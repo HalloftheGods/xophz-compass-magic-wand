@@ -25,7 +25,7 @@ Make SEO effortlessly enchanting by visually managing your meta data, sitemaps, 
 1. Ensure **Xophz COMPASS** is installed and active.
 2. Upload `xophz-compass-magic-wand` to `/wp-content/plugins/`.
 3. Activate through the Plugins menu.
-4. Access via the COMPASS dashboard → **Magic Wand**.
+4. Access via the My Compass dashboard → **Magic Wand**.
 
 ## Frontend Routes
 
