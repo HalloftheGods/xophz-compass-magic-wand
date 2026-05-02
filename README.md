@@ -1,4 +1,4 @@
-# Xophz Magic Wand SEO
+# Xophz Magic Hat SEO
 
 > **Category:** True North · **Version:** 0.0.1
 
@@ -6,7 +6,7 @@ Make SEO effortlessly enchanting by visually managing your meta data, sitemaps, 
 
 ## Description
 
-**Magic Wand** is the SEO management plugin for COMPASS. It provides an intuitive, visual interface for managing on-page SEO — meta tags, Open Graph data, XML sitemaps, and crawl configurations — without the bloat of monolithic SEO plugins.
+**Magic Hat** is the SEO management plugin for COMPASS. It provides an intuitive, visual interface for managing on-page SEO — meta tags, Open Graph data, XML sitemaps, and crawl configurations — without the bloat of monolithic SEO plugins.
 
 ### Core Capabilities
 
@@ -25,7 +25,7 @@ Make SEO effortlessly enchanting by visually managing your meta data, sitemaps, 
 1. Ensure **Xophz COMPASS** is installed and active.
 2. Upload `xophz-compass-magic-wand` to `/wp-content/plugins/`.
 3. Activate through the Plugins menu.
-4. Access via the My Compass dashboard → **Magic Wand**.
+4. Access via the My Compass dashboard → **Magic Hat**.
 
 ## Frontend Routes
 

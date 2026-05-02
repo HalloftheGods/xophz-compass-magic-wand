@@ -13,10 +13,11 @@
  * @package           Xophz_Compass_
  *
  * @wordpress-plugin
- * Category:          True North
- * Plugin Name:       Xophz Magic Wand SEO
+ * Category:          Wizard's Tower
+ * Group:             CMS
+ * Plugin Name:       Xophz Magic Hat
  * Plugin URI:        https://github.com/HalloftheGods/xophz-compass-magic-wand
- * Description:       Make SEO effortlessly enchanting by visually managing your meta data, sitemaps, and crawls.
+ * Description:       Conjure stunning pages and themes with this magical point-and-click builder interface.
  * Version:           26.4.28
  * Author:            Hall of the Gods, Inc.
  * Author URI:        http://www.hallofthegods.com/

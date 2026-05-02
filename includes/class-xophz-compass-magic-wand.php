@@ -78,6 +78,7 @@ class Xophz_Compass_Magic_Wand {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_rest_hooks();
 
 	}
 
@@ -104,6 +105,7 @@ class Xophz_Compass_Magic_Wand {
 		 * core plugin.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xophz-compass-magic-wand-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xophz-compass-magic-wand-compiler.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -174,6 +176,11 @@ class Xophz_Compass_Magic_Wand {
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+	}
+
+	private function define_rest_hooks() {
+		$plugin_compiler = new Xophz_Compass_Magic_Wand_Compiler();
+		$this->loader->add_action( 'rest_api_init', $plugin_compiler, 'register_routes' );
 	}
 
 	/**
