@@ -159,6 +159,8 @@ class Xophz_Compass_Magic_Wand {
 		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'addToMenu' );
+		
+		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'customize_controls_scripts' );
 
 	}
 
@@ -175,6 +177,9 @@ class Xophz_Compass_Magic_Wand {
 
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		
+		$this->loader->add_filter( 'the_content', $plugin_public, 'render_page_builder_content' );
+		$this->loader->add_action( 'customize_preview_init', $plugin_public, 'enqueue_preview_scripts' );
 
 	}
 

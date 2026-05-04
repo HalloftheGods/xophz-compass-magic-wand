@@ -109,4 +109,45 @@ class Xophz_Compass_Magic_Wand_Admin {
         Xophz_Compass::add_submenu($this->plugin_name);
 	}
 
+	/**
+	 * Register Customizer scripts for Page Builder UI
+	 */
+	public function customize_controls_scripts() {
+		wp_enqueue_script( $this->plugin_name . '-customizer', plugin_dir_url( __FILE__ ) . 'js/xophz-compass-magic-wand-customizer.js', array( 'jquery', 'customize-controls', 'jquery-ui-sortable' ), $this->version, true );
+		
+		wp_localize_script( $this->plugin_name . '-customizer', 'mhMagicWand', array(
+			'sections' => array(
+				// Content
+				array('id' => 'hero',          'name' => 'Hero',          'icon' => 'dashicons-format-image',   'color' => '#62c9ff',  'category' => 'content'),
+				array('id' => 'about',         'name' => 'About',         'icon' => 'dashicons-info-outline',   'color' => '#8b5cf6',  'category' => 'content'),
+				array('id' => 'content',       'name' => 'Content',       'icon' => 'dashicons-text-page',      'color' => '#3b82f6',  'category' => 'content'),
+				// Features
+				array('id' => 'features',      'name' => 'Features',      'icon' => 'dashicons-grid-view',      'color' => '#10b981',  'category' => 'features'),
+				array('id' => 'numbers',       'name' => 'Numbers',       'icon' => 'dashicons-chart-bar',      'color' => '#f59e0b',  'category' => 'features'),
+				// Engagement
+				array('id' => 'cta',           'name' => 'Call to Action','icon' => 'dashicons-megaphone',      'color' => '#ff3366',  'category' => 'engage'),
+				array('id' => 'testimonials',  'name' => 'Testimonials',  'icon' => 'dashicons-format-quote',   'color' => '#06b6d4',  'category' => 'engage'),
+				array('id' => 'clients',       'name' => 'Clients',       'icon' => 'dashicons-groups',         'color' => '#64748b',  'category' => 'engage'),
+				// Team & Portfolio
+				array('id' => 'team',          'name' => 'Team',          'icon' => 'dashicons-admin-users',    'color' => '#ec4899',  'category' => 'people'),
+				array('id' => 'portfolio',     'name' => 'Portfolio',     'icon' => 'dashicons-portfolio',      'color' => '#a855f7',  'category' => 'people'),
+				// Utility
+				array('id' => 'latest-posts',  'name' => 'Latest Posts',  'icon' => 'dashicons-admin-post',     'color' => '#ef4444',  'category' => 'utility'),
+				array('id' => 'contact',       'name' => 'Contact',       'icon' => 'dashicons-email-alt',      'color' => '#14b8a6',  'category' => 'utility'),
+			),
+			'categories' => array(
+				array('id' => 'content',  'name' => 'Content'),
+				array('id' => 'features', 'name' => 'Features'),
+				array('id' => 'engage',   'name' => 'Engagement'),
+				array('id' => 'people',   'name' => 'Team & Portfolio'),
+				array('id' => 'utility',  'name' => 'Utility'),
+			),
+			'strings' => array(
+				'select_section' => __('Choose a Section', 'xophz-compass-magic-wand'),
+				'remove'         => __('Remove', 'xophz-compass-magic-wand'),
+				'no_sections'    => __('No sections added', 'xophz-compass-magic-wand'),
+			)
+		) );
+	}
+
 }
