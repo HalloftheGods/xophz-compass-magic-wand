@@ -235,10 +235,10 @@ class Xophz_Compass_Magic_Wand_Public {
 				$h .= '</div></div>';
 				break;
 			case 'portfolio':
-				$h .= '<div style="text-align:center;"><h2 data-mw-edit="title" style="margin-bottom:40px;">' . esc_html( $this->get_edit( $section, 'title', $t ) ) . '</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;">';
+				$h .= '<div style="text-align:center;"><h2 data-mw-edit="title" style="margin-bottom:40px;">' . esc_html( $this->get_edit( $section, 'title', $t ) ) . '</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">';
 				for ( $i=1; $i<=6; $i++ ) {
-					$img_src = $this->get_edit( $section, 'project_img_'.$i, 'https://picsum.photos/seed/project' . $index . '_' . $i . '/300/200' );
-					$h .= '<img data-mw-image="project_img_'.$i.'" src="' . esc_url($img_src) . '" style="width:100%;height:200px;object-fit:cover;border-radius:var(--mh-border-radius,4px);cursor:pointer;" />';
+					$img_src = $this->get_edit( $section, 'project_img_'.$i, 'https://picsum.photos/seed/project' . $index . '_' . $i . '/400/300' );
+					$h .= '<img data-mw-image="project_img_'.$i.'" src="' . esc_url($img_src) . '" style="width:100%;height:250px;object-fit:cover;border-radius:var(--mh-border-radius,4px);cursor:pointer;" />';
 				}
 				$h .= '</div></div>';
 				break;
