@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Category:          Wizard's Tower
  * Group:             CMS
- * Plugin Name:       Xophz Magic Hat
+ * Plugin Name:       Xophz Magic Wand
  * Plugin URI:        https://github.com/HalloftheGods/xophz-compass-magic-wand
  * Description:       Conjure stunning pages and themes with this magical point-and-click builder interface.
  * Version:           26.5.5
