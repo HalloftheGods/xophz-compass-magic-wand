@@ -6,7 +6,7 @@ Make SEO effortlessly enchanting by visually managing your meta data, sitemaps, 
 
 ## Description
 
-**Magic Hat** is the SEO management plugin for COMPASS. It provides an intuitive, visual interface for managing on-page SEO — meta tags, Open Graph data, XML sitemaps, and crawl configurations — without the bloat of monolithic SEO plugins.
+**Magic Hat** is the SEO management plugin for COMPASS. It provides an intuitive, visual interface for managing on-page SEO - meta tags, Open Graph data, XML sitemaps, and crawl configurations - without the bloat of monolithic SEO plugins.
 
 ### Core Capabilities
 

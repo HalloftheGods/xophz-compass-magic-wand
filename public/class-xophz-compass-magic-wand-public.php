@@ -207,7 +207,7 @@ class Xophz_Compass_Magic_Wand_Public {
 				foreach ( $quotes as $i => $q ) {
 					$h .= '<div style="padding:30px;background:var(--mh-color-card,#f9f9f9);border:1px solid var(--mh-color-border-muted,#eee);border-radius:var(--mh-border-radius,4px);text-align:left;">';
 					$h .= '<p data-mw-edit="quote_'.$i.'" style="color:var(--mh-color-text-muted);font-style:italic;line-height:1.6;margin-bottom:16px;">"' . esc_html( $this->get_edit( $section, 'quote_'.$i, $q[0] ) ) . '"</p>';
-					$h .= '<strong data-mw-edit="author_'.$i.'" style="font-size:13px;">— ' . esc_html( $this->get_edit( $section, 'author_'.$i, $q[1] ) ) . '</strong></div>';
+					$h .= '<strong data-mw-edit="author_'.$i.'" style="font-size:13px;">- ' . esc_html( $this->get_edit( $section, 'author_'.$i, $q[1] ) ) . '</strong></div>';
 				}
 				$h .= '</div></div>';
 				break;
