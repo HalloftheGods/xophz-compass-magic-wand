@@ -54,8 +54,7 @@ function activate_xophz_compass_magic_wand() {
  * This action is documented in includes/class-xophz-compass-magic-wand-deactivator.php
  */
 function deactivate_xophz_compass_magic_wand() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-xophz-compass-magic-wand-deactivator.php';
-	Xophz_Compass_Magic_Wand_Deactivator::deactivate();
+	Xophz_Compass_Magic_Wand::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_xophz_compass_magic_wand' );
