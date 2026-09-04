@@ -442,7 +442,7 @@ class Xophz_Compass_Magic_Wand_Compiler {
 			// Translate dynamic Magic Wand components into native WordPress PHP functions
 			$html_content = preg_replace(
 				'/<([^>]+)data-mw-type="site-identity"([^>]*)>(.*?)<\/\1>/s',
-				'<$1$2><?php bloginfo(\'name\'); ?></$1>',
+				'<$1$2><?php bloginfo("name"); ?></$1>',
 				$html_content
 			);
 
