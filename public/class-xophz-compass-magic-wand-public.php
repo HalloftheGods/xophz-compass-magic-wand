@@ -221,24 +221,29 @@ class Xophz_Compass_Magic_Wand_Public {
 				break;
 			case 'team':
 				$h .= '<div style="text-align:center;"><h2 data-mw-edit="title" style="margin-bottom:40px;">' . esc_html( $this->get_edit( $section, 'title', $t ) ) . '</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;">';
-				$members = array(
-					array('Jane Doe', 'CEO', 'women/'.(($index*10 + 1) % 99 + 1).'.jpg'),
-					array('John Smith', 'CTO', 'men/'.(($index*10 + 2) % 99 + 1).'.jpg'),
-					array('Emily Chen', 'Designer', 'women/'.(($index*10 + 3) % 99 + 1).'.jpg')
-				);
-				foreach ( $members as $i => $m ) {
-					$img_src = $this->get_edit( $section, 'member_img_'.$i, 'https://randomuser.me/api/portraits/' . $m[2] );
-					$h .= '<div><img data-mw-image="member_img_'.$i.'" src="' . esc_url($img_src) . '" style="width:100px;height:100px;border-radius:50%;object-fit:cover;margin:0 auto 16px;display:block;cursor:pointer;" />';
-					$h .= '<h4 data-mw-edit="member_'.$i.'" style="margin-bottom:4px;">' . esc_html( $this->get_edit( $section, 'member_'.$i, $m[0] ) ) . '</h4>';
-					$h .= '<p data-mw-edit="role_'.$i.'" style="color:var(--mh-color-text-muted);font-size:13px;">' . esc_html( $this->get_edit( $section, 'role_'.$i, $m[1] ) ) . '</p></div>';
+				$wp_users = get_users( array( 'number' => 3 ) );
+				if ( ! empty( $wp_users ) ) {
+					foreach ( $wp_users as $i => $u ) {
+						$avatar_url = get_avatar_url( $u->ID, array( 'size' => 128 ) );
+						$h .= '<div><img data-mw-image="member_img_'.$i.'" src="' . esc_url( $avatar_url ) . '" style="width:100px;height:100px;border-radius:50%;object-fit:cover;margin:0 auto 16px;display:block;cursor:pointer;" />';
+						$h .= '<h4 data-mw-edit="member_'.$i.'" style="margin-bottom:4px;">' . esc_html( $this->get_edit( $section, 'member_'.$i, $u->display_name ) ) . '</h4>';
+						$roles = implode( ', ', array_map( 'ucfirst', (array) $u->roles ) );
+						$h .= '<p data-mw-edit="role_'.$i.'" style="color:var(--mh-color-text-muted);font-size:13px;">' . esc_html( $this->get_edit( $section, 'role_'.$i, $roles ) ) . '</p></div>';
+					}
+				} else {
+					$h .= '<p style="color:var(--mh-color-text-muted);grid-column:1/-1;">No team members found.</p>';
 				}
 				$h .= '</div></div>';
 				break;
 			case 'portfolio':
 				$h .= '<div style="text-align:center;"><h2 data-mw-edit="title" style="margin-bottom:40px;">' . esc_html( $this->get_edit( $section, 'title', $t ) ) . '</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">';
 				for ( $i=1; $i<=6; $i++ ) {
-					$img_src = $this->get_edit( $section, 'project_img_'.$i, 'https://picsum.photos/seed/project' . $index . '_' . $i . '/400/300' );
-					$h .= '<img data-mw-image="project_img_'.$i.'" src="' . esc_url($img_src) . '" style="width:100%;height:250px;object-fit:cover;border-radius:var(--mh-border-radius,4px);cursor:pointer;" />';
+					$img_src = $this->get_edit( $section, 'project_img_'.$i, '' );
+					if ( ! empty( $img_src ) ) {
+						$h .= '<img data-mw-image="project_img_'.$i.'" src="' . esc_url($img_src) . '" style="width:100%;height:250px;object-fit:cover;border-radius:var(--mh-border-radius,4px);cursor:pointer;" />';
+					} else {
+						$h .= '<div style="width:100%;height:200px;background:var(--mh-color-card,#1e293b);border:1px dashed var(--mh-color-border-muted,#334155);border-radius:var(--mh-border-radius,4px);display:flex;align-items:center;justify-content:center;color:var(--mh-color-text-muted);font-size:12px;">Empty Project Slot ' . $i . '</div>';
+					}
 				}
 				$h .= '</div></div>';
 				break;
@@ -247,8 +252,12 @@ class Xophz_Compass_Magic_Wand_Public {
 				$posts = get_posts(array('posts_per_page'=>3));
 				if ( ! empty( $posts ) ) {
 					foreach ( $posts as $p ) {
-						$img = get_the_post_thumbnail_url($p, 'medium') ?: 'https://picsum.photos/seed/post'.$p->ID.'/400/250';
-						$h .= '<div style="border:1px solid var(--mh-color-border-muted,#eee);border-radius:var(--mh-border-radius,4px);overflow:hidden;"><img src="' . esc_url($img) . '" style="width:100%;height:160px;object-fit:cover;" /><div style="padding:20px;"><h3 style="font-size:16px;margin-bottom:8px;"><a href="' . get_permalink($p) . '" style="text-decoration:none;color:inherit;">' . esc_html($p->post_title) . '</a></h3><p style="color:var(--mh-color-text-muted);font-size:13px;">' . wp_trim_words($p->post_content,15) . '</p></div></div>';
+						$img = get_the_post_thumbnail_url($p, 'medium');
+						$h .= '<div style="border:1px solid var(--mh-color-border-muted,#eee);border-radius:var(--mh-border-radius,4px);overflow:hidden;">';
+						if ( $img ) {
+							$h .= '<img src="' . esc_url($img) . '" style="width:100%;height:160px;object-fit:cover;" />';
+						}
+						$h .= '<div style="padding:20px;"><h3 style="font-size:16px;margin-bottom:8px;"><a href="' . get_permalink($p) . '" style="text-decoration:none;color:inherit;">' . esc_html($p->post_title) . '</a></h3><p style="color:var(--mh-color-text-muted);font-size:13px;">' . wp_trim_words($p->post_content,15) . '</p></div></div>';
 					}
 				} else {
 					$h .= '<p style="color:var(--mh-color-text-muted);text-align:center;grid-column:1/-1;">No posts found.</p>';
@@ -258,9 +267,10 @@ class Xophz_Compass_Magic_Wand_Public {
 			case 'contact':
 				$h .= '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;text-align:left;"><div>';
 				$h .= '<h2 data-mw-edit="title" style="margin-bottom:16px;">' . esc_html( $this->get_edit( $section, 'title', $t ) ) . '</h2>';
-				$h .= '<p data-mw-edit="subtitle" style="color:var(--mh-color-text-muted);margin-bottom:24px;">' . esc_html( $this->get_edit( $section, 'subtitle', 'Get in touch. We would love to hear from you.' ) ) . '</p>';
-				$h .= '<div style="margin-bottom:12px;"><strong>Email:</strong> <span data-mw-edit="email" style="color:var(--mh-color-text-muted);">' . esc_html( $this->get_edit( $section, 'email', 'hello@example.com' ) ) . '</span></div>';
-				$h .= '<div><strong>Phone:</strong> <span data-mw-edit="phone" style="color:var(--mh-color-text-muted);">' . esc_html( $this->get_edit( $section, 'phone', '(555) 123-4567' ) ) . '</span></div></div>';
+				$h .= '<p data-mw-edit="subtitle" style="color:var(--mh-color-text-muted);margin-bottom:24px;">' . esc_html( $this->get_edit( $section, 'subtitle', 'Get in touch.' ) ) . '</p>';
+				$admin_email = get_bloginfo( 'admin_email' );
+				$h .= '<div style="margin-bottom:12px;"><strong>Email:</strong> <span data-mw-edit="email" style="color:var(--mh-color-text-muted);">' . esc_html( $this->get_edit( $section, 'email', $admin_email ) ) . '</span></div>';
+				$h .= '<div><strong>Phone:</strong> <span data-mw-edit="phone" style="color:var(--mh-color-text-muted);">' . esc_html( $this->get_edit( $section, 'phone', '' ) ) . '</span></div></div>';
 				$h .= '<div style="background:var(--mh-color-card,#f9f9f9);padding:30px;border-radius:var(--mh-border-radius,4px);border:1px solid var(--mh-color-border-muted,#eee);">';
 				$shortcode = $this->get_edit( $section, 'shortcode', '[contact-form-7]' );
 				$h .= '<div data-mw-shortcode="shortcode" style="cursor:pointer;" title="Click to edit shortcode">';
