@@ -340,7 +340,7 @@ class Xophz_Compass_Magic_Wand_Compiler {
 				if ( preg_match( '/Categories:\s*(.+)/i', $code, $m ) ) { $categories = array_map( 'trim', explode( ',', $m[1] ) ); }
 				if ( preg_match( '/Description:\s*(.+)/i', $code, $m ) ) { $description = trim( $m[1] ); }
 
-				// Extract block markup (everything after the closing PHP tag ?>)
+				// Extract block markup (everything after the closing PHP tag)
 				$block_markup = '';
 				$parts = explode( '?>', $code, 2 );
 				if ( count( $parts ) > 1 ) {
