@@ -1,85 +1,126 @@
 <?php
+/**
+ * REST API Compiler and Site Editor Endpoint Controller
+ *
+ * Provides endpoints for Gutenberg block serialization, template loading,
+ * block rendering, and theme token extraction adhering to Quantum standards.
+ *
+ * @package Xophz_Compass_Magic_Wand
+ * @since   1.0.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Xophz_Compass_Magic_Wand_Compiler {
 
-	public function register_routes() {
-		// Existing compilation & child theme routes
-		register_rest_route( 'magic-wand/v1', '/compile', array(
-			'methods'             => WP_REST_Server::CREATABLE,
-			'callback'            => array( $this, 'compile_template' ),
-			'permission_callback' => array( $this, 'check_permission' ),
-		) );
+	/**
+	 * Register REST API routes.
+	 */
+	public function register_routes(): void {
+		$namespace = 'magic-wand/v1';
 
-		register_rest_route( 'magic-wand/v1', '/create-child-theme', array(
-			'methods'             => WP_REST_Server::CREATABLE,
-			'callback'            => array( $this, 'create_child_theme' ),
-			'permission_callback' => array( $this, 'check_permission' ),
-		) );
-
-		// Site Editor REST API routes
-		register_rest_route( 'magic-wand/v1', '/pages', array(
+		register_rest_route( $namespace, '/pages', array(
 			'methods'             => WP_REST_Server::READABLE,
 			'callback'            => array( $this, 'get_pages' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/page-content', array(
+		register_rest_route( $namespace, '/page-content', array(
 			'methods'             => WP_REST_Server::READABLE,
 			'callback'            => array( $this, 'get_page_content' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/save-page', array(
+		register_rest_route( $namespace, '/save-page', array(
 			'methods'             => WP_REST_Server::CREATABLE,
 			'callback'            => array( $this, 'save_page' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/create-page', array(
+		register_rest_route( $namespace, '/create-page', array(
 			'methods'             => WP_REST_Server::CREATABLE,
 			'callback'            => array( $this, 'create_page' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/templates', array(
+		register_rest_route( $namespace, '/templates', array(
 			'methods'             => WP_REST_Server::READABLE,
 			'callback'            => array( $this, 'get_templates' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/save-template', array(
+		register_rest_route( $namespace, '/save-template', array(
 			'methods'             => WP_REST_Server::CREATABLE,
 			'callback'            => array( $this, 'save_template' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/patterns', array(
+		register_rest_route( $namespace, '/patterns', array(
 			'methods'             => WP_REST_Server::READABLE,
 			'callback'            => array( $this, 'get_patterns' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/render-blocks', array(
+		register_rest_route( $namespace, '/render-blocks', array(
 			'methods'             => WP_REST_Server::CREATABLE,
 			'callback'            => array( $this, 'render_blocks' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
 
-		register_rest_route( 'magic-wand/v1', '/theme-tokens', array(
+		register_rest_route( $namespace, '/theme-tokens', array(
 			'methods'             => WP_REST_Server::READABLE,
 			'callback'            => array( $this, 'get_theme_tokens' ),
 			'permission_callback' => array( $this, 'check_permission' ),
 		) );
-	}
 
-	public function check_permission() {
-		return current_user_can( 'edit_theme_options' );
+		register_rest_route( $namespace, '/create-child-theme', array(
+			'methods'             => WP_REST_Server::CREATABLE,
+			'callback'            => array( $this, 'create_child_theme' ),
+			'permission_callback' => array( $this, 'check_permission' ),
+		) );
 	}
 
 	/**
-	 * Retrieve all WordPress pages and key templates
+	 * Permission check for theme editing operations.
 	 */
-	public function get_pages( WP_REST_Request $request ) {
+	public function check_permission(): bool {
+		return current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_pages' );
+	}
+
+	/**
+	 * Helper: Return standardized REST response envelope.
+	 *
+	 * @param array<string, mixed> $data   Data payload.
+	 * @param int                  $status HTTP status code.
+	 */
+	private function respond( array $data, int $status = 200 ): WP_REST_Response {
+		$version = defined( 'XOPHZ_COMPASS_MAGIC_WAND_VERSION' ) ? XOPHZ_COMPASS_MAGIC_WAND_VERSION : '1.0.0';
+
+		$envelope = array(
+			'success' => true,
+			'data'    => $data,
+			'meta'    => array(
+				'timestamp' => time(),
+				'version'   => $version,
+			),
+		);
+
+		// Mirror keys to top-level for backwards compatibility with legacy callers
+		foreach ( $data as $k => $v ) {
+			if ( ! isset( $envelope[ $k ] ) ) {
+				$envelope[ $k ] = $v;
+			}
+		}
+
+		return new WP_REST_Response( $envelope, $status );
+	}
+
+	/**
+	 * Retrieve all WordPress pages.
+	 */
+	public function get_pages( WP_REST_Request $request ): WP_REST_Response {
 		$post_type = $request->get_param( 'post_type' ) ?: 'page';
 		$posts = get_posts( array(
 			'post_type'      => $post_type,
@@ -91,61 +132,55 @@ class Xophz_Compass_Magic_Wand_Compiler {
 
 		$results = array();
 		foreach ( $posts as $p ) {
-			$has_blocks = has_blocks( $p->post_content );
-			$template   = get_post_meta( $p->ID, '_wp_page_template', true ) ?: 'default';
-			$permalink  = get_permalink( $p->ID );
-
 			$results[] = array(
 				'id'         => $p->ID,
 				'title'      => ! empty( $p->post_title ) ? $p->post_title : '(Untitled #' . $p->ID . ')',
 				'slug'       => $p->post_name,
 				'status'     => $p->post_status,
 				'modified'   => $p->post_modified,
-				'has_blocks' => $has_blocks,
-				'template'   => $template,
-				'url'        => $permalink,
+				'has_blocks' => has_blocks( $p->post_content ),
+				'template'   => get_post_meta( $p->ID, '_wp_page_template', true ) ?: 'default',
+				'url'        => get_permalink( $p->ID ),
 			);
 		}
 
-		return rest_ensure_response( array(
-			'success' => true,
-			'pages'   => $results,
-		) );
+		return $this->respond( array( 'pages' => $results ) );
 	}
 
 	/**
-	 * Retrieve full page content with raw block markup, parsed AST, and rendered preview HTML
+	 * Retrieve page content with raw block markup, parsed AST, and rendered preview HTML.
 	 */
 	public function get_page_content( WP_REST_Request $request ) {
 		$id = absint( $request->get_param( 'id' ) );
 		if ( ! $id ) {
-			return new WP_Error( 'missing_id', 'Page ID is required', array( 'status' => 400 ) );
+			return new WP_Error( 'missing_id', __( 'Page ID is required', 'xophz-compass-magic-wand' ), array( 'status' => 400 ) );
 		}
 
 		$post = get_post( $id );
 		if ( ! $post ) {
-			return new WP_Error( 'not_found', 'Page not found', array( 'status' => 404 ) );
+			return new WP_Error( 'not_found', __( 'Page not found', 'xophz-compass-magic-wand' ), array( 'status' => 404 ) );
 		}
 
-		$raw_content = $post->post_content;
-		$parsed_blocks = parse_blocks( $raw_content );
-		$rendered_html = do_blocks( $raw_content );
+		// Run legacy migration if needed
+		Xophz_Compass_Magic_Wand_Migration::migrate_page( $id );
+		$post = get_post( $id );
 
-		return rest_ensure_response( array(
-			'success'       => true,
+		$raw_content = $post->post_content;
+
+		return $this->respond( array(
 			'id'            => $post->ID,
 			'title'         => $post->post_title,
 			'slug'          => $post->post_name,
 			'status'        => $post->post_status,
 			'raw_content'   => $raw_content,
-			'parsed_blocks' => $parsed_blocks,
-			'rendered_html' => $rendered_html,
+			'parsed_blocks' => parse_blocks( $raw_content ),
+			'rendered_html' => do_blocks( $raw_content ),
 			'url'           => get_permalink( $post->ID ),
 		) );
 	}
 
 	/**
-	 * Save block markup into a WordPress page
+	 * Save block markup into a WordPress page.
 	 */
 	public function save_page( WP_REST_Request $request ) {
 		$id      = absint( $request->get_param( 'id' ) );
@@ -154,7 +189,7 @@ class Xophz_Compass_Magic_Wand_Compiler {
 		$status  = $request->get_param( 'status' );
 
 		if ( ! $id ) {
-			return new WP_Error( 'missing_id', 'Page ID is required', array( 'status' => 400 ) );
+			return new WP_Error( 'missing_id', __( 'Page ID is required', 'xophz-compass-magic-wand' ), array( 'status' => 400 ) );
 		}
 
 		$update_args = array(
@@ -174,17 +209,19 @@ class Xophz_Compass_Magic_Wand_Compiler {
 			return $updated_id;
 		}
 
-		return rest_ensure_response( array(
-			'success'   => true,
+		// Clean up any legacy post meta key to preserve single source of truth
+		delete_post_meta( $id, '_mh_page_sections' );
+
+		return $this->respond( array(
 			'id'        => $updated_id,
-			'message'   => 'Page saved successfully with native Gutenberg blocks',
+			'message'   => __( 'Page saved successfully with native Gutenberg blocks', 'xophz-compass-magic-wand' ),
 			'timestamp' => current_time( 'mysql' ),
 			'url'       => get_permalink( $updated_id ),
 		) );
 	}
 
 	/**
-	 * Create a new page and return ID
+	 * Create a new page.
 	 */
 	public function create_page( WP_REST_Request $request ) {
 		$title    = sanitize_text_field( $request->get_param( 'title' ) ?: 'New Magic Wand Page' );
@@ -206,25 +243,23 @@ class Xophz_Compass_Magic_Wand_Compiler {
 			update_post_meta( $new_id, '_wp_page_template', $template );
 		}
 
-		return rest_ensure_response( array(
-			'success' => true,
+		return $this->respond( array(
 			'id'      => $new_id,
 			'title'   => $title,
 			'url'     => get_permalink( $new_id ),
-			'message' => 'New page created',
+			'message' => __( 'New page created', 'xophz-compass-magic-wand' ),
 		) );
 	}
 
 	/**
-	 * Get theme templates and template parts
+	 * Get theme templates and template parts.
 	 */
-	public function get_templates( WP_REST_Request $request ) {
-		$theme_dir  = get_template_directory();
-		$child_dir  = get_stylesheet_directory();
-		$templates  = array();
-		$parts      = array();
+	public function get_templates( WP_REST_Request $request ): WP_REST_Response {
+		$theme_dir = get_template_directory();
+		$child_dir = get_stylesheet_directory();
+		$templates = array();
+		$parts     = array();
 
-		// Check templates
 		$template_files = array(
 			'index'   => 'Index (Blog / Archive)',
 			'page'    => 'Page Default',
@@ -239,18 +274,15 @@ class Xophz_Compass_Magic_Wand_Compiler {
 				? $child_dir . '/templates/' . $slug . '.html'
 				: $theme_dir . '/templates/' . $slug . '.html';
 
-			$content = file_exists( $file_path ) ? file_get_contents( $file_path ) : '';
-
 			$templates[] = array(
 				'slug'    => $slug,
 				'label'   => $label,
 				'type'    => 'template',
-				'content' => $content,
+				'content' => file_exists( $file_path ) ? file_get_contents( $file_path ) : '',
 				'file'    => basename( $file_path ),
 			);
 		}
 
-		// Check template parts
 		$part_files = array(
 			'header' => array( 'label' => 'Site Header', 'area' => 'header' ),
 			'footer' => array( 'label' => 'Site Footer', 'area' => 'footer' ),
@@ -261,27 +293,24 @@ class Xophz_Compass_Magic_Wand_Compiler {
 				? $child_dir . '/parts/' . $slug . '.html'
 				: $theme_dir . '/parts/' . $slug . '.html';
 
-			$content = file_exists( $file_path ) ? file_get_contents( $file_path ) : '';
-
 			$parts[] = array(
 				'slug'    => $slug,
 				'label'   => $meta['label'],
 				'area'    => $meta['area'],
 				'type'    => 'part',
-				'content' => $content,
+				'content' => file_exists( $file_path ) ? file_get_contents( $file_path ) : '',
 				'file'    => basename( $file_path ),
 			);
 		}
 
-		return rest_ensure_response( array(
-			'success'   => true,
+		return $this->respond( array(
 			'templates' => $templates,
 			'parts'     => $parts,
 		) );
 	}
 
 	/**
-	 * Save block markup into a template or template part
+	 * Save block markup into a template or template part file.
 	 */
 	public function save_template( WP_REST_Request $request ) {
 		$slug    = sanitize_file_name( $request->get_param( 'slug' ) );
@@ -289,13 +318,12 @@ class Xophz_Compass_Magic_Wand_Compiler {
 		$content = $request->get_param( 'content' );
 
 		if ( empty( $slug ) || empty( $content ) ) {
-			return new WP_Error( 'missing_params', 'Slug and content are required', array( 'status' => 400 ) );
+			return new WP_Error( 'missing_params', __( 'Slug and content are required', 'xophz-compass-magic-wand' ), array( 'status' => 400 ) );
 		}
 
 		$stylesheet = get_stylesheet();
-		// If editing parent theme directly, require child theme
 		if ( 'xophz-magic-hat' === $stylesheet || 'xophz-blank-slate' === $stylesheet ) {
-			return new WP_Error( 'parent_theme_active', 'Protected parent theme active. Please create a child theme to save template modifications.', array( 'status' => 403 ) );
+			return new WP_Error( 'parent_theme_active', __( 'Protected parent theme active. Please create a child theme to save template modifications.', 'xophz-compass-magic-wand' ), array( 'status' => 403 ) );
 		}
 
 		$target_dir = get_stylesheet_directory() . ( 'part' === $type ? '/parts' : '/templates' );
@@ -307,196 +335,77 @@ class Xophz_Compass_Magic_Wand_Compiler {
 		$result      = file_put_contents( $target_file, wp_unslash( $content ) );
 
 		if ( false === $result ) {
-			return new WP_Error( 'write_failed', 'Could not save template file. Check directory permissions.', array( 'status' => 500 ) );
+			return new WP_Error( 'write_failed', __( 'Could not save template file. Check directory permissions.', 'xophz-compass-magic-wand' ), array( 'status' => 500 ) );
 		}
 
-		return rest_ensure_response( array(
-			'success' => true,
-			'message' => 'Template part saved successfully',
+		return $this->respond( array(
+			'message' => __( 'Template part saved successfully', 'xophz-compass-magic-wand' ),
 			'file'    => basename( $target_file ),
 		) );
 	}
 
 	/**
-	 * Return registered Magic Hat patterns
+	 * Return registered block patterns sourced from the Pattern Registry.
 	 */
-	public function get_patterns( WP_REST_Request $request ) {
-		$theme_dir = get_template_directory();
-		$patterns_dir = $theme_dir . '/patterns';
-		$results = array();
+	public function get_patterns( WP_REST_Request $request ): WP_REST_Response {
+		$registry = Xophz_Compass_Magic_Wand_Pattern_Registry::get_instance();
+		$patterns = array_values( $registry->get_pattern_definitions() );
 
-		if ( is_dir( $patterns_dir ) ) {
-			$files = glob( $patterns_dir . '/*.php' );
-			foreach ( $files as $f ) {
-				$code = file_get_contents( $f );
-				// Parse header comments
-				$title       = '';
-				$slug        = '';
-				$categories  = array();
-				$description = '';
-
-				if ( preg_match( '/Title:\s*(.+)/i', $code, $m ) ) { $title = trim( $m[1] ); }
-				if ( preg_match( '/Slug:\s*(.+)/i', $code, $m ) ) { $slug = trim( $m[1] ); }
-				if ( preg_match( '/Categories:\s*(.+)/i', $code, $m ) ) { $categories = array_map( 'trim', explode( ',', $m[1] ) ); }
-				if ( preg_match( '/Description:\s*(.+)/i', $code, $m ) ) { $description = trim( $m[1] ); }
-
-				// Extract block markup (everything after the closing PHP tag)
-				$block_markup = '';
-				$parts = explode( '?>', $code, 2 );
-				if ( count( $parts ) > 1 ) {
-					$block_markup = trim( $parts[1] );
-				}
-
-				if ( ! empty( $slug ) ) {
-					$results[] = array(
-						'slug'         => $slug,
-						'title'        => $title ?: basename( $f, '.php' ),
-						'categories'   => $categories,
-						'description'  => $description,
-						'block_markup' => $block_markup,
-					);
-				}
-			}
-		}
-
-		return rest_ensure_response( array(
-			'success'  => true,
-			'patterns' => $results,
-		) );
+		return $this->respond( array( 'patterns' => $patterns ) );
 	}
 
 	/**
-	 * Server-side block markup renderer
+	 * Server-side block markup renderer.
 	 */
-	public function render_blocks( WP_REST_Request $request ) {
+	public function render_blocks( WP_REST_Request $request ): WP_REST_Response {
 		$content = $request->get_param( 'content' );
 		if ( empty( $content ) ) {
-			return rest_ensure_response( array( 'success' => true, 'html' => '' ) );
+			return $this->respond( array( 'html' => '' ) );
 		}
 
 		$rendered = do_blocks( wp_unslash( $content ) );
-		return rest_ensure_response( array(
-			'success' => true,
-			'html'    => $rendered,
-		) );
+		return $this->respond( array( 'html' => $rendered ) );
 	}
 
 	/**
-	 * Retrieve theme tokens from theme.json and theme mods
+	 * Retrieve theme tokens from theme.json.
 	 */
-	public function get_theme_tokens( WP_REST_Request $request ) {
+	public function get_theme_tokens( WP_REST_Request $request ): WP_REST_Response {
 		$theme_json_file = get_template_directory() . '/theme.json';
 		$theme_json = array();
 		if ( file_exists( $theme_json_file ) ) {
 			$theme_json = json_decode( file_get_contents( $theme_json_file ), true ) ?: array();
 		}
 
-		$palette = isset( $theme_json['settings']['color']['palette'] ) ? $theme_json['settings']['color']['palette'] : array();
+		$palette       = isset( $theme_json['settings']['color']['palette'] ) ? $theme_json['settings']['color']['palette'] : array();
 		$font_families = isset( $theme_json['settings']['typography']['fontFamilies'] ) ? $theme_json['settings']['typography']['fontFamilies'] : array();
-		$font_sizes = isset( $theme_json['settings']['typography']['fontSizes'] ) ? $theme_json['settings']['typography']['fontSizes'] : array();
+		$font_sizes    = isset( $theme_json['settings']['typography']['fontSizes'] ) ? $theme_json['settings']['typography']['fontSizes'] : array();
 		$spacing_sizes = isset( $theme_json['settings']['spacing']['spacingSizes'] ) ? $theme_json['settings']['spacing']['spacingSizes'] : array();
-		$layout = isset( $theme_json['settings']['layout'] ) ? $theme_json['settings']['layout'] : array( 'contentSize' => '840px', 'wideSize' => '1340px' );
+		$layout        = isset( $theme_json['settings']['layout'] ) ? $theme_json['settings']['layout'] : array( 'contentSize' => '840px', 'wideSize' => '1340px' );
 
-		return rest_ensure_response( array(
-			'success'       => true,
+		return $this->respond( array(
 			'palette'       => $palette,
 			'font_families' => $font_families,
 			'font_sizes'    => $font_sizes,
 			'spacing_sizes' => $spacing_sizes,
 			'layout'        => $layout,
+			'tokens'        => array(
+				'palette'       => $palette,
+				'fontFamilies'  => $font_families,
+				'fontSizes'     => $font_sizes,
+				'spacingSizes'  => $spacing_sizes,
+				'layout'        => $layout,
+			),
 		) );
 	}
 
 	/**
-	 * Compile template for classic PHP themes
+	 * Create and activate a child theme.
 	 */
-	public function compile_template( WP_REST_Request $request ) {
-		$templates = $request->get_param( 'templates' );
-
-		if ( empty( $templates ) || ! is_array( $templates ) ) {
-			return new WP_Error( 'missing_templates', 'Template data is required', array( 'status' => 400 ) );
-		}
-
-		// Protect the parent theme
-		$stylesheet = get_stylesheet();
-		if ( 'xophz-magic-hat' === $stylesheet || 'xophz-blank-slate' === $stylesheet ) {
-			return new WP_Error( 'parent_theme_active', 'You cannot compile directly into the Magic Hat parent theme. Please create a child theme first.', array( 'status' => 403 ) );
-		}
-
-		$theme_dir = get_stylesheet_directory();
-		$saved_files = array();
-
-		foreach ( $templates as $key => $html_content ) {
-			$template_name = sanitize_file_name( $key );
-			
-			if ( ! str_ends_with( $template_name, '.php' ) && ! str_ends_with( $template_name, '.html' ) ) {
-				$template_name .= '.php';
-			}
-
-			$file_path = $theme_dir . '/' . $template_name;
-
-			// Strip editor-specific classes
-			$html_content = preg_replace( '/\s*magic-wand-(hover|selected|editing|dimmed)\s*/', ' ', $html_content );
-			$html_content = str_replace( 'class=""', '', $html_content );
-
-			// Translate dynamic Magic Wand components into native WordPress PHP functions
-			$html_content = preg_replace(
-				'/<([^>]+)data-mw-type="site-identity"([^>]*)>(.*?)<\/\1>/s',
-				'<$1$2><?php bloginfo("name"); ?></$1>',
-				$html_content
-			);
-
-			$html_content = preg_replace(
-				'/<([^>]+)data-mw-type="menu"([^>]*)>(.*?)<\/\1>/s',
-				'<?php wp_nav_menu( array( \'theme_location\' => \'primary\', \'container_class\' => \'magic-menu\' ) ); ?>',
-				$html_content
-			);
-
-			$compiled_content = "<?php\n/**\n * Compiled by Magic Wand\n */\n?>\n";
-
-			if ( 'header.php' === $template_name ) {
-				$compiled_content .= '<!DOCTYPE html>' . "\n";
-				$compiled_content .= '<html <?php language_attributes(); ?>>' . "\n";
-				$compiled_content .= '<head>' . "\n";
-				$compiled_content .= '    <meta charset="<?php bloginfo( \'charset\' ); ?>">' . "\n";
-				$compiled_content .= '    <meta name="viewport" content="width=device-width, initial-scale=1">' . "\n";
-				$compiled_content .= '    <?php wp_head(); ?>' . "\n";
-				$compiled_content .= '</head>' . "\n";
-				$compiled_content .= '<body <?php body_class(); ?>>' . "\n";
-				$compiled_content .= '    <?php wp_body_open(); ?>' . "\n";
-				$compiled_content .= wp_unslash( $html_content ) . "\n";
-			} elseif ( 'footer.php' === $template_name ) {
-				$compiled_content .= wp_unslash( $html_content ) . "\n";
-				$compiled_content .= '    <?php wp_footer(); ?>' . "\n";
-				$compiled_content .= '</body>' . "\n";
-				$compiled_content .= '</html>' . "\n";
-			} else {
-				$compiled_content .= "<?php get_header(); ?>\n";
-				$compiled_content .= wp_unslash( $html_content ) . "\n";
-				$compiled_content .= "<?php get_footer(); ?>\n";
-			}
-
-			$result = file_put_contents( $file_path, $compiled_content );
-
-			if ( false === $result ) {
-				return new WP_Error( 'write_failed', 'Could not write to ' . $template_name . '. Check directory permissions.', array( 'status' => 500 ) );
-			}
-
-			$saved_files[] = $template_name;
-		}
-
-		return rest_ensure_response( array(
-			'success' => true,
-			'message' => 'Templates compiled successfully',
-			'files'   => $saved_files,
-		) );
-	}
-
 	public function create_child_theme( WP_REST_Request $request ) {
 		$theme_name = sanitize_text_field( $request->get_param( 'theme_name' ) );
-		
 		if ( empty( $theme_name ) ) {
-			return new WP_Error( 'missing_name', 'Child theme name is required', array( 'status' => 400 ) );
+			return new WP_Error( 'missing_name', __( 'Child theme name is required', 'xophz-compass-magic-wand' ), array( 'status' => 400 ) );
 		}
 
 		$theme_slug = sanitize_title( $theme_name );
@@ -504,38 +413,26 @@ class Xophz_Compass_Magic_Wand_Compiler {
 		$child_dir  = $themes_dir . '/' . $theme_slug;
 
 		if ( file_exists( $child_dir ) ) {
-			return new WP_Error( 'theme_exists', 'A theme with this slug already exists.', array( 'status' => 400 ) );
+			return new WP_Error( 'theme_exists', __( 'A theme with this slug already exists.', 'xophz-compass-magic-wand' ), array( 'status' => 400 ) );
 		}
 
-		if ( ! mkdir( $child_dir, 0777, true ) ) {
-			return new WP_Error( 'mkdir_failed', 'Could not create child theme directory. Check permissions.', array( 'status' => 500 ) );
+		if ( ! mkdir( $child_dir, 0755, true ) ) {
+			return new WP_Error( 'mkdir_failed', __( 'Could not create child theme directory.', 'xophz-compass-magic-wand' ), array( 'status' => 500 ) );
 		}
 
-		$style_css = "/**\n";
-		$style_css .= " * Theme Name: {$theme_name}\n";
-		$style_css .= " * Template: xophz-magic-hat\n";
-		$style_css .= " * Description: Magic Wand Child Theme\n";
-		$style_css .= " * Author: Xophz COMPASS\n";
-		$style_css .= " */\n";
-
+		$style_css = "/**\n * Theme Name: {$theme_name}\n * Template: xophz-magic-hat\n * Description: Magic Wand Child Theme\n * Author: Xophz COMPASS\n */\n";
 		file_put_contents( $child_dir . '/style.css', $style_css );
 
-		$functions_php = "<?php\n/**\n * Child Theme Functions\n */\n";
-		$functions_php .= "add_action( 'wp_enqueue_scripts', function() {\n";
-		$functions_php .= "\twp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );\n";
-		$functions_php .= "} );\n";
-
+		$functions_php = "<?php\nadd_action( 'wp_enqueue_scripts', function() {\n\twp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );\n} );\n";
 		file_put_contents( $child_dir . '/functions.php', $functions_php );
 
-		// Create template directories for FSE block templates
 		wp_mkdir_p( $child_dir . '/templates' );
 		wp_mkdir_p( $child_dir . '/parts' );
 
 		switch_theme( $theme_slug );
 
-		return rest_ensure_response( array(
-			'success' => true,
-			'message' => 'Child theme created and activated!',
+		return $this->respond( array(
+			'message' => __( 'Child theme created and activated', 'xophz-compass-magic-wand' ),
 			'theme'   => $theme_slug,
 		) );
 	}

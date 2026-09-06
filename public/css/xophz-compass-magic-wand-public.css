@@ -1,6 +1,10 @@
 /**
  * Magic Wand Public CSS - Circadian Token Synchronization
+ *
+ * Provides responsive container classes and theme token alignment
+ * with flat specificity and zero !important declarations.
  */
+
 .mh-section {
   position: relative;
   background: transparent;
@@ -38,50 +42,4 @@
 .mh-section-full-width {
   width: 100%;
   padding: 60px 24px;
-}
-
-/* Circadian rhythm element-level token overrides for legacy post_content */
-.mh-section [style*="color:#0f172a"],
-.mh-section [style*="color: #0f172a"],
-.mh-section [style*="color:#111827"],
-.mh-section [style*="color: #111827"] {
-  color: var(--mh-color-text-heading, #0f172a) !important;
-}
-
-.mh-section [style*="color:#334155"],
-.mh-section [style*="color: #334155"] {
-  color: var(--mh-color-text-main, #334155) !important;
-}
-
-.mh-section [style*="color:#64748b"],
-.mh-section [style*="color: #64748b"],
-.mh-section [style*="color:#94a3b8"],
-.mh-section [style*="color: #94a3b8"] {
-  color: var(--mh-color-text-muted, #64748b) !important;
-}
-
-.mh-section [style*="background:#ffffff"],
-.mh-section [style*="background: #ffffff"],
-.mh-section [style*="background:#fff"],
-.mh-section [style*="background: #fff"] {
-  background: var(--mh-color-card, #ffffff) !important;
-}
-
-.mh-section [style*="border:1px solid #e2e8f0"],
-.mh-section [style*="border: 1px solid #e2e8f0"],
-.mh-section [style*="border:1px solid #cbd5e1"],
-.mh-section [style*="border: 1px solid #cbd5e1"] {
-  border-color: var(--mh-color-border-muted, #e2e8f0) !important;
-}
-
-.mh-section table thead tr {
-  background: var(--mh-color-section, #f8fafc) !important;
-  border-color: var(--mh-color-border-muted, #e2e8f0) !important;
-}
-
-.mh-section table tr,
-.mh-section table th,
-.mh-section table td {
-  border-color: var(--mh-color-border-muted, #e2e8f0) !important;
-  color: var(--mh-color-text-main, #334155) !important;
 }

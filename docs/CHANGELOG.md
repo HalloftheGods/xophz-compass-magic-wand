@@ -5,6 +5,23 @@ All notable changes to the Xophz Compass Magic Wand plugin are documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.9.8] - 2026-09-06
+
+### Added
+- Native Gutenberg Pattern Registry (`includes/class-xophz-compass-magic-wand-pattern-registry.php`): Registered native block patterns for core modular section archetypes (hero, features, about, pricing, cta, contact, numbers, faq).
+- One-Way Block Migration Tool (`includes/class-xophz-compass-magic-wand-migration.php`): Added non-destructive converter transforming legacy `_mh_page_sections` post meta into native Gutenberg block comments in `post_content`, retiring legacy metadata cleanly.
+
+### Changed
+- Refactored Public Frontend (`public/class-xophz-compass-magic-wand-public.php`): Streamlined public display from 832 lines to 160 lines. Removed destructive `the_content` filter override that previously hid Gutenberg Site Editor content.
+- Standardized REST Envelopes (`includes/class-xophz-compass-magic-wand-compiler.php`): Unified all `magic-wand/v1` REST endpoints to output structured `{ success: true, data: ..., meta: ... }` response envelopes.
+- Dynamic Section Catalog (`admin/class-xophz-compass-magic-wand-admin.php`): Connected Customizer section catalog directly to the Gutenberg Pattern Registry.
+- Design Token Modernization (`public/js/xophz-compass-magic-wand-preview.js` & `public/css/xophz-compass-magic-wand-public.css`): Replaced hardcoded hex colors with CSS variables and removed CSS `!important` flags.
+
+### Fixed
+- Tripartite Conflict Resolution: Eliminated state desynchronization between WordPress Customizer, Gutenberg Site Editor, and Magic Wand Studio by establishing native Gutenberg grammar in `post_content` as the single source of truth.
+- Zero Mock Data Compliance: Purged all synthetic image URLs (Picsum, Unsplash, and placehold.co) across public rendering and editor libraries.
+- Activator Markup Error (`includes/class-xophz-compass-magic-wand-activator.php`): Corrected malformed HTML tags in fatal error output.
+
 ## [26.9.7] - 2026-09-05
 
 ### Added

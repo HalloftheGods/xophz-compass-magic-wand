@@ -110,29 +110,14 @@ class Xophz_Compass_Magic_Wand extends Xophz_Compass_Plugin_Base {
 	 */
 	private function load_dependencies() {
 
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xophz-compass-magic-wand-pattern-registry.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xophz-compass-magic-wand-migration.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-xophz-compass-magic-wand-compiler.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-xophz-compass-magic-wand-admin.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-xophz-compass-magic-wand-public.php';
 
-
+		// Initialize pattern registry singleton
+		Xophz_Compass_Magic_Wand_Pattern_Registry::get_instance();
 	}
 
 	/**

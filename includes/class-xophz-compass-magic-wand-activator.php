@@ -31,7 +31,7 @@ class Xophz_Compass_Magic_Wand_Activator {
 	 */
 	public static function activate() {
 	    if ( !class_exists( 'Xophz_Compass' ) ) {  
-	    	die('This plugin requires COMPASS to be active.</a></div>');
+	    	die( esc_html__( 'This plugin requires COMPASS to be active.', 'xophz-compass-magic-wand' ) );
 	    } 
 	}
 

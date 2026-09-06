@@ -16,35 +16,36 @@
 
 	// ── Modern Styles ─────────────────────────────────────────
 	var css =
-		'.mw-overlay { position: absolute; pointer-events: none; border: 2px solid #2563eb; border-radius: 4px; z-index: 99990; opacity: 0; transition: opacity 0.15s, border-color 0.15s; box-shadow: 0 0 0 1px rgba(37,99,235,0.2); }' +
+		':root { --mw-brand: var(--mh-color-brand-base, var(--wp--preset--color--brand-base, #2563eb)); --mw-brand-hover: var(--mh-color-brand-hover, #3b82f6); --mw-dark: var(--mh-color-text-heading, #0f172a); }' +
+		'.mw-overlay { position: absolute; pointer-events: none; border: 2px solid var(--mw-brand); border-radius: 4px; z-index: 99990; opacity: 0; transition: opacity 0.15s, border-color 0.15s; box-shadow: 0 0 0 1px color-mix(in srgb, var(--mw-brand) 20%, transparent); }' +
 		'.mw-overlay.active { opacity: 1; }' +
-		'.mw-overlay-label { position: absolute; top: -1px; left: -1px; background: #0f172a; color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 0 0 6px 0; pointer-events: auto; white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }' +
-		'.mw-overlay-actions { position: absolute; top: -1px; right: -1px; display: flex; pointer-events: auto; background: #0f172a; border-radius: 0 0 0 6px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }' +
-		'.mw-overlay-actions button { background: #0f172a; color: #f8fafc; border: none; width: 28px; height: 26px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
-		'.mw-overlay-actions button:hover { background: #2563eb; color: #ffffff; }' +
+		'.mw-overlay-label { position: absolute; top: -1px; left: -1px; background: var(--mw-dark); color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 0 0 6px 0; pointer-events: auto; white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }' +
+		'.mw-overlay-actions { position: absolute; top: -1px; right: -1px; display: flex; pointer-events: auto; background: var(--mw-dark); border-radius: 0 0 0 6px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }' +
+		'.mw-overlay-actions button { background: var(--mw-dark); color: #f8fafc; border: none; width: 28px; height: 26px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
+		'.mw-overlay-actions button:hover { background: var(--mw-brand); color: #ffffff; }' +
 		'.mw-overlay-actions button.mw-action-delete:hover { background: #ef4444; }' +
 		'.mw-editable { outline: none; cursor: text; transition: box-shadow 0.15s; }' +
-		'.mw-editable:focus { box-shadow: inset 0 0 0 2px rgba(37,99,235,0.4); border-radius: 2px; }' +
+		'.mw-editable:focus { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--mw-brand) 40%, transparent); border-radius: 2px; }' +
 		'.mw-section { position: relative; }' +
-		'.mw-section:hover { outline: 1px dashed rgba(37,99,235,0.3); outline-offset: 2px; }' +
+		'.mw-section:hover { outline: 1px dashed color-mix(in srgb, var(--mw-brand) 40%, transparent); outline-offset: 2px; }' +
 		
 		// Inter-section insertion notch
 		'.mw-insert-notch { position: absolute; left: 0; right: 0; height: 16px; transform: translateY(-50%); z-index: 99995; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s; pointer-events: auto; }' +
 		'.mw-insert-notch:hover, .mw-insert-notch.active { opacity: 1; }' +
-		'.mw-insert-notch::before { content: ""; position: absolute; left: 10%; right: 10%; height: 2px; background: #2563eb; border-radius: 1px; }' +
-		'.mw-insert-btn { position: relative; background: #2563eb; color: #ffffff; border: none; border-radius: 9999px; padding: 3px 12px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(37,99,235,0.35); transition: transform 0.15s, background 0.15s; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
-		'.mw-insert-btn:hover { background: #1d4ed8; transform: scale(1.05); }' +
+		'.mw-insert-notch::before { content: ""; position: absolute; left: 10%; right: 10%; height: 2px; background: var(--mw-brand); border-radius: 1px; }' +
+		'.mw-insert-btn { position: relative; background: var(--mw-brand); color: #ffffff; border: none; border-radius: 9999px; padding: 3px 12px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px color-mix(in srgb, var(--mw-brand) 35%, transparent); transition: transform 0.15s, background 0.15s; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
+		'.mw-insert-btn:hover { background: var(--mw-brand-hover); transform: scale(1.05); }' +
 
 		// Floating Text Formatting Toolbar
-		'#mw-format-toolbar { position: absolute; display: none; background: #0f172a; border-radius: 6px; padding: 4px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); z-index: 99999; gap: 2px; align-items: center; }' +
+		'#mw-format-toolbar { position: absolute; display: none; background: var(--mw-dark); border-radius: 6px; padding: 4px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); z-index: 99999; gap: 2px; align-items: center; }' +
 		'#mw-format-toolbar button { background: transparent; color: #f8fafc; border: none; width: 26px; height: 26px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }' +
 		'#mw-format-toolbar button:hover { background: rgba(255,255,255,0.15); color: #60a5fa; }' +
 		
 		// Image hover indicator
-		'[data-mw-image]:hover { outline: 2px dashed #2563eb; outline-offset: 2px; cursor: pointer; filter: brightness(0.95); }' +
+		'[data-mw-image]:hover { outline: 2px dashed var(--mw-brand); outline-offset: 2px; cursor: pointer; filter: brightness(0.95); }' +
 		
 		// Popovers
-		'#mw-link-popover, #mw-shortcode-popover { border-radius: 6px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; }';
+		'#mw-link-popover, #mw-shortcode-popover { border-radius: 6px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); border: 1px solid var(--mh-color-border-muted, #e2e8f0); }';
 
 	$('head').append('<style>' + css + '</style>');
 
