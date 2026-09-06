@@ -165,6 +165,7 @@ class Xophz_Compass_Magic_Wand extends Xophz_Compass_Plugin_Base {
 		
 		$this->loader->add_action( 'customize_controls_enqueue_scripts', $plugin_admin, 'customize_controls_scripts' );
 		$this->loader->add_action( 'wp_ajax_mh_switch_front_template', $plugin_admin, 'ajax_switch_front_template' );
+		$this->loader->add_action( 'wp_ajax_mh_save_page_sections', $plugin_admin, 'ajax_save_page_sections' );
 
 	}
 

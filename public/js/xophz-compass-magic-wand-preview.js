@@ -216,12 +216,36 @@
 
 	// ── Section Actions (Reorder / Delete / Width / Settings) ──
 	function getSections() {
+		if ( window.mhPreviewData && window.mhPreviewData.sections ) {
+			return window.mhPreviewData.sections;
+		}
 		try { return JSON.parse(parentApi('mh_page_sections').get() || '[]'); }
 		catch(e) { return []; }
 	}
 
 	function saveSections(arr) {
-		parentApi('mh_page_sections').set(JSON.stringify(arr));
+		if ( window.mhPreviewData ) {
+			window.mhPreviewData.sections = arr;
+			if ( parentApi && parentApi.previewer ) {
+				parentApi.previewer.send( 'mh-page-sections-updated', {
+					pageId: window.mhPreviewData.pageId,
+					sections: arr
+				} );
+			}
+			if ( window.mhPreviewData.ajaxUrl && window.mhPreviewData.pageId ) {
+				$.post( window.mhPreviewData.ajaxUrl, {
+					action: 'mh_save_page_sections',
+					page_id: window.mhPreviewData.pageId,
+					sections: JSON.stringify( arr ),
+					_ajax_nonce: window.mhPreviewData.nonce
+				} );
+			}
+		}
+		if ( !window.mhPreviewData || window.mhPreviewData.isFrontPage ) {
+			if ( parentApi && parentApi('mh_page_sections') ) {
+				parentApi('mh_page_sections').set(JSON.stringify(arr));
+			}
+		}
 	}
 
 	$(document).on('click', '.mw-action-delete', function(e) {
@@ -434,6 +458,11 @@
 			initEditables();
 			createOverlays();
 		}, 400);
+
+		// Notify Customizer controls of current page data
+		if ( parentApi && parentApi.previewer && window.mhPreviewData ) {
+			parentApi.previewer.send( 'mh-preview-page-loaded', window.mhPreviewData );
+		}
 
 		if ( window.wp && window.wp.customize && window.wp.customize.preview ) {
 			window.wp.customize.preview.bind('mh-scroll-to', function(slug) {

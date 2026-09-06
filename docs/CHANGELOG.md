@@ -5,6 +5,16 @@ All notable changes to the Xophz Compass Magic Wand plugin are documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.9.7] - 2026-09-05
+
+### Added
+- Page-Specific Builder Sections Scoping (`public/class-xophz-compass-magic-wand-public.php`): Scoped section loading and rendering to `_mh_page_sections` post meta per page, preventing sections from leaking across all site pages.
+- AJAX Page Section Persister (`admin/class-xophz-compass-magic-wand-admin.php` & `includes/class-xophz-compass-magic-wand.php`): Added `mh_save_page_sections` endpoint to save sections specifically to the target page ID and compile native Gutenberg blocks into its `post_content`.
+- Preview Page Synchronization (`public/js/xophz-compass-magic-wand-preview.js` & `admin/js/xophz-compass-magic-wand-customizer.js`): Added live bi-directional messaging between preview frame and Customizer controls (`mh-preview-page-loaded` and `mh-page-sections-updated`) with an "Editing Page: [Title]" indicator badge.
+
+### Fixed
+- Global Page Hijacking: Fixed `render_page_builder_content` replacing content across all pages (`is_page()`). Pages without custom sections now cleanly render their original post content.
+
 ## [26.9.6] - 2026-09-05
 
 ### Added

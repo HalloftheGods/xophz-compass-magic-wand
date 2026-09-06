@@ -9,6 +9,23 @@
 		var $pageRowsContainer = $('#mh_page_rows');
 		var settingId = 'mh_page_sections';
 		var targetInsertionIndex = null;
+		var activePageId = ( mhMagicWand && mhMagicWand.pageOnFront ) ? mhMagicWand.pageOnFront : 0;
+		var activePageTitle = ( mhMagicWand && mhMagicWand.showOnFront === 'page' ) ? 'Home' : 'Front Page';
+		var pageSectionsCache = {};
+
+		function updateActivePageIndicator() {
+			var $indicator = $('#mh-active-page-badge');
+			if ( ! $indicator.length ) {
+				$('.mh-template-switch-wrap').before(
+					'<div id="mh-active-page-badge" style="margin-bottom: 12px; padding: 6px 10px; background: color-mix(in srgb, var(--mh-color-brand-base, #2563eb) 12%, transparent); border: 1px solid var(--mh-color-brand-base, #2563eb); border-radius: 4px; display: flex; align-items: center; justify-content: space-between;">' +
+						'<span style="font-size: 11px; font-weight: 700; color: #2563eb; text-transform: uppercase;">Editing Page:</span>' +
+						'<span id="mh-active-page-title" style="font-size: 11px; font-weight: 600; color: #0f172a; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + escAttr( activePageTitle ) + '</span>' +
+					'</div>'
+				);
+			} else {
+				$('#mh-active-page-title').text( activePageTitle );
+			}
+		}
 
 		// ── SVG Wireframe Illustration Generator ────────────────
 		function getWireframeSvg(id, category, color) {
@@ -510,17 +527,42 @@
 		}
 
 		function getSections() {
+			if ( pageSectionsCache[ activePageId ] ) {
+				return pageSectionsCache[ activePageId ];
+			}
 			try { return JSON.parse(api(settingId) ? api(settingId).get() : '[]') || []; }
 			catch(e) { return []; }
 		}
 
 		function saveSections(arr) {
-			if ( api(settingId) ) { api(settingId).set(JSON.stringify(arr)); }
+			pageSectionsCache[ activePageId ] = arr;
+			if ( ! activePageId || ( mhMagicWand && activePageId === mhMagicWand.pageOnFront ) ) {
+				if ( api(settingId) ) { api(settingId).set(JSON.stringify(arr)); }
+			}
+			if ( mhMagicWand && mhMagicWand.ajaxUrl && activePageId ) {
+				$.post( mhMagicWand.ajaxUrl, {
+					action: 'mh_save_page_sections',
+					page_id: activePageId,
+					sections: JSON.stringify( arr ),
+					_ajax_nonce: mhMagicWand.nonce
+				} );
+			}
 			renderSectionList();
 		}
 
 		function saveSectionsQuiet(arr) {
-			if ( api(settingId) ) { api(settingId).set(JSON.stringify(arr)); }
+			pageSectionsCache[ activePageId ] = arr;
+			if ( ! activePageId || ( mhMagicWand && activePageId === mhMagicWand.pageOnFront ) ) {
+				if ( api(settingId) ) { api(settingId).set(JSON.stringify(arr)); }
+			}
+			if ( mhMagicWand && mhMagicWand.ajaxUrl && activePageId ) {
+				$.post( mhMagicWand.ajaxUrl, {
+					action: 'mh_save_page_sections',
+					page_id: activePageId,
+					sections: JSON.stringify( arr ),
+					_ajax_nonce: mhMagicWand.nonce
+				} );
+			}
 		}
 
 		// ── Template Switcher Interaction ────────────────────────
@@ -624,9 +666,33 @@
 		});
 
 		renderSectionList();
+		updateActivePageIndicator();
+
+		if ( api.previewer ) {
+			api.previewer.bind( 'mh-preview-page-loaded', function( data ) {
+				if ( ! data || ! data.pageId ) return;
+				activePageId = data.pageId;
+				activePageTitle = data.pageTitle || 'Page ' + data.pageId;
+				pageSectionsCache[ activePageId ] = data.sections || [];
+				updateActivePageIndicator();
+				renderSectionList();
+			} );
+
+			api.previewer.bind( 'mh-page-sections-updated', function( data ) {
+				if ( ! data || ! data.pageId ) return;
+				pageSectionsCache[ data.pageId ] = data.sections || [];
+				if ( data.pageId === activePageId ) {
+					renderSectionList();
+				}
+			} );
+		}
 
 		if ( api(settingId) ) {
-			api(settingId).bind(function() { renderSectionList(); });
+			api(settingId).bind(function() {
+				if ( ! activePageId || ( mhMagicWand && activePageId === mhMagicWand.pageOnFront ) ) {
+					renderSectionList();
+				}
+			});
 		}
 	});
 

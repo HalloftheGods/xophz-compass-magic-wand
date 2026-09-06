@@ -264,4 +264,66 @@ class Xophz_Compass_Magic_Wand_Admin {
 		}
 	}
 
+	/**
+	 * AJAX Handler to save sections for a specific page
+	 */
+	public function ajax_save_page_sections() {
+		check_ajax_referer( 'mh_switch_template_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'edit_pages' ) && ! current_user_can( 'edit_theme_options' ) ) {
+			wp_send_json_error( array( 'message' => 'Unauthorized' ) );
+		}
+
+		$page_id = isset( $_POST['page_id'] ) ? absint( $_POST['page_id'] ) : 0;
+		$sections_json = isset( $_POST['sections'] ) ? wp_unslash( $_POST['sections'] ) : '[]';
+
+		if ( ! $page_id ) {
+			wp_send_json_error( array( 'message' => 'Invalid page ID' ) );
+		}
+
+		// Update page-specific post meta
+		update_post_meta( $page_id, '_mh_page_sections', $sections_json );
+
+		// If this is the front page, also keep theme mod in sync
+		$front_page_id = absint( get_option( 'page_on_front' ) );
+		if ( $page_id === $front_page_id ) {
+			set_theme_mod( 'mh_page_sections', $sections_json );
+		}
+
+		// Compile sections into Gutenberg blocks and update post_content
+		$sections = json_decode( $sections_json, true );
+		if ( is_array( $sections ) && class_exists( 'Xophz_Compass_Magic_Wand_Public' ) ) {
+			$public_inst = new Xophz_Compass_Magic_Wand_Public( $this->plugin_name, $this->version );
+			$block_content = '';
+			foreach ( $sections as $index => $section ) {
+				$type  = isset( $section['type'] ) ? $section['type'] : 'content';
+				$label = isset( $section['label'] ) ? $section['label'] : ucfirst( str_replace( '-', ' ', $type ) );
+				$inner = $public_inst->render_section_type( $type, $label, $section, $index );
+				
+				$layout = isset( $section['settings']['layout'] ) ? $section['settings']['layout'] : 'contained';
+				$layout_type = ( $layout === 'full' ) ? 'default' : 'constrained';
+				$layout_class = ( $layout === 'full' ) ? 'mh-section-full-width' : 'mh-section-boxed';
+				
+				$block_content .= "<!-- wp:group {\"metadata\":{\"name\":\"" . esc_attr( $label ) . "\"},\"align\":\"full\",\"layout\":{\"type\":\"" . $layout_type . "\"}} -->\n";
+				$block_content .= "<div class=\"wp-block-group alignfull mh-section mh-section-" . esc_attr( $type ) . " " . esc_attr( $layout_class ) . "\">\n";
+				$block_content .= $inner . "\n";
+				$block_content .= "</div>\n";
+				$block_content .= "<!-- /wp:group -->\n\n";
+			}
+
+			if ( ! empty( $block_content ) ) {
+				wp_update_post( array(
+					'ID'           => $page_id,
+					'post_content' => $block_content,
+				) );
+			}
+		}
+
+		wp_send_json_success( array(
+			'page_id' => $page_id,
+			'message' => 'Sections saved for page ' . $page_id,
+		) );
+	}
+
 }
+
