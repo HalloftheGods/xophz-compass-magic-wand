@@ -37,6 +37,12 @@ function mh_get_sections_catalog(): array {
 		if ( file_exists( $filepath ) ) {
 			$category_sections = require $filepath;
 			if ( is_array( $category_sections ) ) {
+				foreach ( $category_sections as $id => &$sec ) {
+					if ( isset( $sec['category'] ) && 0 === strpos( $sec['category'], 'magic-wand-' ) ) {
+						$sec['category'] = substr( $sec['category'], 11 );
+					}
+				}
+				unset( $sec );
 				$catalog = array_merge( $catalog, $category_sections );
 			}
 		}

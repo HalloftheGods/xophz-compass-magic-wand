@@ -434,7 +434,12 @@
 
 		// ── Section Library Modal ──────────────────────────────
 		var categories = mhMagicWand.categories || [];
-		var sectionsList = mhMagicWand.sections || [];
+		var sectionsList = (mhMagicWand.sections || []).map(function(s) {
+			if ( s && s.category ) {
+				s.category = s.category.replace(/^magic-wand-/, '');
+			}
+			return s;
+		});
 		var activeSource = 'all';
 		var activeCat = 'all';
 		var currentPreviewSectionId = null;

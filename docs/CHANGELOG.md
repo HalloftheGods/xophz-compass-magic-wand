@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Public and Preview Enqueue Modernization (`public/class-xophz-compass-magic-wand-public.php`): Added fallback enqueuing for all 6 modular category stylesheets in frontend rendering and Customizer live preview with zero legacy stylesheet references.
 - Design Token Integration: Integrated theme.json presets (`var:preset|spacing|*`, `has-surface-body-background-color`, `has-brand-base-color`) and CSS custom properties across all section markup.
 
+### Fixed
+- Section Library Modal Blank State (`includes/sections/*.php`, `includes/sections-catalog.php`, `admin/js/xophz-compass-magic-wand-customizer.js`): Fixed issue where Customizer Section Library modal came up blank with 0 matching sections. Stripped redundant `magic-wand-` prefix from all 63 section category keys in `includes/sections/` to align with the canonical taxonomy slugs (`hero`, `clients`, `features`, etc.) in the pattern registry. Added defensive category normalization in `mh_get_sections_catalog()` and `xophz-compass-magic-wand-customizer.js` to ensure consistent category matching and wireframe SVG generation.
+
 ### Removed
 - Monolithic Stylesheet Purge: Permanently removed duplicated 5,307-line legacy `public/css/one-page-express-sections.css`.
 - Legacy URL and Shortcode Purge: Purged all occurrences of `onepageexpress.com`, `tag_companion_uri`, and legacy `[one_page_express_*]` shortcodes across all section definitions.
