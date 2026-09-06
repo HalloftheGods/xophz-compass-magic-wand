@@ -1,7 +1,8 @@
 /**
  * Magic Wand - Preview Handles
  * Runs INSIDE the Customizer preview iframe.
- * Adds hover overlays, inline text editing, and section-level controls.
+ * Adds hover overlays, inline text editing, floating formatting toolbar,
+ * inter-section insertion notches, and direct section controls.
  */
 (function($) {
 	'use strict';
@@ -13,23 +14,41 @@
 
 	var parentApi = window.parent.wp.customize;
 
-	// ── Styles ────────────────────────────────────────────────
+	// ── Modern Styles ─────────────────────────────────────────
 	var css =
-		'.mw-overlay{position:absolute;pointer-events:none;border:2px solid #c3a486;border-radius:3px;z-index:99990;opacity:0;transition:opacity .15s;}' +
-		'.mw-overlay.active{opacity:1;}' +
-		'.mw-overlay-label{position:absolute;top:-1px;left:-1px;background:#c3a486;color:#fff;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:0 0 3px 0;pointer-events:auto;white-space:nowrap;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}' +
-		'.mw-overlay-actions{position:absolute;top:-1px;right:-1px;display:flex;gap:2px;pointer-events:auto;}' +
-		'.mw-overlay-actions button{background:#c3a486;color:#fff;border:none;width:24px;height:24px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}' +
-		'.mw-overlay-actions button:hover{background:#a88c6d;}' +
-		'.mw-editable{outline:none;cursor:text;}' +
-		'.mw-editable:focus{box-shadow:inset 0 0 0 2px rgba(195,164,134,0.4);border-radius:2px;}' +
-		'.mw-section:hover{outline:1px dashed rgba(195,164,134,0.3);outline-offset:2px;}' +
-		'.mw-add-section-preview:hover button{opacity:0.85;transform:translateY(-1px);}';
+		'.mw-overlay { position: absolute; pointer-events: none; border: 2px solid #2563eb; border-radius: 4px; z-index: 99990; opacity: 0; transition: opacity 0.15s, border-color 0.15s; box-shadow: 0 0 0 1px rgba(37,99,235,0.2); }' +
+		'.mw-overlay.active { opacity: 1; }' +
+		'.mw-overlay-label { position: absolute; top: -1px; left: -1px; background: #0f172a; color: #ffffff; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 0 0 6px 0; pointer-events: auto; white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }' +
+		'.mw-overlay-actions { position: absolute; top: -1px; right: -1px; display: flex; pointer-events: auto; background: #0f172a; border-radius: 0 0 0 6px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.15); }' +
+		'.mw-overlay-actions button { background: #0f172a; color: #f8fafc; border: none; width: 28px; height: 26px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
+		'.mw-overlay-actions button:hover { background: #2563eb; color: #ffffff; }' +
+		'.mw-overlay-actions button.mw-action-delete:hover { background: #ef4444; }' +
+		'.mw-editable { outline: none; cursor: text; transition: box-shadow 0.15s; }' +
+		'.mw-editable:focus { box-shadow: inset 0 0 0 2px rgba(37,99,235,0.4); border-radius: 2px; }' +
+		'.mw-section { position: relative; }' +
+		'.mw-section:hover { outline: 1px dashed rgba(37,99,235,0.3); outline-offset: 2px; }' +
+		
+		// Inter-section insertion notch
+		'.mw-insert-notch { position: absolute; left: 0; right: 0; height: 16px; transform: translateY(-50%); z-index: 99995; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s; pointer-events: auto; }' +
+		'.mw-insert-notch:hover, .mw-insert-notch.active { opacity: 1; }' +
+		'.mw-insert-notch::before { content: ""; position: absolute; left: 10%; right: 10%; height: 2px; background: #2563eb; border-radius: 1px; }' +
+		'.mw-insert-btn { position: relative; background: #2563eb; color: #ffffff; border: none; border-radius: 9999px; padding: 3px 12px; font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(37,99,235,0.35); transition: transform 0.15s, background 0.15s; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
+		'.mw-insert-btn:hover { background: #1d4ed8; transform: scale(1.05); }' +
+
+		// Floating Text Formatting Toolbar
+		'#mw-format-toolbar { position: absolute; display: none; background: #0f172a; border-radius: 6px; padding: 4px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); z-index: 99999; gap: 2px; align-items: center; }' +
+		'#mw-format-toolbar button { background: transparent; color: #f8fafc; border: none; width: 26px; height: 26px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }' +
+		'#mw-format-toolbar button:hover { background: rgba(255,255,255,0.15); color: #60a5fa; }' +
+		
+		// Image hover indicator
+		'[data-mw-image]:hover { outline: 2px dashed #2563eb; outline-offset: 2px; cursor: pointer; filter: brightness(0.95); }' +
+		
+		// Popovers
+		'#mw-link-popover, #mw-shortcode-popover { border-radius: 6px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; }';
 
 	$('head').append('<style>' + css + '</style>');
 
-	// ── Editable elements ────────────────────────────────────
-	// Mark text elements as editable when in customizer
+	// ── Editable Text Elements ────────────────────────────────
 	function initEditables() {
 		$('.mh-section [data-mw-edit]').each(function() {
 			$(this).attr('contenteditable', 'true').addClass('mw-editable');
@@ -53,31 +72,88 @@
 		}
 	});
 
-	// ── Section overlays ─────────────────────────────────────
+	// ── Floating Text Format Toolbar ──────────────────────────
+	var $formatToolbar = $(
+		'<div id="mw-format-toolbar">' +
+			'<button type="button" data-cmd="bold" title="Bold"><strong>B</strong></button>' +
+			'<button type="button" data-cmd="italic" title="Italic"><em>I</em></button>' +
+			'<button type="button" data-cmd="underline" title="Underline"><u>U</u></button>' +
+			'<button type="button" data-cmd="removeFormat" title="Clear Formatting">&times;</button>' +
+		'</div>'
+	);
+	$('body').append($formatToolbar);
+
+	$(document).on('mouseup keyup', '.mw-editable', function() {
+		var selection = window.getSelection();
+		if ( selection && selection.toString().trim().length > 0 ) {
+			var range = selection.getRangeAt(0);
+			var rect = range.getBoundingClientRect();
+			$formatToolbar.css({
+				top: rect.top + window.scrollY - 38,
+				left: rect.left + window.scrollX + (rect.width / 2) - ($formatToolbar.outerWidth() / 2),
+				display: 'flex'
+			});
+		} else {
+			$formatToolbar.hide();
+		}
+	});
+
+	$(document).on('mousedown', '#mw-format-toolbar button', function(e) {
+		e.preventDefault();
+		var cmd = $(this).data('cmd');
+		document.execCommand(cmd, false, null);
+	});
+
+	$(document).on('mousedown', function(e) {
+		if ( !$(e.target).closest('#mw-format-toolbar').length && !$(e.target).closest('.mw-editable').length ) {
+			$formatToolbar.hide();
+		}
+	});
+
+	// ── Section Overlays & Inter-Section Notches ──────────────
 	var $overlayContainer = $('<div id="mw-overlays" style="position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:99990;"></div>');
 	$('body').append($overlayContainer);
 
 	function createOverlays() {
 		$overlayContainer.empty();
-		$('.mh-section').each(function(index) {
+		var $sections = $('.mh-section');
+
+		$sections.each(function(index) {
 			var $section = $(this);
 			$section.addClass('mw-section');
 			var sectionId = $section.attr('id') || 'section-' + index;
 			var label = sectionId.replace(/-/g, ' ');
 
-			var $overlay = $('<div class="mw-overlay" data-section-index="' + index + '">' +
-				'<span class="mw-overlay-label">' + label + '</span>' +
-				'<div class="mw-overlay-actions">' +
-					'<button class="mw-action-layout" title="Toggle Layout Width" data-index="' + index + '">⛶</button>' +
-					'<button class="mw-action-up" title="Move up" data-index="' + index + '">↑</button>' +
-					'<button class="mw-action-down" title="Move down" data-index="' + index + '">↓</button>' +
-					'<button class="mw-action-delete" title="Remove" data-index="' + index + '">×</button>' +
-				'</div>' +
-			'</div>');
+			// Overlay frame
+			var $overlay = $(
+				'<div class="mw-overlay" data-section-index="' + index + '">' +
+					'<span class="mw-overlay-label">' +
+						'<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2563eb;"></span>' +
+						label +
+					'</span>' +
+					'<div class="mw-overlay-actions">' +
+						'<button type="button" class="mw-action-up" title="Move Up" data-index="' + index + '">&#8593;</button>' +
+						'<button type="button" class="mw-action-down" title="Move Down" data-index="' + index + '">&#8595;</button>' +
+						'<button type="button" class="mw-action-layout" title="Toggle Contained/Full Width" data-index="' + index + '">&#9974;</button>' +
+						'<button type="button" class="mw-action-settings" title="Section Settings" data-index="' + index + '">&#9881;</button>' +
+						'<button type="button" class="mw-action-delete" title="Remove Section" data-index="' + index + '">&times;</button>' +
+					'</div>' +
+				'</div>'
+			);
 
 			$overlayContainer.append($overlay);
 			$overlay.data('section', $section);
+
+			// Inter-section insertion notch (bottom of each section)
+			var $notch = $(
+				'<div class="mw-insert-notch" data-insert-after="' + index + '">' +
+					'<button type="button" class="mw-insert-btn" data-insert-after="' + index + '">+ Add Section</button>' +
+				'</div>'
+			);
+			$overlayContainer.append($notch);
+			$notch.data('section', $section);
 		});
+
 		positionOverlays();
 	}
 
@@ -92,6 +168,18 @@
 				left: offset.left,
 				width: $section.outerWidth(),
 				height: $section.outerHeight()
+			});
+		});
+
+		$overlayContainer.find('.mw-insert-notch').each(function() {
+			var $notch = $(this);
+			var $section = $notch.data('section');
+			if ( !$section || !$section.length ) return;
+			var offset = $section.offset();
+			$notch.css({
+				top: offset.top + $section.outerHeight(),
+				left: offset.left,
+				width: $section.outerWidth()
 			});
 		});
 	}
@@ -111,10 +199,22 @@
 	$(document).on('mouseleave', '.mh-section, .mw-overlay', function() {
 		hideTimeout = setTimeout(function() {
 			$overlayContainer.find('.mw-overlay').removeClass('active');
-		}, 100);
+		}, 120);
 	});
 
-	// ── Section actions (reorder / delete via parent API) ─────
+	// Trigger Add Section from notch
+	$(document).on('click', '.mw-insert-btn', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		var afterIdx = parseInt($(this).data('insert-after'), 10);
+		if ( typeof parent.mhOpenAddSectionPanel === 'function' ) {
+			parent.mhOpenAddSectionPanel(afterIdx + 1);
+		} else if ( parentApi && parentApi.section ) {
+			parentApi.section('mh_page_builder').focus();
+		}
+	});
+
+	// ── Section Actions (Reorder / Delete / Width / Settings) ──
 	function getSections() {
 		try { return JSON.parse(parentApi('mh_page_sections').get() || '[]'); }
 		catch(e) { return []; }
@@ -126,7 +226,7 @@
 
 	$(document).on('click', '.mw-action-delete', function(e) {
 		e.stopPropagation();
-		var idx = parseInt($(this).data('index'));
+		var idx = parseInt($(this).data('index'), 10);
 		var sections = getSections();
 		if ( idx > -1 && idx < sections.length ) {
 			sections.splice(idx, 1);
@@ -136,7 +236,7 @@
 
 	$(document).on('click', '.mw-action-up', function(e) {
 		e.stopPropagation();
-		var idx = parseInt($(this).data('index'));
+		var idx = parseInt($(this).data('index'), 10);
 		var sections = getSections();
 		if ( idx > 0 ) {
 			var temp = sections[idx - 1];
@@ -148,7 +248,7 @@
 
 	$(document).on('click', '.mw-action-down', function(e) {
 		e.stopPropagation();
-		var idx = parseInt($(this).data('index'));
+		var idx = parseInt($(this).data('index'), 10);
 		var sections = getSections();
 		if ( idx < sections.length - 1 ) {
 			var temp = sections[idx + 1];
@@ -160,7 +260,7 @@
 
 	$(document).on('click', '.mw-action-layout', function(e) {
 		e.stopPropagation();
-		var idx = parseInt($(this).data('index'));
+		var idx = parseInt($(this).data('index'), 10);
 		var sections = getSections();
 		if ( idx > -1 && idx < sections.length ) {
 			if ( !sections[idx].settings ) sections[idx].settings = {};
@@ -169,7 +269,14 @@
 		}
 	});
 
-	// ── Images ───────────────────────────────────────────────
+	$(document).on('click', '.mw-action-settings', function(e) {
+		e.stopPropagation();
+		if ( parentApi && parentApi.section ) {
+			parentApi.section('mh_page_builder').focus();
+		}
+	});
+
+	// ── Image Replacement (WP Media Library) ──────────────────
 	var mediaFrame;
 	$(document).on('click', '[data-mw-image]', function(e) {
 		e.preventDefault();
@@ -185,8 +292,8 @@
 		}
 		
 		mediaFrame = parent.wp.media({
-			title: 'Select Image',
-			button: { text: 'Use this image' },
+			title: 'Select or Upload Image',
+			button: { text: 'Use this Image' },
 			multiple: false
 		});
 		
@@ -206,17 +313,19 @@
 		mediaFrame.open();
 	});
 
-	// ── Links ────────────────────────────────────────────────
-	var $linkPopover = $('<div id="mw-link-popover" style="position:absolute;display:none;background:#fff;padding:8px;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.1);z-index:99991;border:1px solid #ddd;display:flex;gap:4px;">' +
-		'<input type="text" placeholder="https://" style="border:1px solid #ddd;padding:4px 8px;border-radius:2px;font-size:12px;color:#333;width:200px;" />' +
-		'<button style="background:#c3a486;color:#fff;border:none;border-radius:2px;padding:4px 8px;cursor:pointer;font-size:12px;">OK</button>' +
-	'</div>');
+	// ── Link Popover ──────────────────────────────────────────
+	var $linkPopover = $(
+		'<div id="mw-link-popover" style="position:absolute;display:none;background:#ffffff;padding:8px;border-radius:6px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.15);z-index:99999;border:1px solid #e2e8f0;display:flex;gap:6px;align-items:center;">' +
+			'<input type="text" placeholder="https://" style="border:1px solid #cbd5e1;padding:6px 10px;border-radius:4px;font-size:12px;color:#0f172a;width:220px;outline:none;" />' +
+			'<button type="button" style="background:#2563eb;color:#ffffff;border:none;border-radius:4px;padding:6px 12px;cursor:pointer;font-size:12px;font-weight:600;">Apply</button>' +
+		'</div>'
+	);
 	$('body').append($linkPopover);
 
 	var currentLinkEl = null;
 
 	$(document).on('click', 'a[data-mw-edit]', function(e) {
-		e.preventDefault(); // stop navigation
+		e.preventDefault();
 		currentLinkEl = $(this);
 		var offset = currentLinkEl.offset();
 		var urlKey = currentLinkEl.attr('data-mw-edit') + '_url';
@@ -263,11 +372,13 @@
 		}
 	});
 
-	// ── Shortcodes ───────────────────────────────────────────
-	var $shortcodePopover = $('<div id="mw-shortcode-popover" style="position:absolute;display:none;background:#fff;padding:8px;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.1);z-index:99991;border:1px solid #ddd;display:flex;gap:4px;">' +
-		'<input type="text" placeholder="[shortcode]" style="border:1px solid #ddd;padding:4px 8px;border-radius:2px;font-size:12px;color:#333;width:200px;font-family:monospace;" />' +
-		'<button style="background:#c3a486;color:#fff;border:none;border-radius:2px;padding:4px 8px;cursor:pointer;font-size:12px;">OK</button>' +
-	'</div>');
+	// ── Shortcode Popover ─────────────────────────────────────
+	var $shortcodePopover = $(
+		'<div id="mw-shortcode-popover" style="position:absolute;display:none;background:#ffffff;padding:8px;border-radius:6px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.15);z-index:99999;border:1px solid #e2e8f0;display:flex;gap:6px;align-items:center;">' +
+			'<input type="text" placeholder="[shortcode]" style="border:1px solid #cbd5e1;padding:6px 10px;border-radius:4px;font-size:12px;color:#0f172a;width:220px;font-family:monospace;outline:none;" />' +
+			'<button type="button" style="background:#2563eb;color:#ffffff;border:none;border-radius:4px;padding:6px 12px;cursor:pointer;font-size:12px;font-weight:600;">Apply</button>' +
+		'</div>'
+	);
 	$('body').append($shortcodePopover);
 
 	var currentShortcodeEl = null;
@@ -317,12 +428,12 @@
 		}
 	});
 
-	// ── Initialize ───────────────────────────────────────────
+	// ── Initialize ────────────────────────────────────────────
 	$(document).ready(function() {
 		setTimeout(function() {
 			initEditables();
 			createOverlays();
-		}, 500);
+		}, 400);
 
 		if ( window.wp && window.wp.customize && window.wp.customize.preview ) {
 			window.wp.customize.preview.bind('mh-scroll-to', function(slug) {
