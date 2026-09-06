@@ -1026,7 +1026,7 @@
 			var items = s.items || [];
 			var html = '<div class="mh-control-group">' +
 				'<div class="mh-items-control-head">' +
-					'<span class="mh-control-group-title" style="margin:0;">Content Items (' + items.length + ')</span>' +
+					'<span class="mh-control-group-title">' + 'Content Items (' + items.length + ')</span>' +
 					'<button type="button" class="button button-secondary button-small mh-rail-add-item-btn">+ Add Item</button>' +
 				'</div>' +
 				'<div class="mh-items-accordion">';
@@ -1095,18 +1095,18 @@
 							'<label class="mh-rail-label">Plan Name</label>' +
 							'<input type="text" class="mh-rail-input" data-prop="name" value="' + escAttr(item.name || '') + '" />' +
 						'</div>' +
-						'<div class="mh-rail-field" style="display:flex;gap:8px;">' +
-							'<div style="flex:1;"><label class="mh-rail-label">Price</label><input type="text" class="mh-rail-input" data-prop="price" value="' + escAttr(item.price || '$29') + '" /></div>' +
-							'<div style="flex:1;"><label class="mh-rail-label">Period</label><input type="text" class="mh-rail-input" data-prop="period" value="' + escAttr(item.period || '/mo') + '" /></div>' +
-						'</div>' +
+						'<div class="mh-rail-field mh-rail-field-row">' +
+						'<div class="mh-rail-field-col"><label class="mh-rail-label">Price</label><input type="text" class="mh-rail-input" data-prop="price" value="' + escAttr(item.price || '$29') + '" /></div>' +
+						'<div class="mh-rail-field-col"><label class="mh-rail-label">Period</label><input type="text" class="mh-rail-input" data-prop="period" value="' + escAttr(item.period || '/mo') + '" /></div>' +
+					'</div>' +
 						'<div class="mh-rail-field">' +
 							'<label class="mh-rail-label">Features (one per line)</label>' +
 							'<textarea class="mh-rail-textarea" data-prop="features">' + escAttr(item.features || '') + '</textarea>' +
 						'</div>' +
-						'<div class="mh-rail-field" style="display:flex;gap:8px;">' +
-							'<div style="flex:1;"><label class="mh-rail-label">Button Text</label><input type="text" class="mh-rail-input" data-prop="btn_text" value="' + escAttr(item.btn_text || 'Get Started') + '" /></div>' +
-							'<div style="flex:1;"><label class="mh-rail-label">Button Link</label><input type="text" class="mh-rail-input" data-prop="btn_link" value="' + escAttr(item.btn_link || '#') + '" /></div>' +
-						'</div>';
+					'<div class="mh-rail-field mh-rail-field-row">' +
+						'<div class="mh-rail-field-col"><label class="mh-rail-label">Button Text</label><input type="text" class="mh-rail-input" data-prop="btn_text" value="' + escAttr(item.btn_text || 'Get Started') + '" /></div>' +
+						'<div class="mh-rail-field-col"><label class="mh-rail-label">Button Link</label><input type="text" class="mh-rail-input" data-prop="btn_link" value="' + escAttr(item.btn_link || '#') + '" /></div>' +
+					'</div>';
 				} else if ( type.indexOf('team') !== -1 ) {
 					html +=
 						'<div class="mh-rail-field">' +
@@ -1133,13 +1133,13 @@
 						'</div>';
 				} else if ( type.indexOf('cta') !== -1 ) {
 					html +=
-						'<div class="mh-rail-field" style="display:flex;gap:8px;">' +
-							'<div style="flex:1;"><label class="mh-rail-label">Primary Button</label><input type="text" class="mh-rail-input" data-prop="btn1_text" value="' + escAttr(item.btn1_text || 'Get Started') + '" /></div>' +
-							'<div style="flex:1;"><label class="mh-rail-label">Primary Link</label><input type="text" class="mh-rail-input" data-prop="btn1_link" value="' + escAttr(item.btn1_link || '#') + '" /></div>' +
+						'<div class="mh-rail-field mh-rail-field-row">' +
+							'<div class="mh-rail-field-col"><label class="mh-rail-label">Primary Button</label><input type="text" class="mh-rail-input" data-prop="btn1_text" value="' + escAttr(item.btn1_text || 'Get Started') + '" /></div>' +
+							'<div class="mh-rail-field-col"><label class="mh-rail-label">Primary Link</label><input type="text" class="mh-rail-input" data-prop="btn1_link" value="' + escAttr(item.btn1_link || '#') + '" /></div>' +
 						'</div>' +
-						'<div class="mh-rail-field" style="display:flex;gap:8px;">' +
-							'<div style="flex:1;"><label class="mh-rail-label">Secondary Button</label><input type="text" class="mh-rail-input" data-prop="btn2_text" value="' + escAttr(item.btn2_text || 'Learn More') + '" /></div>' +
-							'<div style="flex:1;"><label class="mh-rail-label">Secondary Link</label><input type="text" class="mh-rail-input" data-prop="btn2_link" value="' + escAttr(item.btn2_link || '#') + '" /></div>' +
+						'<div class="mh-rail-field mh-rail-field-row">' +
+							'<div class="mh-rail-field-col"><label class="mh-rail-label">Secondary Button</label><input type="text" class="mh-rail-input" data-prop="btn2_text" value="' + escAttr(item.btn2_text || 'Learn More') + '" /></div>' +
+							'<div class="mh-rail-field-col"><label class="mh-rail-label">Secondary Link</label><input type="text" class="mh-rail-input" data-prop="btn2_link" value="' + escAttr(item.btn2_link || '#') + '" /></div>' +
 						'</div>';
 				} else if ( type.indexOf('contact') !== -1 ) {
 					html +=
@@ -1147,9 +1147,9 @@
 							'<label class="mh-rail-label">Office Address</label>' +
 							'<input type="text" class="mh-rail-input" data-prop="address" value="' + escAttr(item.address || '') + '" />' +
 						'</div>' +
-						'<div class="mh-rail-field" style="display:flex;gap:8px;">' +
-							'<div style="flex:1;"><label class="mh-rail-label">Phone</label><input type="text" class="mh-rail-input" data-prop="phone" value="' + escAttr(item.phone || '') + '" /></div>' +
-							'<div style="flex:1;"><label class="mh-rail-label">Email</label><input type="text" class="mh-rail-input" data-prop="email" value="' + escAttr(item.email || '') + '" /></div>' +
+						'<div class="mh-rail-field mh-rail-field-row">' +
+							'<div class="mh-rail-field-col"><label class="mh-rail-label">Phone</label><input type="text" class="mh-rail-input" data-prop="phone" value="' + escAttr(item.phone || '') + '" /></div>' +
+							'<div class="mh-rail-field-col"><label class="mh-rail-label">Email</label><input type="text" class="mh-rail-input" data-prop="email" value="' + escAttr(item.email || '') + '" /></div>' +
 						'</div>' +
 						'<div class="mh-rail-field">' +
 							'<label class="mh-rail-label">Contact Form Shortcode</label>' +
@@ -1338,7 +1338,7 @@
 
 							'<div class="mh-bg-color-wrap mh-control-field" style="' + (bgType === 'color' ? '' : 'display:none;') + '">' +
 								'<label class="mh-control-field-title">Custom Background Color</label>' +
-								'<input type="color" class="mh-control-input mh-bg-color-input" value="' + escAttr(bgColor) + '" style="height:34px;padding:2px 4px;cursor:pointer;" />' +
+								'<input type="color" class="mh-control-input mh-bg-color-input mh-color-input" value="' + escAttr(bgColor) + '" />' +
 								'<div class="mh-rail-color-swatches">' +
 									'<button type="button" class="mh-rail-color-swatch" data-color="#2563eb" style="background:#2563eb;" title="Brand Cyan"></button>' +
 									'<button type="button" class="mh-rail-color-swatch" data-color="#0f172a" style="background:#0f172a;" title="Dark Slate"></button>' +
@@ -1352,11 +1352,11 @@
 
 							'<div class="mh-bg-gradient-wrap mh-control-field" style="' + (bgType === 'gradient' ? '' : 'display:none;') + '">' +
 								'<label class="mh-control-field-title">Gradient Presets</label>' +
-								'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px;">' +
-									'<button type="button" class="button mh-rail-grad-btn" data-grad="linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)" style="background:linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);color:#fff;border:none;font-weight:600;">Cosmic Cyan</button>' +
-									'<button type="button" class="button mh-rail-grad-btn" data-grad="linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" style="background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#fff;border:none;font-weight:600;">Dark Slate</button>' +
-									'<button type="button" class="button mh-rail-grad-btn" data-grad="linear-gradient(135deg, #ff3366 0%, #ff6b3d 100%)" style="background:linear-gradient(135deg, #ff3366 0%, #ff6b3d 100%);color:#fff;border:none;font-weight:600;">Sunset Flare</button>' +
-									'<button type="button" class="button mh-rail-grad-btn" data-grad="linear-gradient(135deg, #064e3b 0%, #065f46 100%)" style="background:linear-gradient(135deg, #064e3b 0%, #065f46 100%);color:#fff;border:none;font-weight:600;">Deep Emerald</button>' +
+								'<div class="mh-grad-grid">' +
+									'<button type="button" class="button mh-rail-grad-btn mh-grad-btn" data-grad="linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)" style="background:linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);">Cosmic Cyan</button>' +
+									'<button type="button" class="button mh-rail-grad-btn mh-grad-btn" data-grad="linear-gradient(135deg, #0f172a 0%, #1e293b 100%)" style="background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">Dark Slate</button>' +
+									'<button type="button" class="button mh-rail-grad-btn mh-grad-btn" data-grad="linear-gradient(135deg, #ff3366 0%, #ff6b3d 100%)" style="background:linear-gradient(135deg, #ff3366 0%, #ff6b3d 100%);">Sunset Flare</button>' +
+									'<button type="button" class="button mh-rail-grad-btn mh-grad-btn" data-grad="linear-gradient(135deg, #064e3b 0%, #065f46 100%)" style="background:linear-gradient(135deg, #064e3b 0%, #065f46 100%);">Deep Emerald</button>' +
 								'</div>' +
 							'</div>' +
 
@@ -1364,15 +1364,15 @@
 								'<label class="mh-control-field-title">Background Image</label>' +
 								'<div class="mh-rail-media-wrap">' +
 									'<img class="mh-rail-media-preview mh-bg-img-preview" src="' + escAttr(bgImg || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' fill=\'%23cbd5e1\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/%3E%3C/svg%3E') + '" />' +
-									'<div style="flex:1;">' +
+									'<div class="mh-rail-field-col">' +
 										'<button type="button" class="button button-secondary button-small mh-choose-bg-img-btn">Select Image</button>' +
-										(bgImg ? ' <button type="button" class="button-link-delete mh-remove-bg-img-btn" style="margin-left:6px;font-size:11px;">Remove</button>' : '') +
+										(bgImg ? ' <button type="button" class="button-link-delete mh-remove-bg-img-btn">Remove</button>' : '') +
 										'<input type="hidden" class="mh-bg-img-input" value="' + escAttr(bgImg) + '" />' +
 									'</div>' +
 								'</div>' +
 							'</div>' +
 
-							'<div class="mh-control-field" style="margin-top:10px;">' +
+							'<div class="mh-control-field">' +
 								'<label class="mh-control-field-title">Text Color Scheme</label>' +
 								'<div class="mh-btn-group">' +
 									'<button type="button" class="button mh-text-scheme-opt' + (textScheme === 'auto' ? ' active' : '') + '" data-val="auto">Auto</button>' +
@@ -1390,9 +1390,9 @@
 							'<div class="mh-control-group-title">Navigation Anchor</div>' +
 							'<div class="mh-control-field">' +
 								'<label class="mh-control-field-title">Section ID / Anchor</label>' +
-								'<div style="display:flex;align-items:center;">' +
-									'<span style="padding:5px 8px;background:#f0f0f1;border:1px solid #8c8f94;border-right:none;border-radius:4px 0 0 4px;color:#50575e;font-weight:600;font-size:12px;">#</span>' +
-									'<input type="text" class="mh-control-input mh-rail-anchor-input" value="' + escAttr(anchor) + '" style="border-radius:0 4px 4px 0;" placeholder="section-id" />' +
+								'<div class="mh-anchor-input-wrap">' +
+									'<span class="mh-anchor-prefix">#</span>' +
+									'<input type="text" class="mh-control-input mh-rail-anchor-input" value="' + escAttr(anchor) + '" placeholder="section-id" />' +
 								'</div>' +
 								'<p class="mh-control-field-desc">Use this ID to link menu items directly to this section with smooth scrolling (e.g. <code>#' + escAttr(anchor) + '</code>).</p>' +
 							'</div>' +
@@ -1408,11 +1408,11 @@
 
 						'<div class="mh-control-group">' +
 							'<div class="mh-control-group-title">Responsive Display</div>' +
-							'<div class="mh-control-field" style="display:flex;flex-direction:column;gap:6px;">' +
-								'<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#1d2327;cursor:pointer;">' +
+							'<div class="mh-control-field mh-responsive-field">' +
+								'<label class="mh-responsive-label">' +
 									'<input type="checkbox" class="mh-rail-hide-mobile" ' + (s.settings.hide_mobile ? 'checked' : '') + ' /> Hide on Mobile devices' +
 								'</label>' +
-								'<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#1d2327;cursor:pointer;">' +
+								'<label class="mh-responsive-label">' +
 									'<input type="checkbox" class="mh-rail-hide-desktop" ' + (s.settings.hide_desktop ? 'checked' : '') + ' /> Hide on Desktop devices' +
 								'</label>' +
 							'</div>' +
