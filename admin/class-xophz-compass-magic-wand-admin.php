@@ -113,6 +113,12 @@ class Xophz_Compass_Magic_Wand_Admin {
 	 * Register Customizer scripts for Page Builder UI
 	 */
 	public function customize_controls_scripts() {
+		wp_enqueue_media();
+		wp_enqueue_style( 'dashicons' );
+		if ( function_exists( 'get_template_directory' ) && file_exists( get_template_directory() . '/assets/font-awesome/font-awesome.min.css' ) ) {
+			wp_enqueue_style( 'magic-hat-font-awesome', get_template_directory_uri() . '/assets/font-awesome/font-awesome.min.css', array(), '4.7.0' );
+		}
+		wp_enqueue_style( $this->plugin_name . '-admin-customizer', plugin_dir_url( __FILE__ ) . 'css/xophz-compass-magic-wand-admin.css', array(), $this->version, 'all' );
 		wp_enqueue_script( $this->plugin_name . '-customizer', plugin_dir_url( __FILE__ ) . 'js/xophz-compass-magic-wand-customizer.js', array( 'jquery', 'customize-controls', 'jquery-ui-sortable' ), $this->version, true );
 		
 		$registry       = Xophz_Compass_Magic_Wand_Pattern_Registry::get_instance();
@@ -213,7 +219,10 @@ class Xophz_Compass_Magic_Wand_Admin {
 	 * AJAX Handler to save sections for a specific page
 	 */
 	public function ajax_save_page_sections() {
-		check_ajax_referer( 'mh_switch_template_nonce', 'nonce' );
+		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ) : ( isset( $_REQUEST['_ajax_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_ajax_nonce'] ) ) : '' );
+		if ( ! wp_verify_nonce( $nonce, 'mh_switch_template_nonce' ) && ! wp_verify_nonce( $nonce, 'mh_page_builder_nonce' ) ) {
+			wp_send_json_error( array( 'message' => 'Invalid security token' ) );
+		}
 
 		if ( ! current_user_can( 'edit_pages' ) && ! current_user_can( 'edit_theme_options' ) ) {
 			wp_send_json_error( array( 'message' => 'Unauthorized' ) );
@@ -237,17 +246,18 @@ class Xophz_Compass_Magic_Wand_Admin {
 				$block_content .= $public_inst->render_section_type( $type, $label, $section, $index ) . "\n\n";
 			}
 
-			if ( ! empty( $block_content ) ) {
-				wp_update_post( array(
-					'ID'           => $page_id,
-					'post_content' => trim( $block_content ),
-				) );
-			}
+			wp_update_post( array(
+				'ID'           => $page_id,
+				'post_content' => trim( $block_content ),
+			) );
 		}
 
-		// Delete legacy post meta to maintain pure post_content single source of truth
-		delete_post_meta( $page_id, '_mh_page_sections' );
-		remove_theme_mod( 'mh_page_sections' );
+		// Persist sections metadata to post_meta and theme_mod so Customizer retains active sections
+		update_post_meta( $page_id, '_mh_page_sections', wp_slash( $sections_json ) );
+		$front_page_id = absint( get_option( 'page_on_front' ) );
+		if ( $page_id === $front_page_id || ! $front_page_id ) {
+			set_theme_mod( 'mh_page_sections', $sections_json );
+		}
 
 		wp_send_json_success( array(
 			'page_id' => $page_id,

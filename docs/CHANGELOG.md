@@ -5,6 +5,86 @@ All notable changes to the Xophz Compass Magic Wand plugin are documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.9.13] - 2026-09-06
+
+### Added
+- Modular Category Pattern Modules (`includes/sections/`): Created 6 modular category pattern definitions (`category-hero-overlap.php`, `category-content-about.php`, `category-features-numbers.php`, `category-team-testimonials.php`, `category-cta-contact.php`, `category-pricing-portfolio.php`) housing all 63 canonical section patterns.
+- 100% Native Gutenberg Core Block Patterns: Converted all 63 classic section templates into pure native WordPress core blocks (`core/group`, `core/columns`, `core/column`, `core/heading`, `core/paragraph`, `core/buttons`, `core/button`), eliminating all raw 2017 HTML elements (`.gridContainer`, `.flexbox-list`) inside `wp:group` to resolve Site Editor validation errors ("Block contains unexpected or invalid content").
+- Magic Wand Category Slugs & Scoped Wrappers: Standardized all 63 section patterns to use `magic-wand-*` category slugs and `.mh-section-*` container classes.
+
+### Changed
+- Modular Sections Catalog Orchestrator (`includes/sections-catalog.php`): Refactored `mh_get_sections_catalog()` into a modular orchestrator that dynamically merges category definitions from `includes/sections/`, loading all 63 sections cleanly.
+- Public and Preview Enqueue Modernization (`public/class-xophz-compass-magic-wand-public.php`): Added fallback enqueuing for all 6 modular category stylesheets in frontend rendering and Customizer live preview with zero legacy stylesheet references.
+- Design Token Integration: Integrated theme.json presets (`var:preset|spacing|*`, `has-surface-body-background-color`, `has-brand-base-color`) and CSS custom properties across all section markup.
+
+### Removed
+- Monolithic Stylesheet Purge: Permanently removed duplicated 5,307-line legacy `public/css/one-page-express-sections.css`.
+- Legacy URL and Shortcode Purge: Purged all occurrences of `onepageexpress.com`, `tag_companion_uri`, and legacy `[one_page_express_*]` shortcodes across all section definitions.
+
+## [26.9.12] - 2026-09-06
+
+### Added
+- Unified 63-Section Catalog (`includes/sections-catalog.php`): Combined 9 core Magic Hat modular patterns with 54 classic One Page Express archetypes across 18 normalized categories (`hero`, `overlapable`, `about`, `features`, `content`, `cta`, `testimonials`, `numbers`, `clients`, `team`, `latest_news`, `contact`, `portfolio`, `woocommerce`, `gallery`, `pricing`, `faq`, `subscribe`).
+- Add Section Modal Sidebar Navigation (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Added dedicated left side navigation with category Dashicons and dynamic count badges reflecting active source filters and live search queries.
+- Interactive Live Preview Pane (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Added slide-over live preview canvas rendering pure mock markup with responsive device viewport toggles (Desktop 100%, Tablet 768px, Mobile 375px) and "+ Insert Section" action button.
+- Comprehensive Vector SVG Wireframes (`admin/js/xophz-compass-magic-wand-customizer.js`): Expanded `getWireframeSvg` across all 18 categories, generating crisp, lightweight inline SVG wireframes with zero external image dependencies.
+
+### Changed
+- Add Section Library Modal (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Redesigned modal with segmented source filter pills (All, Core, Classic), live search with clear button, and dual card hover actions (Preview and + Add).
+- Pure Mock Architecture (`includes/sections-catalog.php`): Replaced all external image references in classic section archetypes with pure CSS mock containers (`mh-mock-media-box`, `mh-mock-avatar-box`, `mh-mock-video-box`, `mh-mock-client-box`).
+
+### Fixed
+- Section Deletion and Empty State Persistence (`admin/class-xophz-compass-magic-wand-admin.php`, `public/class-xophz-compass-magic-wand-public.php`, `admin/js/xophz-compass-magic-wand-customizer.js`, & `public/js/xophz-compass-magic-wand-preview.js`): Fixed issue where deleting sections failed to persist. Resolved nonce validation mismatch in `ajax_save_page_sections` to accept both query parameters (`nonce` and `_ajax_nonce`) and both security tokens (`mh_switch_template_nonce` and `mh_page_builder_nonce`). Ensured `wp_update_post` clears `post_content` when all sections are removed. Updated `get_page_sections` and `sync_sections_to_front_page` to respect empty arrays so deleted sections are not resurrected from outdated post content. Prevented preview iframe DOM harvesting from repopulating deleted sections during live Customizer sessions.
+
+### Removed
+- Purged Copied Stock Assets: Purged all copied bitmap PNG preview files and external image folders from the plugin directory.
+
+## [26.9.11] - 2026-09-06
+
+### Added
+- Canonical One Page Express Sections Catalog (`includes/sections-catalog.php`): Registered all 54 One Page Express sections across 16 categories (`overlapable`, `about`, `features`, `content`, `cta`, `testimonials`, `numbers`, `clients`, `team`, `latest_news`, `contact`, `portfolio`, `woocommerce`, `gallery`, `pricing-tables`, `subscribe`) wrapped in Gutenberg full-width group block markup.
+- Section Assets and Previews (`admin/images/sections/`, `public/images/sections/`, `public/css/one-page-express-sections.css`): Mirrored all 54 preview PNG thumbnails and section stylesheets into the companion plugin.
+
+### Changed
+- Gutenberg Block Pattern Registry (`includes/class-xophz-compass-magic-wand-pattern-registry.php`): Connected pattern registry directly to the 54 canonical One Page Express section archetypes, registering all 16 categories with WordPress core block patterns.
+- Customizer Add Section Modal (`admin/js/xophz-compass-magic-wand-customizer.js`): Updated modal to group sections under gray uppercase category bars, displaying preview cards with dark caption pills across the bottom and hover "+ Add Section" overlays.
+- Frontend Section Renderer (`public/class-xophz-compass-magic-wand-public.php`): Updated `render_section_type` to resolve all 54 section archetypes and dynamically map companion image placeholders to local theme assets.
+
+## [26.9.10] - 2026-09-06
+
+### Changed
+- Standard WordPress Customizer Third Controls Screen (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Re-engineered section side rail into an authentic WordPress Customizer Third Controls Screen with native `.customize-section-title` header, standard `.customize-section-back` navigation button, `Customizing ▸ Page Settings` breadcrumb, and WordPress core typography and control cards.
+- Standard WordPress Tab Navigation (`admin/css/xophz-compass-magic-wand-admin.css` & `admin/js/xophz-compass-magic-wand-customizer.js`): Replaced custom pill buttons with WordPress admin tab navigation (`.mh-screen3-tabs`) styled to match core Customizer sub-navigation.
+- Native Content Items Accordion (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Restructured item repeaters to follow the WordPress Customizer Menu Item accordion pattern, featuring collapsible cards with drag handle, title, toggle arrow, and delete link.
+- In-Place Third Controls Screen Positioning (`admin/css/xophz-compass-magic-wand-admin.css` & `admin/js/xophz-compass-magic-wand-customizer.js`): Eliminated horizontal translateX translation and protrusion into the preview canvas. Positioned `#mh-section-side-rail` strictly within the 300px Customizer sidebar (`top: 45px; bottom: 45px; left: 0; width: 100%`) with clean in-place display toggling, keeping the Customizer header and footer actions permanently accessible.
+
+### Fixed
+- Page Settings Section Item Sizing and Layout (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Resolved squished and wrapped text in Screen 2 (`Page Settings`) section rows. Replaced the crowded horizontal flex row with spacious, clickable section cards displaying full section titles, type/layout meta pills, clean action buttons, and drag handles.
+- Link Popover Initial Visibility Leak (`public/js/xophz-compass-magic-wand-preview.js`): Fixed conflicting inline styles (`display:none;` followed by `display:flex;`) that overrode hiding and caused popovers to render permanently in the preview canvas on initial load.
+
+### Removed
+- Obsolete Shortcode Popover (`public/js/xophz-compass-magic-wand-preview.js`): Removed unused `#mw-shortcode-popover` element, styles, and click listeners from the preview canvas.
+
+## [26.9.9] - 2026-09-06
+
+### Added
+- One Page Express Section Settings Side Rail (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Slide-in child drawer panel for fine-grained section customization directly from the Customizer Page Settings section. Features dedicated Content, Style & Layout, and Advanced configuration tabs.
+- Dynamic Section Items Manager (`admin/js/xophz-compass-magic-wand-customizer.js`): Interactive accordion-card repeater allowing users to add, edit, reorder, and remove section cards (features, testimonials, pricing tiers, metrics, team members, FAQ items) with real-time preview sync.
+- Modular Section Style & Background Engine (`admin/js/xophz-compass-magic-wand-customizer.js` & `public/class-xophz-compass-magic-wand-public.php`): Per-section container width toggle (Boxed vs Full Width), vertical padding slider, text color scheme, and multi-mode backgrounds (Transparent, Solid Color, Linear Gradient, Background Image via WP Media Library).
+- Real-Time Canvas Section Sync (`public/js/xophz-compass-magic-wand-preview.js`): Bi-directional PostMessage event handling (`mh-update-section-preview` and `mh-open-section-side-rail`) updating section layout, background, and titles without full-page reloads.
+- Media Uploader Integration (`admin/class-xophz-compass-magic-wand-admin.php`): Enqueued `wp_enqueue_media()` in Customizer controls to support image selection for section backgrounds and item media.
+
+### Fixed
+- Page Sections Persistence & Registration (`admin/class-xophz-compass-magic-wand-admin.php`, `public/class-xophz-compass-magic-wand-public.php`, `includes/class-xophz-compass-magic-wand-migration.php`, & `includes/class-xophz-compass-magic-wand-compiler.php`): Resolved issue where Page Settings showed "No sections added" despite sections existing on the page. Eliminated erroneous `delete_post_meta` and `remove_theme_mod` calls that wiped out section configurations upon saving or viewing pages. Added dual persistence to both `_mh_page_sections` post meta and `mh_page_sections` theme mod in `ajax_save_page_sections` and `sync_sections_to_front_page`.
+- Post Content Block Parsing Fallback (`public/class-xophz-compass-magic-wand-public.php`): Introduced `get_page_sections()` with automatic Gutenberg block parsing. If section metadata is missing or empty, it scans `post_content` for `.mh-section` block containers, reconstructs the section configurations, and auto-populates the database so the Customizer always reflects live page sections.
+- In-Canvas DOM Section Harvesting Fallback (`public/js/xophz-compass-magic-wand-preview.js` & `admin/js/xophz-compass-magic-wand-customizer.js`): Added live DOM harvesting in preview iframe. If preview boots with empty settings, it harvests `.mh-section` elements directly from the canvas DOM, updates the Customizer `mh_page_sections` setting, and immediately renders section rows in the Page Settings sidebar.
+- Section Overlay Actions Execution (`public/js/xophz-compass-magic-wand-preview.js`): Fixed overlay action buttons (Settings, Width, Move Up, Move Down, Delete) that appeared unresponsive. Added direct in-canvas DOM manipulation for instant visual feedback: Move Up and Move Down physically reorder section elements in the iframe DOM, Width toggles container width classes immediately, and Delete smoothly removes the section node.
+- Section Settings Side Rail Activation (`admin/js/xophz-compass-magic-wand-customizer.js` & `admin/css/xophz-compass-magic-wand-admin.css`): Repositioned `#mh-section-side-rail` to anchor directly to `#customize-controls`, ensuring the slide-in drawer displays reliably regardless of whether the Page Settings section was previously expanded. Configured automatic expansion of `mh_page_builder` upon opening the side rail and added visibility toggling to prevent phantom overflow.
+- Preview Page Data and Setting Synchronization (`public/class-xophz-compass-magic-wand-public.php` & `admin/js/xophz-compass-magic-wand-customizer.js`): Resolved empty sections cache race condition by localizing initial `sections`, `ajaxUrl`, and `nonce` in `mhPreviewData`, ensuring `mh-preview-page-loaded` preserves active section records and keeps the Customizer `mh_page_sections` setting synchronized.
+- Section Settings Overlay Visual Contrast (`public/js/xophz-compass-magic-wand-preview.js` & `public/class-xophz-compass-magic-wand-public.php`): Replaced inverted `--mh-color-text-heading` color token with guaranteed Starship Dark Slate (`#0f172a`) pill badge design (`.mw-preview-badge`), eliminating solid white overlays in dark/circadian modes. Standardized overlay buttons to use native Dashicons matching header, hero, and footer overlay controls.
+- Debounced Keyup Text Saving (`admin/js/xophz-compass-magic-wand-customizer.js` & `public/js/xophz-compass-magic-wand-preview.js`): Added 750ms keyup debounce delay to side rail settings inputs, section row labels, and in-canvas `[data-mw-edit]` elements, eliminating immediate save requests on every keystroke and preventing jarring background re-renders during typing.
+- In-Canvas Inline Text Focus Retention (`public/js/xophz-compass-magic-wand-preview.js`): Prevented click events on `.mw-editable` and `[data-mw-edit]` elements from triggering parent Customizer control focus, ensuring direct on-site editing without losing cursor focus.
+
 ## [26.9.8] - 2026-09-06
 
 ### Added

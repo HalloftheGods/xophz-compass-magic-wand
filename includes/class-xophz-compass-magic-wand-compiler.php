@@ -209,9 +209,6 @@ class Xophz_Compass_Magic_Wand_Compiler {
 			return $updated_id;
 		}
 
-		// Clean up any legacy post meta key to preserve single source of truth
-		delete_post_meta( $id, '_mh_page_sections' );
-
 		return $this->respond( array(
 			'id'        => $updated_id,
 			'message'   => __( 'Page saved successfully with native Gutenberg blocks', 'xophz-compass-magic-wand' ),

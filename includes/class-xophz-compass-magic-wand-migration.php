@@ -71,8 +71,6 @@ class Xophz_Compass_Magic_Wand_Migration {
 			}
 		}
 
-		// Clean up legacy meta to restore pure post_content ownership
-		delete_post_meta( $page_id, '_mh_page_sections' );
 		return true;
 	}
 }
