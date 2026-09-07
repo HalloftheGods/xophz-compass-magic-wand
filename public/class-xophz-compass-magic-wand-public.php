@@ -47,6 +47,18 @@ class Xophz_Compass_Magic_Wand_Public {
 			'all'
 		);
 
+		// Enqueue compiled Quantum Atoms styles if available
+		$atoms_css = plugin_dir_path( __FILE__ ) . 'dist/magic-wand-atoms.css';
+		if ( file_exists( $atoms_css ) ) {
+			wp_enqueue_style(
+				$this->plugin_name . '-atoms',
+				plugin_dir_url( __FILE__ ) . 'dist/magic-wand-atoms.css',
+				array(),
+				$this->version,
+				'all'
+			);
+		}
+
 		// Fallback registration for modular section stylesheets if not enqueued by theme
 		$section_categories = array(
 			'hero-overlap',
@@ -75,10 +87,54 @@ class Xophz_Compass_Magic_Wand_Public {
 	}
 
 	/**
+	 * Enqueue public scripts including the Quantum Atoms runtime.
+	 */
+	public function enqueue_scripts(): void {
+		$atoms_js = plugin_dir_path( __FILE__ ) . 'dist/magic-wand-atoms.umd.js';
+		if ( file_exists( $atoms_js ) ) {
+			wp_enqueue_script(
+				$this->plugin_name . '-atoms',
+				plugin_dir_url( __FILE__ ) . 'dist/magic-wand-atoms.umd.js',
+				array(),
+				$this->version,
+				true
+			);
+		}
+	}
+
+	/**
 	 * Enqueue scripts for the Customizer live preview iframe.
 	 */
 	public function enqueue_preview_scripts(): void {
+		if ( ! is_customize_preview() ) {
+			return;
+		}
+
 		wp_enqueue_style( 'dashicons' );
+
+		// Enqueue Quantum Atoms for live preview iframe
+		$atoms_css = plugin_dir_path( __FILE__ ) . 'dist/magic-wand-atoms.css';
+		if ( file_exists( $atoms_css ) ) {
+			wp_enqueue_style(
+				$this->plugin_name . '-atoms',
+				plugin_dir_url( __FILE__ ) . 'dist/magic-wand-atoms.css',
+				array(),
+				$this->version,
+				'all'
+			);
+		}
+
+		$atoms_js = plugin_dir_path( __FILE__ ) . 'dist/magic-wand-atoms.umd.js';
+		if ( file_exists( $atoms_js ) ) {
+			wp_enqueue_script(
+				$this->plugin_name . '-atoms',
+				plugin_dir_url( __FILE__ ) . 'dist/magic-wand-atoms.umd.js',
+				array(),
+				$this->version,
+				true
+			);
+		}
+
 		wp_enqueue_script(
 			$this->plugin_name . '-preview',
 			plugin_dir_url( __FILE__ ) . 'js/xophz-compass-magic-wand-preview.js',
@@ -112,9 +168,23 @@ class Xophz_Compass_Magic_Wand_Public {
 			}
 		}
 
-		$page_id = get_the_ID();
+		$page_id = get_queried_object_id();
 		if ( ! $page_id ) {
-			$page_id = get_queried_object_id();
+			$page_id = get_the_ID();
+		}
+		if ( ! $page_id && is_front_page() ) {
+			$page_id = absint( get_option( 'page_on_front' ) );
+		}
+
+		$page_title = '';
+		if ( $page_id ) {
+			$page_title = get_the_title( $page_id );
+		} elseif ( is_front_page() ) {
+			$page_title = __( 'Home', 'xophz-compass-magic-wand' );
+		} elseif ( is_home() ) {
+			$page_title = __( 'Blog', 'xophz-compass-magic-wand' );
+		} else {
+			$page_title = __( 'Page', 'xophz-compass-magic-wand' );
 		}
 
 		$is_front = is_front_page();
@@ -124,8 +194,8 @@ class Xophz_Compass_Magic_Wand_Public {
 			$this->plugin_name . '-preview',
 			'mhPreviewData',
 			array(
-				'pageId'      => $page_id,
-				'pageTitle'   => get_the_title( $page_id ),
+				'pageId'      => (int) $page_id,
+				'pageTitle'   => $page_title,
 				'isFront'     => $is_front,
 				'isFrontPage' => $is_front,
 				'sections'    => $sections,
@@ -146,6 +216,87 @@ class Xophz_Compass_Magic_Wand_Public {
 			return array();
 		}
 
+		$post = get_post( $page_id );
+		if ( $post && ! empty( $post->post_content ) && function_exists( 'parse_blocks' ) ) {
+			$blocks = parse_blocks( $post->post_content );
+			$sections_from_blocks = array();
+
+			foreach ( $blocks as $i => $block ) {
+				if ( empty( $block['blockName'] ) ) {
+					continue;
+				}
+
+				$block_html = serialize_block( $block );
+				$is_section = ( false !== strpos( $block_html, 'mh-section' ) ) || ( false !== strpos( $block_html, 'data-section-type' ) );
+
+				if ( $is_section ) {
+					$type = 'custom';
+					if ( preg_match( '/data-section-type="([^"]+)"/i', $block_html, $t ) ) {
+						$type = $t[1];
+					} elseif ( preg_match( '/\bmh-section-([a-z0-9-]+)\b/i', $block_html, $m ) ) {
+						if ( $m[1] !== 'boxed' && $m[1] !== 'full-width' ) {
+							$type = $m[1];
+						}
+					}
+
+					$anchor = '';
+					if ( preg_match( '/\bid="([^"]+)"/i', $block_html, $a ) ) {
+						$anchor = $a[1];
+					}
+
+					$is_full = (bool) preg_match( '/mh-section-full-width/i', $block_html );
+
+					$title = '';
+					if ( preg_match( '/<h[1-3][^>]*>(.*?)<\/h[1-3]>/is', $block_html, $h ) ) {
+						$title = wp_strip_all_tags( $h[1] );
+					}
+
+					$subtitle = '';
+					if ( preg_match( '/<p[^>]*class="[^"]*has-text-muted-color[^"]*"[^>]*>(.*?)<\/p>/is', $block_html, $p ) ) {
+						$subtitle = wp_strip_all_tags( $p[1] );
+					}
+
+					$label = $title ? $title : ( $anchor ? ucwords( str_replace( array( '-', '_' ), ' ', $anchor ) ) : ucfirst( str_replace( '-', ' ', $type ) ) );
+
+					$sections_from_blocks[] = array(
+						'type'     => $type,
+						'id'       => $anchor ? 'section_' . sanitize_key( $anchor ) : 'section_' . $i,
+						'label'    => $label,
+						'content'  => $block_html,
+						'settings' => array(
+							'title'    => $title ?: $label,
+							'subtitle' => $subtitle,
+							'layout'   => $is_full ? 'full' : 'contained',
+							'anchor'   => $anchor,
+						),
+					);
+				}
+			}
+
+			if ( ! empty( $sections_from_blocks ) ) {
+				$raw_meta = get_post_meta( $page_id, '_mh_page_sections', true );
+				if ( ! empty( $raw_meta ) ) {
+					$meta_sections = json_decode( $raw_meta, true );
+					if ( is_array( $meta_sections ) ) {
+						foreach ( $sections_from_blocks as $idx => &$sec ) {
+							if ( isset( $meta_sections[ $idx ] ) && is_array( $meta_sections[ $idx ] ) ) {
+								$m_sec = $meta_sections[ $idx ];
+								if ( isset( $m_sec['settings'] ) && is_array( $m_sec['settings'] ) ) {
+									$sec['settings'] = array_merge( $sec['settings'], $m_sec['settings'] );
+								}
+								if ( isset( $m_sec['edits'] ) && is_array( $m_sec['edits'] ) ) {
+									$sec['edits'] = $m_sec['edits'];
+								}
+							}
+						}
+						unset( $sec );
+					}
+				}
+
+				return $sections_from_blocks;
+			}
+		}
+
 		$has_meta = metadata_exists( 'post', $page_id, '_mh_page_sections' );
 		$raw      = $has_meta ? get_post_meta( $page_id, '_mh_page_sections', true ) : '';
 		if ( ! $has_meta ) {
@@ -162,64 +313,7 @@ class Xophz_Compass_Magic_Wand_Public {
 			}
 		}
 
-		// Fallback: Parse sections directly from post_content Gutenberg blocks
-		$post = get_post( $page_id );
-		if ( ! $post || empty( $post->post_content ) ) {
-			return array();
-		}
-
-		$sections = array();
-		if ( preg_match_all( '/<div([^>]*class="[^"]*mh-section[^"]*"[^>]*)>(.*?)<\/div>\s*<!-- \/wp:group -->/is', $post->post_content, $matches, PREG_SET_ORDER ) ) {
-			foreach ( $matches as $i => $match ) {
-				$attrs_str  = $match[1];
-				$inner_html = $match[2];
-
-				$type = 'custom';
-				if ( preg_match( '/data-section-type="([^"]+)"/i', $attrs_str, $t ) ) {
-					$type = $t[1];
-				}
-
-				$anchor = '';
-				if ( preg_match( '/id="([^"]+)"/i', $attrs_str, $a ) ) {
-					$anchor = $a[1];
-				}
-
-				$is_full = (bool) preg_match( '/mh-section-full-width/i', $attrs_str );
-
-				$title = '';
-				if ( preg_match( '/<h[1-3][^>]*>(.*?)<\/h[1-3]>/is', $inner_html, $h ) ) {
-					$title = wp_strip_all_tags( $h[1] );
-				}
-				$subtitle = '';
-				if ( preg_match( '/<p[^>]*class="[^"]*has-text-muted-color[^"]*"[^>]*>(.*?)<\/p>/is', $inner_html, $p ) ) {
-					$subtitle = wp_strip_all_tags( $p[1] );
-				}
-
-				$label = $title ? $title : ( $anchor ? ucwords( str_replace( array( '-', '_' ), ' ', $anchor ) ) : ucfirst( $type ) );
-
-				$sections[] = array(
-					'type'     => $type,
-					'id'       => $anchor ? 'section_' . sanitize_key( $anchor ) : 'section_' . $i,
-					'label'    => $label,
-					'settings' => array(
-						'title'    => $title ?: $label,
-						'subtitle' => $subtitle,
-						'layout'   => $is_full ? 'full' : 'contained',
-						'anchor'   => $anchor,
-					),
-				);
-			}
-		}
-
-		if ( ! empty( $sections ) ) {
-			update_post_meta( $page_id, '_mh_page_sections', wp_slash( wp_json_encode( $sections ) ) );
-			$front_page_id = absint( get_option( 'page_on_front' ) );
-			if ( $page_id === $front_page_id || ! $front_page_id ) {
-				set_theme_mod( 'mh_page_sections', wp_json_encode( $sections ) );
-			}
-		}
-
-		return $sections;
+		return array();
 	}
 
 	/**
@@ -263,8 +357,11 @@ class Xophz_Compass_Magic_Wand_Public {
 		$registry = Xophz_Compass_Magic_Wand_Pattern_Registry::get_instance();
 		$patterns = $registry->get_pattern_definitions();
 
+		$has_custom_content = ! empty( $section['content'] );
 		$content = '';
-		if ( isset( $patterns[ $type ] ) ) {
+		if ( $has_custom_content ) {
+			$content = $section['content'];
+		} elseif ( isset( $patterns[ $type ] ) ) {
 			$content = $patterns[ $type ]['content'];
 		} else {
 			$content = '<!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->' . "\n" . '<div class="wp-block-group alignfull"><p>' . esc_html( $label ?: $type ) . '</p></div>' . "\n" . '<!-- /wp:group -->';
@@ -320,27 +417,168 @@ class Xophz_Compass_Magic_Wand_Public {
 
 		$style_attr = ! empty( $style_parts ) ? ' style="' . esc_attr( implode( ';', $style_parts ) ) . '"' : '';
 
-		// Inject attributes into the opening group container
-		$pattern_tag = '/<div class="([^"]*wp-block-group[^"]*)"/i';
-		$replacement = '<div id="' . esc_attr( $anchor ) . '" data-section-type="' . esc_attr( $type ) . '" data-section-index="' . esc_attr( $index ) . '" class="$1 mh-section ' . esc_attr( $layout_class . $scheme_class . $extra_classes ) . '"' . $style_attr;
-
+		// Update or inject attributes on the outer section wrapper
+		$pattern_tag = '/<div([^>]*class="[^"]*wp-block-group[^"]*"[^>]*)>/i';
 		if ( preg_match( $pattern_tag, $content ) ) {
-			$content = preg_replace( $pattern_tag, $replacement, $content, 1 );
+			$content = preg_replace_callback( $pattern_tag, function( $m ) use ( $anchor, $type, $index, $layout_class, $scheme_class, $extra_classes, $style_attr ) {
+				$attrs = $m[1];
+				// Strip previous dynamic section attributes to avoid duplicates
+				$attrs = preg_replace( '/\s*(id|data-section-type|data-section-index|style)="[^"]*"/i', '', $attrs );
+				$attrs = preg_replace( '/\s*(mh-section-full-width|mh-section-boxed|has-light-text|has-dark-text)/i', '', $attrs );
+				if ( false === strpos( $attrs, 'mh-section' ) ) {
+					$attrs = preg_replace( '/class="([^"]*)"/i', 'class="$1 mh-section"', $attrs );
+				}
+				$attrs = preg_replace( '/class="([^"]*)"/i', 'class="$1 ' . esc_attr( trim( $layout_class . $scheme_class . $extra_classes ) ) . '"', $attrs );
+				return '<div id="' . esc_attr( $anchor ) . '" data-section-type="' . esc_attr( $type ) . '" data-section-index="' . esc_attr( $index ) . '"' . $attrs . $style_attr . '>';
+			}, $content, 1 );
 		} else {
 			// Wrap in full-width group container if pattern lacks top-level group
 			$content = '<!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->' . "\n" .
-				'<div id="' . esc_attr( $anchor ) . '" data-section-type="' . esc_attr( $type ) . '" data-section-index="' . esc_attr( $index ) . '" class="wp-block-group alignfull mh-section ' . esc_attr( $layout_class . $scheme_class . $extra_classes ) . '"' . $style_attr . '>' . "\n" .
+				'<div id="' . esc_attr( $anchor ) . '" data-section-type="' . esc_attr( $type ) . '" data-section-index="' . esc_attr( $index ) . '" class="wp-block-group alignfull mh-section ' . esc_attr( trim( $layout_class . $scheme_class . $extra_classes ) ) . '"' . $style_attr . '>' . "\n" .
 				$content . "\n" .
 				'</div>' . "\n" .
 				'<!-- /wp:group -->';
 		}
 
-		// Apply custom title and subtitle if specified in section settings
-		if ( ! empty( $settings['title'] ) ) {
-			$content = preg_replace( '/(<h[1-3][^>]*>)(.*?)(<\/h[1-3]>)/i', '$1' . esc_html( $settings['title'] ) . '$3', $content, 1 );
+		// Apply target date for countdown timer applet atoms
+		if ( ! empty( $settings['target_date'] ) && preg_match( '/<x-countdown-clock\b[^>]*>/is', $content ) ) {
+			$content = preg_replace_callback( '/(<x-countdown-clock\b[^>]*\btarget-date=")([^"]*)(")/is', function( $m ) use ( $settings ) {
+				return $m[1] . esc_attr( $settings['target_date'] ) . $m[3];
+			}, $content, 1 );
 		}
-		if ( ! empty( $settings['subtitle'] ) ) {
-			$content = preg_replace( '/(<p class="[^"]*has-text-muted-color[^"]*"[^>]*>)(.*?)(<\/p>)/i', '$1' . esc_html( $settings['subtitle'] ) . '$3', $content, 1 );
+
+		// Apply edits dictionary recorded by canvas inline editor if present
+		if ( ! empty( $section['edits'] ) && is_array( $section['edits'] ) ) {
+			foreach ( $section['edits'] as $orig_or_key => $val ) {
+				if ( is_string( $val ) && is_string( $orig_or_key ) && '' !== $orig_or_key ) {
+					if ( substr( $orig_or_key, -4 ) === '_url' ) {
+						continue;
+					}
+					if ( false !== strpos( $content, $orig_or_key ) ) {
+						$content = str_replace( $orig_or_key, esc_html( $val ), $content );
+					}
+				}
+			}
+		}
+
+		// Dynamic content items: only compile if items are explicitly present and section was not loaded with custom content
+		if ( ! $has_custom_content && ! empty( $section['items'] ) && is_array( $section['items'] ) ) {
+			$content = self::compile_section_items( $content, $section['items'], $type );
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Compile custom items into section markup.
+	 *
+	 * Dynamically populates titles, descriptions, icons, links, and prices into column blocks.
+	 *
+	 * @param string               $content Section Gutenberg markup.
+	 * @param array<int, array<string, mixed>> $items Array of item descriptors.
+	 * @param string               $type    Section archetype slug.
+	 * @return string Compiled block markup.
+	 */
+	public static function compile_section_items( string $content, array $items, string $type = '' ): string {
+		if ( empty( $items ) ) {
+			return $content;
+		}
+
+		// Match all column blocks
+		$col_pattern = '/(<!-- wp:column\b.*?-->\s*<div\b[^>]*class="[^"]*wp-block-column[^"]*"[^>]*>)(.*?)(<\/div>\s*<!-- \/wp:column -->)/is';
+		if ( ! preg_match_all( $col_pattern, $content, $matches, PREG_SET_ORDER ) ) {
+			return $content;
+		}
+
+		$cols_count  = count( $matches );
+		$items_count = count( $items );
+		$new_cols    = array();
+
+		for ( $i = 0; $i < $items_count; $i++ ) {
+			$item = $items[ $i ];
+			$base_idx = min( $i, $cols_count - 1 );
+			$col_open = $matches[ $base_idx ][1];
+			$col_body = $matches[ $base_idx ][2];
+			$col_close = $matches[ $base_idx ][3];
+
+			// Inject item index marker for precise live preview binding
+			$col_open = preg_replace( '/class="([^"]*wp-block-column[^"]*)"/i', 'data-mw-item-idx="' . $i . '" class="$1"', $col_open, 1 );
+
+			$title = isset( $item['title'] ) ? $item['title'] : ( isset( $item['name'] ) ? $item['name'] : ( isset( $item['value'] ) ? $item['value'] : ( isset( $item['question'] ) ? $item['question'] : ( isset( $item['headline'] ) ? $item['headline'] : '' ) ) ) );
+			$desc  = isset( $item['desc'] ) ? $item['desc'] : ( isset( $item['quote'] ) ? $item['quote'] : ( isset( $item['label'] ) ? $item['label'] : ( isset( $item['bio'] ) ? $item['bio'] : ( isset( $item['answer'] ) ? $item['answer'] : '' ) ) ) );
+			$role  = isset( $item['role'] ) ? $item['role'] : '';
+			$icon  = isset( $item['icon'] ) ? $item['icon'] : '';
+			$price = isset( $item['price'] ) ? $item['price'] : '';
+			$link  = isset( $item['link'] ) ? $item['link'] : ( isset( $item['btn_link'] ) ? $item['btn_link'] : '' );
+			$btn_text = isset( $item['btn_text'] ) ? $item['btn_text'] : '';
+
+			// 1. Update Title & Description in column
+			$has_heading = (bool) preg_match( '/<h[2-6]\b/i', $col_body );
+			if ( $has_heading ) {
+				if ( '' !== $title ) {
+					$col_body = preg_replace( '/(<h[2-6]\b[^>]*>)(.*?)(<\/h[2-6]>)/is', '$1' . esc_html( $title ) . '$3', $col_body, 1 );
+				}
+				if ( '' !== $desc ) {
+					if ( preg_match( '/(<p\b[^>]*data-mw-item-prop="desc"[^>]*>)(.*?)(<\/p>)/is', $col_body ) ) {
+						$col_body = preg_replace( '/(<p\b[^>]*data-mw-item-prop="desc"[^>]*>)(.*?)(<\/p>)/is', '$1' . esc_html( $desc ) . '$3', $col_body, 1 );
+					} elseif ( preg_match( '/(<p\b[^>]*\bhas-text-muted-color\b[^>]*>)(.*?)(<\/p>)/is', $col_body ) ) {
+						$col_body = preg_replace( '/(<p\b[^>]*\bhas-text-muted-color\b[^>]*>)(.*?)(<\/p>)/is', '$1' . esc_html( $desc ) . '$3', $col_body, 1 );
+					}
+				}
+			} else {
+				// Single container paragraph card (e.g. showcase boxes)
+				if ( '' !== $title && '' !== $desc ) {
+					$replacement = '<p class="has-text-align-center has-text-heading-color has-text-color" style="font-weight:700;margin-bottom:4px;" data-mw-item-prop="title">' . esc_html( $title ) . '</p>' . "\n" .
+						'<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size" data-mw-item-prop="desc">' . esc_html( $desc ) . '</p>';
+					$col_body = preg_replace( '/<p\b[^>]*>.*?<\/p>/is', $replacement, $col_body, 1 );
+				} elseif ( '' !== $title ) {
+					$col_body = preg_replace( '/(<p\b[^>]*>)(.*?)(<\/p>)/is', '$1' . esc_html( $title ) . '$3', $col_body, 1 );
+				} elseif ( '' !== $desc ) {
+					$col_body = preg_replace( '/(<p\b[^>]*>)(.*?)(<\/p>)/is', '$1' . esc_html( $desc ) . '$3', $col_body, 1 );
+				}
+			}
+
+			// 2. Update Role (Testimonials / Team)
+			if ( '' !== $role && preg_match( '/(<p\b[^>]*data-mw-item-prop="role"[^>]*>)(.*?)(<\/p>)/is', $col_body ) ) {
+				$col_body = preg_replace( '/(<p\b[^>]*data-mw-item-prop="role"[^>]*>)(.*?)(<\/p>)/is', '$1' . esc_html( $role ) . '$3', $col_body, 1 );
+			}
+
+			// 3. Update Icon
+			if ( '' !== $icon ) {
+				if ( preg_match( '/<span\b[^>]*class="[^"]*dashicons\b[^"]*"[^>]*>/is', $col_body ) ) {
+					$col_body = preg_replace( '/class="([^"]*dashicons\s+)[^"\s]+([^"]*)"/is', 'class="$1' . esc_attr( $icon ) . '$2"', $col_body, 1 );
+				}
+			}
+
+			// 4. Update Price & Period
+			if ( '' !== $price && preg_match( '/(<span\b[^>]*class="[^"]*mh-price-num[^"]*"[^>]*>)(.*?)(<\/span>)/is', $col_body ) ) {
+				$col_body = preg_replace( '/(<span\b[^>]*class="[^"]*mh-price-num[^"]*"[^>]*>)(.*?)(<\/span>)/is', '$1' . esc_html( $price ) . '$3', $col_body, 1 );
+			}
+
+			// 5. Update Button text and link
+			if ( '' !== $btn_text && preg_match( '/(<a\b[^>]*class="[^"]*wp-block-button__link[^"]*"[^>]*>)(.*?)(<\/a>)/is', $col_body ) ) {
+				$col_body = preg_replace( '/(<a\b[^>]*class="[^"]*wp-block-button__link[^"]*"[^>]*>)(.*?)(<\/a>)/is', '$1' . esc_html( $btn_text ) . '$3', $col_body, 1 );
+			}
+			if ( '' !== $link && preg_match( '/(<a\b[^>]*href=")([^"]*)(")/is', $col_body ) ) {
+				$col_body = preg_replace( '/(<a\b[^>]*href=")([^"]*)(")/is', '$1' . esc_url( $link ) . '$3', $col_body, 1 );
+			}
+
+			$new_cols[] = $col_open . $col_body . $col_close;
+		}
+
+		// Replace the original column block sequence with the compiled columns
+		$full_matched_cols = '';
+		foreach ( $matches as $m ) {
+			$full_matched_cols .= $m[0];
+		}
+		$compiled_cols = implode( "\n\n", $new_cols );
+
+		$pos = strpos( $content, $matches[0][0] );
+		if ( false !== $pos ) {
+			$last_match = end( $matches );
+			$last_pos = strrpos( $content, $last_match[0] );
+			$total_len = ( $last_pos + strlen( $last_match[0] ) ) - $pos;
+			$content = substr_replace( $content, $compiled_cols, $pos, $total_len );
 		}
 
 		return $content;

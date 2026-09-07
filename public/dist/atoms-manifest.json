@@ -1,0 +1,92 @@
+{
+  "version": "1.0.0",
+  "name": "Magic Wand Quantum Atoms",
+  "generated": "2026-09-06T14:41:00Z",
+  "atoms": [
+    {
+      "name": "XBtn",
+      "tag": "x-btn",
+      "category": "action",
+      "description": "Quantum action button with glassmorphic accents, elevation, and loading states.",
+      "props": {
+        "color": { "type": "string", "default": "primary", "options": ["primary", "secondary", "accent", "surface"] },
+        "variant": { "type": "string", "default": "elevated", "options": ["elevated", "flat", "tonal", "outlined", "text", "plain"] },
+        "size": { "type": "string", "default": "default", "options": ["x-small", "small", "default", "large", "x-large"] },
+        "block": { "type": "boolean", "default": false },
+        "loading": { "type": "boolean", "default": false }
+      }
+    },
+    {
+      "name": "XCard",
+      "tag": "x-card",
+      "category": "container",
+      "description": "Glassmorphic container card with elevation, rounded borders, and slot hierarchy.",
+      "props": {
+        "elevation": { "type": "number", "default": 1 },
+        "rounded": { "type": "string", "default": "md", "options": ["none", "xs", "sm", "md", "lg", "xl"] },
+        "border": { "type": "boolean", "default": false },
+        "hover": { "type": "boolean", "default": true }
+      }
+    },
+    {
+      "name": "XChip",
+      "tag": "x-chip",
+      "category": "display",
+      "description": "Status badge, category pill, and filter token atom.",
+      "props": {
+        "color": { "type": "string", "default": "brand-base" },
+        "size": { "type": "string", "default": "small", "options": ["x-small", "small", "default", "large"] },
+        "variant": { "type": "string", "default": "tonal", "options": ["elevated", "flat", "tonal", "outlined"] }
+      }
+    },
+    {
+      "name": "XDivider",
+      "tag": "x-divider",
+      "category": "display",
+      "description": "Subtle boundary separator with optional inset and vertical orientations.",
+      "props": {
+        "vertical": { "type": "boolean", "default": false },
+        "inset": { "type": "boolean", "default": false }
+      }
+    },
+    {
+      "name": "XDialog",
+      "tag": "x-dialog",
+      "category": "container",
+      "description": "Glassmorphic overlay modal with responsive backdrop blur.",
+      "props": {
+        "maxWidth": { "type": "string", "default": "600px" },
+        "persistent": { "type": "boolean", "default": false }
+      }
+    },
+    {
+      "name": "XIcon",
+      "tag": "x-icon",
+      "category": "display",
+      "description": "Multi-collection vector icon renderer with unified color binding.",
+      "props": {
+        "icon": { "type": "string", "default": "star" },
+        "size": { "type": "string", "default": "default" },
+        "color": { "type": "string", "default": "currentColor" }
+      }
+    },
+    {
+      "name": "XCountdownClock",
+      "tag": "x-countdown-clock",
+      "category": "applet",
+      "description": "Autonomous live countdown clock with day/hour/min/sec flip cells.",
+      "props": {
+        "targetDate": { "type": "string", "default": "" }
+      }
+    },
+    {
+      "name": "XMarkdown",
+      "tag": "x-markdown",
+      "category": "display",
+      "description": "Reactive markdown renderer with code syntax highlighting.",
+      "props": {
+        "content": { "type": "string", "default": "" }
+      }
+    }
+  ]
+}

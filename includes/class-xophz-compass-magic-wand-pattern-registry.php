@@ -98,6 +98,7 @@ class Xophz_Compass_Magic_Wand_Pattern_Registry {
 			'pricing'      => __( 'Pricing & Plans', 'xophz-compass-magic-wand' ),
 			'faq'          => __( 'FAQ', 'xophz-compass-magic-wand' ),
 			'subscribe'    => __( 'Subscribe', 'xophz-compass-magic-wand' ),
+			'quantum-atoms' => __( 'Quantum Atoms', 'xophz-compass-magic-wand' ),
 		);
 	}
 

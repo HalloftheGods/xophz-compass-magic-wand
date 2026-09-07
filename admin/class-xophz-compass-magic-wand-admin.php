@@ -110,16 +110,111 @@ class Xophz_Compass_Magic_Wand_Admin {
 	}
 
 	/**
-	 * Register Customizer scripts for Page Builder UI
+	 * Register Customizer scripts for Page Builder UI.
 	 */
 	public function customize_controls_scripts() {
 		wp_enqueue_media();
 		wp_enqueue_style( 'dashicons' );
-		if ( function_exists( 'get_template_directory' ) && file_exists( get_template_directory() . '/assets/font-awesome/font-awesome.min.css' ) ) {
-			wp_enqueue_style( 'magic-hat-font-awesome', get_template_directory_uri() . '/assets/font-awesome/font-awesome.min.css', array(), '4.7.0' );
+
+		// Enqueue core Gutenberg block library styles for preview rendering
+		wp_enqueue_style( 'wp-block-library' );
+		wp_enqueue_style( 'wp-block-library-theme' );
+
+		if ( function_exists( 'get_template_directory' ) ) {
+			$template_dir = get_template_directory();
+			$template_uri = get_template_directory_uri();
+
+			if ( file_exists( $template_dir . '/assets/font-awesome/font-awesome.min.css' ) ) {
+				wp_enqueue_style( 'magic-hat-font-awesome', $template_uri . '/assets/font-awesome/font-awesome.min.css', array(), '4.7.0' );
+			}
+
+			if ( file_exists( $template_dir . '/assets/css/variables.css' ) ) {
+				wp_enqueue_style( 'magic-hat-variables', $template_uri . '/assets/css/variables.css', array(), $this->version );
+			}
+
+			// Enqueue modular section category stylesheets for live preview rendering
+			$section_categories = array(
+				'hero-overlap',
+				'content-about',
+				'features-numbers',
+				'team-testimonials',
+				'cta-contact',
+				'pricing-portfolio',
+			);
+
+			foreach ( $section_categories as $category ) {
+				$cat_path = $template_dir . '/assets/css/sections/' . $category . '.css';
+				if ( file_exists( $cat_path ) ) {
+					wp_enqueue_style(
+						'magic-hat-section-' . $category,
+						$template_uri . '/assets/css/sections/' . $category . '.css',
+						array( 'wp-block-library' ),
+						$this->version
+					);
+				}
+			}
 		}
-		wp_enqueue_style( $this->plugin_name . '-admin-customizer', plugin_dir_url( __FILE__ ) . 'css/xophz-compass-magic-wand-admin.css', array(), $this->version, 'all' );
-		wp_enqueue_script( $this->plugin_name . '-customizer', plugin_dir_url( __FILE__ ) . 'js/xophz-compass-magic-wand-customizer.js', array( 'jquery', 'customize-controls', 'jquery-ui-sortable' ), $this->version, true );
+
+		wp_enqueue_style( $this->plugin_name . '-admin-customizer', plugin_dir_url( __FILE__ ) . 'css/xophz-compass-magic-wand-admin.css', array( 'wp-block-library' ), $this->version, 'all' );
+
+		// Inject WordPress theme.json global styles into Customizer controls document
+		if ( function_exists( 'wp_get_global_stylesheet' ) ) {
+			$global_styles = wp_get_global_stylesheet();
+			if ( ! empty( $global_styles ) ) {
+				wp_add_inline_style( $this->plugin_name . '-admin-customizer', $global_styles );
+			}
+		}
+
+		// Enqueue compiled Quantum Atoms styles and runtime if available
+		$atoms_css_path = plugin_dir_path( dirname( __FILE__ ) ) . 'public/dist/magic-wand-atoms.css';
+		if ( file_exists( $atoms_css_path ) ) {
+			wp_enqueue_style(
+				$this->plugin_name . '-atoms',
+				plugin_dir_url( dirname( __FILE__ ) ) . 'public/dist/magic-wand-atoms.css',
+				array(),
+				$this->version,
+				'all'
+			);
+		}
+
+		$atoms_js_path = plugin_dir_path( dirname( __FILE__ ) ) . 'public/dist/magic-wand-atoms.umd.js';
+		if ( file_exists( $atoms_js_path ) ) {
+			wp_enqueue_script(
+				$this->plugin_name . '-atoms',
+				plugin_dir_url( dirname( __FILE__ ) ) . 'public/dist/magic-wand-atoms.umd.js',
+				array(),
+				$this->version,
+				true
+			);
+		}
+
+		$js_dir_url = plugin_dir_url( __FILE__ ) . 'js/customizer/';
+		wp_enqueue_script( $this->plugin_name . '-customizer-utils', $js_dir_url . 'utils.js', array(), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-wireframes', $js_dir_url . 'wireframes.js', array(), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-default-items', $js_dir_url . 'default-items.js', array(), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-state', $js_dir_url . 'state.js', array( 'jquery', 'customize-controls', $this->plugin_name . '-customizer-utils' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-section-modal', $js_dir_url . 'section-modal.js', array( 'jquery', 'customize-controls', $this->plugin_name . '-customizer-wireframes', $this->plugin_name . '-customizer-state' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-side-rail', $js_dir_url . 'side-rail.js', array( 'jquery', 'customize-controls', $this->plugin_name . '-customizer-default-items', $this->plugin_name . '-customizer-state' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name . '-customizer-section-list', $js_dir_url . 'section-list.js', array( 'jquery', 'customize-controls', 'jquery-ui-sortable', $this->plugin_name . '-customizer-state', $this->plugin_name . '-customizer-side-rail' ), $this->version, true );
+
+		wp_enqueue_script(
+			$this->plugin_name . '-customizer',
+			plugin_dir_url( __FILE__ ) . 'js/xophz-compass-magic-wand-customizer.js',
+			array(
+				'jquery',
+				'customize-controls',
+				'jquery-ui-sortable',
+				$this->plugin_name . '-customizer-utils',
+				$this->plugin_name . '-customizer-wireframes',
+				$this->plugin_name . '-customizer-default-items',
+				$this->plugin_name . '-customizer-state',
+				$this->plugin_name . '-customizer-section-modal',
+				$this->plugin_name . '-customizer-side-rail',
+				$this->plugin_name . '-customizer-section-list',
+			),
+			$this->version,
+			true
+		);
 		
 		$registry       = Xophz_Compass_Magic_Wand_Pattern_Registry::get_instance();
 		$sections       = array_values( $registry->get_pattern_definitions() );
@@ -243,13 +338,17 @@ class Xophz_Compass_Magic_Wand_Admin {
 			foreach ( $sections as $index => $section ) {
 				$type  = isset( $section['type'] ) ? $section['type'] : 'hero';
 				$label = isset( $section['label'] ) ? $section['label'] : ucfirst( str_replace( '-', ' ', $type ) );
-				$block_content .= $public_inst->render_section_type( $type, $label, $section, $index ) . "\n\n";
+				$rendered = $public_inst->render_section_type( $type, $label, $section, $index );
+				$block_content .= $rendered . "\n\n";
+				$sections[ $index ]['content'] = $rendered;
 			}
 
 			wp_update_post( array(
 				'ID'           => $page_id,
 				'post_content' => trim( $block_content ),
 			) );
+
+			$sections_json = wp_json_encode( $sections );
 		}
 
 		// Persist sections metadata to post_meta and theme_mod so Customizer retains active sections

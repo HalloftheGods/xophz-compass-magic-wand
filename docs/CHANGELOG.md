@@ -5,6 +5,109 @@ All notable changes to the Xophz Compass Magic Wand plugin are documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [26.9.21] - 2026-09-07
+
+### Fixed
+- Content Area Mount Boundary (`src/routes/magic-wand/composables/useMagicWandCanvas.ts`): Resolved critical bug where `renderBlocksToCanvas()` created `#magic-wand-root` and appended it directly to `doc.body`, causing blocks to render after the page footer. Upgraded mount resolution to locate semantic content containers (`[data-mw-type="content"]`, `#mw-page-content`, `#mw-front-content`, `main.mh-page-main`, `main.wp-block-group`, `main`, `.entry-content`), clearing placeholder server-rendered content and mounting blocks strictly between the header and footer.
+- Post-Footer Fallback Prevention (`src/routes/magic-wand/composables/useMagicWandCanvas.ts`): Implemented strict defensive insertion before `footer`, `#mw-footer`, or `[data-mw-type="footer"]` if no explicit `<main>` container exists, preventing blocks from ever being injected below the footer in third-party themes.
+- Canvas Preview Page Synchronization (`src/routes/magic-wand/components/canvas/magic-wand-canvas-stage.vue`, `src/routes/magic-wand/composables/useMagicWandPages.ts`, `src/routes/magic-wand/magic-wand.vue`): Replaced hardcoded `src="/?preview=true"` with reactive `:preview-url="activePreviewUrl"`, dynamically loading the active page permalink with `?preview=true` when switching pages in the topbar.
+
+### Added
+- Universal Point-and-Click Element Editing (`src/routes/magic-wand/composables/useMagicWandCanvas.ts`, `src/routes/magic-wand/magic-wand.controller.ts`): Empowered the Magic Wand canvas to inspect and select any element across the viewport:
+  - Theme Regions (Header, Footer, Hero, Sidebar): Clicking template parts highlights them with signature Neon Cyan (`#62c9ff`) outlines and triggers `onRegionSelect`, smoothly switching the editor target to the corresponding template part (`slug: 'header'` or `slug: 'footer'`).
+  - Direct Inline Text Editing: Clicking any text element (`h1-h6`, `p`, button links, chips, badges) enables `contenteditable="true"` with instantaneous typing feedback and live block model synchronization.
+  - Anchored Floating Toolbar: Extended `useMagicWandCanvas` to emit element bounding box coordinates on click and during iframe scroll events, dynamically anchoring `magic-wand-inline-toolbar` directly above the selected element instead of static top placement.
+- Semantic Theme Content Contract (`wp-content/themes/xophz-magic-hat/page.php`, `wp-content/themes/xophz-magic-hat/front-page.php`): Added `data-mw-type="content"` to `<main id="mw-page-content">` and `<main id="mw-front-content">` to complete uniform template part tagging alongside `#mw-header` and `#mw-footer`.
+
+## [26.9.20] - 2026-09-07
+
+### Fixed
+- Sidebar and Inspector Tab Bar Layout (`src/routes/magic-wand/components/sidebar-left/magic-wand-left-drawer.vue`, `src/routes/magic-wand/components/sidebar-right/magic-wand-inspector.vue`): Resolved vertical whitespace expansion where `v-tabs grow` in vertical flex column containers caused Vuetify 3's `.v-tabs--grow { flex-grow: 1; }` to consume half the drawer height. Constrained tab bars to fixed 40px height with `flex: 0 0 40px !important`.
+- Drawer Slider Overflow Suppression (`src/routes/magic-wand/components/sidebar-left/magic-wand-left-drawer.vue`, `src/routes/magic-wand/components/sidebar-right/magic-wand-inspector.vue`): Added `show-arrows="never"` to eliminate unintended slide group slider buttons (`<` and `>`), and styled tab buttons with `min-width: 0 !important`, `flex: 1 1 0`, and compact padding so all four drawer tabs (Elements, Layers, Pages, Tokens) fit evenly across the 300px sidebar width without horizontal overflow.
+
+## [26.9.19] - 2026-09-07
+
+### Added
+- Direct Canvas Editing Architecture (`public/js/xophz-compass-magic-wand-preview.js`): Transformed the live preview canvas into a full WYSIWYG editor aligned with the One Page Express paradigm. Headings (h1-h6), paragraphs, buttons (`.wp-block-button__link`), chips, and badges are directly editable via `contenteditable="true"` with changes syncing cleanly to block content. Section images are directly swappable via the WordPress Media Library on click, and buttons/links feature a floating neon dark-slate link popover for fast URL updates.
+- Section Elements Navigator (`admin/js/customizer/side-rail.js`, `admin/css/xophz-compass-magic-wand-admin.css`): Introduced an interactive element outline in the Side Rail Content tab that lists every heading, paragraph, button, and image in the section. Clicking an element in the navigator triggers `mh-focus-element`, smoothly scrolling the preview canvas to that element and highlighting it with a project signature Neon Cyan (`#62c9ff`) outline.
+- Direct Canvas Quick Guide (`admin/js/customizer/side-rail.js`, `admin/css/xophz-compass-magic-wand-admin.css`): Added Starship dark slate panel (`#0f172a`) in Customizer Screen 3 guiding users to edit text, buttons, and media directly on the canvas.
+
+### Changed
+- Customizer Separation of Concerns (`admin/js/customizer/side-rail.js`, `admin/js/customizer/section-list.js`, `admin/js/customizer/section-modal.js`): Retired rigid title, eyebrow, subtitle, and action button inputs from the Side Rail Content tab to avoid clashing with canvas content. Look and feel controls (Container Width, Top and Bottom Padding, Background Styling, and Text Color Scheme) remain cleanly isolated in the Style and Layout tab, and Anchor ID and CSS classes remain in Advanced.
+- Non-Destructive Block Persistence (`public/class-xophz-compass-magic-wand-public.php`, `admin/class-xophz-compass-magic-wand-admin.php`): Updated `render_section_type()` to prioritize authentic section block content (`$section['content']`) over static pattern definitions and retired destructive blind regex replacements on inner headings and column cards. Dynamic column item compilation now runs only when sections lack existing block content, preventing corruption of multi-card templates like `about-four-boxes-section`.
+- Native Gutenberg parse_blocks Synchronization (`public/class-xophz-compass-magic-wand-public.php`, `admin/class-xophz-compass-magic-wand-admin.php`): Upgraded `get_page_sections()` to parse native Gutenberg blocks directly from `wp_posts.post_content` using WordPress `parse_blocks()` and `serialize_block()`. Edits made in the Gutenberg Site Editor or Block Editor are now instantly detected by the Customizer and Magic Wand without metadata desynchronization, establishing `post_content` as the canonical source of truth across all three editors.
+
+## [26.9.18] - 2026-09-07
+
+### Fixed
+- Preview Section Text Editing Debounce Removal (`public/js/xophz-compass-magic-wand-preview.js`): Removed the 750ms keyup debounce timer on `[data-mw-edit]` section fields. Field edits now commit cleanly on `blur` and upon Customizer save/publish triggers, preventing mid-keystroke AJAX requests and focus drops while typing.
+
+## [26.9.17] - 2026-09-06
+
+### Added
+- Category 7 Quantum Atoms Section Templates (`includes/sections/category-quantum-atoms.php`): Added 4 flagship section templates leveraging Project Compass Vue 3 Quantum Atoms: `atom-countdown-hero` (launch hero with live `XCountdownClock`, `XChip`, and `XBtn`), `atom-glassmorphic-features` (3-column glassmorphic feature grid with `XCard`, `XChip`, and `XBtn`), `atom-interactive-alert-banner` (announcement bar with tonal `XAlert` and `XBtn`), and `atom-quantum-pricing` (3-tier pricing matrix with `XCard`, `XChip` popular highlights, and `XBtn`).
+- Pattern Registry Category (`includes/class-xophz-compass-magic-wand-pattern-registry.php`, `includes/sections-catalog.php`, `admin/js/customizer/wireframes.js`): Registered `quantum-atoms` category in pattern registry, catalog loader (expanding catalog to 67 sections), and wireframe Dashicon map (`dashicons-superhero-alt`).
+- Universal Dynamic Section Item Compiler (`public/class-xophz-compass-magic-wand-public.php`): Implemented `compile_section_items()` static compiler to parse Gutenberg column blocks (`<!-- wp:column -->`), dynamically updating item card titles, descriptions, roles, icons, prices, links, and buttons based on user repeater inputs in `$section['items']`. Automatically formats single-paragraph cards (showcase boxes) into bold title and description pairs, injecting `data-mw-item-idx` and `data-mw-item-prop` markers for live preview binding.
+- Eyebrow, Action Button, and Countdown Date Compiler (`public/class-xophz-compass-magic-wand-public.php`): Enhanced `render_section_type()` with `preg_replace_callback` execution to safely inject dynamic eyebrow text, custom button text and links (`btn1_text`, `btn1_link`), and countdown target dates (`target_date`) without regex backreference collisions.
+- Customizer Side Rail Field Controls (`admin/js/customizer/side-rail.js`): Added dedicated input fields in the Content tab for Section Eyebrow, Action Button Text and URL, and Countdown Target Date (ISO 8601), with two-way synchronization into `syncCurrentSideRailChanges()`.
+- Default Archetype Item Schemas (`admin/js/customizer/default-items.js`): Added standard field schemas for `about-big-images-section`, `atom-countdown-hero`, `atom-glassmorphic-features`, and `atom-quantum-pricing`.
+
+### Changed
+- Core About Section Upgrade (`includes/sections/category-content-about.php`): Upgraded `about-big-images-section` with `data-mw-edit` bindings, `<x-btn>` atom wrapper, and structured title and description paragraphs across all 3 showcase columns.
+- Live Preview Real-Time DOM Synchronization (`public/js/xophz-compass-magic-wand-preview.js`): Enhanced `mh-update-section-preview` listener to dynamically synchronize titles, subtitles, eyebrows, action buttons, countdown dates, and repeated column cards in real time as the user edits fields in Customizer Screen 3. Automatically triggers `window.XophzMagicWandAtoms.mount()` to re-hydrate Vue atoms on live canvas DOM mutations.
+- Multi-Mount and Lifecycle Tracking (`src/components/atoms/magic-wand-atoms.ts`): Upgraded `mountMagicWandAtoms()` to support mounting across all `[data-magic-wand-mount]` elements via `querySelectorAll()`. Added WeakMap tracking (`mountedApps`) to support clean unmounting and re-hydration without memory leaks. Rebuilt UMD bundle (`public/dist/magic-wand-atoms.umd.js`) and scoped CSS (`public/dist/magic-wand-atoms.css`).
+- Customizer Modal Atoms Hydration (`admin/js/customizer/section-modal.js`, `admin/class-xophz-compass-magic-wand-admin.php`): Enqueued `magic-wand-atoms.umd.js` on Customizer controls screen and mounted Vue atoms inside `#mh-preview-content` when previewing sections in the Section Library modal.
+
+## [26.9.16] - 2026-09-06
+
+### Added
+- Customizer Controls Styling Enqueues (`admin/class-xophz-compass-magic-wand-admin.php`): Enqueued WordPress block library stylesheets (`wp-block-library`, `wp-block-library-theme`), theme token definitions (`variables.css`), all 6 modular category stylesheets, and `magic-wand-atoms.css` into Customizer controls scripts to ensure complete CSS coverage within `#mh-preview-pane`.
+- Dynamic Global Stylesheet Injection (`admin/class-xophz-compass-magic-wand-admin.php`): Injected `wp_get_global_stylesheet()` as inline CSS on the Customizer controls screen, propagating WordPress `--wp--preset--*` tokens and utility classes into parent window UI components.
+- Section Live Preview Pane Styling (`admin/css/xophz-compass-magic-wand-admin.css`): Added comprehensive design token declarations, responsive column flex layout rules, button variant support (`is-style-outline`), `.mh-mock-media-box`, `.mh-mock-video-box`, and card surface elevation rules.
+
+### Changed
+- Synchronized Block Inline Style Attributes Across All 63 Section Archetypes (`includes/sections/category-*.php`): Serialized explicit inline `style="..."` attributes across all Gutenberg block markup (`wp:group`, `wp:columns`, `wp:column`, `wp:buttons`, `wp:button`) in all 6 catalog files to match JSON block comment attributes, resolving front-end unstyled rendering.
+- Standardized Media Placeholders (`includes/sections/category-content-about.php`, `includes/sections/category-features-numbers.php`): Replaced bare visual showcase text in `stripped-about-four-boxes-section` and `stripped-features-image-cards-section` with styled `.mh-mock-media-box` containers and FontAwesome icons.
+
+## [26.9.15] - 2026-09-06
+
+### Added
+- Vite Packaging Pipeline for Magic Wand Atoms (`vite.magic-wand.config.js`): Configured dedicated Vite library build pipeline outputting tree-shaken UMD bundle (`public/dist/magic-wand-atoms.umd.js`) and scoped CSS (`public/dist/magic-wand-atoms.css`) exposing `XophzAtoms` with zero runtime JSX dependencies.
+- Magic Wand Atoms Runtime Entrypoint (`src/components/atoms/magic-wand-atoms.ts`): Standalone Vue 3 mounting pipeline that auto-installs tree-shaken Vuetify primitives (`VBtn`, `VCard`, `VChip`, `VDivider`, `VDialog`, `VAlert`) and project Compass `X*` atoms (`XBtn`, `XCard`, `XChip`, `XDivider`, `XDialog`, `XIcon`, `XAlert`, `XCountdownClock`, `XMarkdown`) onto custom elements or containers.
+- Atoms Build Script (`package.json`): Added `"build:magic-wand:atoms": "vite build --config vite.magic-wand.config.js"` to monorepo scripts.
+- Atoms Manifest (`public/dist/atoms-manifest.json`): Published machine-readable component manifest documenting registered atoms, attributes, props, and Gutenberg tag bindings for AI and block generators.
+- Dynamic Anatomy Engine for Wireframe SVGs (`admin/js/customizer/wireframes.js`): Replaced 436-line switch-case wireframe generator with an anatomy-driven vector generator. Supports 9 distinct layout archetypes (`hero-overlap`, `hero-centered`, `split-right-media`, `grid`, `pricing`, `testimonials`, `faq`, `cta`, `numbers`) with proportional columns, badges, cards, buttons, and icons.
+- Section Anatomy Annotations across all 6 Section Catalogs (`includes/sections/`): Annotated 100% of the 63 canonical section patterns (`category-hero-overlap.php`, `category-content-about.php`, `category-features-numbers.php`, `category-team-testimonials.php`, `category-cta-contact.php`, `category-pricing-portfolio.php`) with explicit layout anatomy (`layout`, `columns`, `hasCards`, `hasMedia`, `hasButtons`, `hasIcons`, `hasBadge`).
+- Automatic Fallback Layout Derivation (`admin/js/customizer/wireframes.js`): Added `deriveAnatomyFromContent()` to parse Gutenberg block markup via pattern matching to gracefully resolve wireframe layouts when explicit anatomy metadata is absent.
+
+### Changed
+- Customizer Section Library Modal (`admin/js/customizer/section-modal.js`): Updated `getWireframeSvg` calls to pass complete section definitions, enabling 1:1 dynamic SVG rendering corresponding to the actual section structure instead of generic repeating wireframes.
+- Script and Style Enqueues (`public/class-xophz-compass-magic-wand-public.php`, `includes/class-xophz-compass-magic-wand.php`): Registered and enqueued `magic-wand-atoms` runtime script and stylesheet on frontend pages and Customizer previews where atoms are detected.
+- Preview Page Detection & Active Page Title Resolution (`includes/class-xophz-compass-magic-wand.php`, `public/class-xophz-compass-magic-wand-public.php`, `admin/js/xophz-compass-magic-wand-customizer.js`, `admin/css/xophz-compass-magic-wand-admin.css`): Hooked `enqueue_preview_scripts` to `wp_enqueue_scripts` instead of `customize_preview_init` so the queried object ID is parsed and accessible. Resolved `$page_id` and `$page_title` from `get_queried_object_id()`, fixing the bug where the active page badge erroneously displayed "Home" on non-front pages such as Services. Added native styling and event binding for the Homepage Settings subnavigation link with smooth focus chaining.
+- Customizer Section & Navigation Emoji Styling (`admin/css/xophz-compass-magic-wand-admin.css`): Styled `.mh-section-emoji` and `.mh-nav-icon` with 1.45em font scaling, inline-block alignment, drop shadow, and tactile hover scale for enriched visual hierarchy across Customizer section lists and menus.
+
+## [26.9.14] - 2026-09-06
+
+### Added
+- Modular Customizer Module Architecture (`admin/js/customizer/`): Decomposed the monolithic 1,998-line `xophz-compass-magic-wand-customizer.js` into crystalline single-responsibility modules coordinated under the `window.mhCustomizer` namespace.
+  - `types.d.ts`: Pure TypeScript definitions for Customizer sections, instances, items, and settings adhering to Quantum Engineering Standards Protocol 4A.
+  - `utils.js`: Shared utility module containing HTML attribute escaping (`escAttr`), anchor slugification (`slugify`), and self-cleaning timer debouncing (`createDebounce`).
+  - `wireframes.js`: Lightweight SVG wireframe illustration generator (`getWireframeSvg`) and category Dashicon mapping (`catIconMap`) with zero external bitmap dependencies.
+  - `default-items.js`: Authentic section archetype content schema provider (`getDefaultItems`) completely free of synthetic personal identities.
+  - `state.js`: Encapsulated state and storage controller managing active page tracking, cache, and WordPress AJAX synchronization using 2-stage atomic booleans.
+  - `section-modal.js`: Section Library Modal manager featuring category navigation, source filtering, 2-stage atomic boolean search filtering, and responsive device live preview.
+  - `side-rail.js`: Native WordPress Customizer 3rd Controls Screen drawer engine with tabbed navigation, item accordion repeater, background styling, and debounced preview synchronization.
+  - `section-list.js`: Screen 2 Page Settings rows controller with jQuery UI drag-and-drop sortable, item action triggers, and homepage template switching.
+
+### Changed
+- Customizer Orchestrator Entrypoint (`admin/js/xophz-compass-magic-wand-customizer.js`): Streamlined into a lightweight 114-line lifecycle orchestrator initializing submodules and binding previewer postMessage events (`mh-preview-page-loaded`, `mh-page-sections-updated`, `mh-open-section-side-rail`).
+- Admin Script Enqueueing (`admin/class-xophz-compass-magic-wand-admin.php`): Enqueued all customizer submodules in structured dependency sequence before the orchestrator script.
+- Zero-Inline-Style Compliance (`admin/css/xophz-compass-magic-wand-admin.css`): Added dedicated CSS classes (`.mh-active-page-badge`, `.mh-modal-empty-state`, `.mh-preview-empty`) and Level 4 CSS variables (`--mh-badge-color`, `--mh-swatch-color`, `--mh-grad-val`) to replace all inline styles.
+
+### Removed
+- Monolithic Customizer Script: Purged 1,998-line monolithic script structure.
+- Synthetic Mock Data: Purged all hardcoded mock identities, fake personal names, dummy emails, and fake phone numbers from default section items.
+
 ## [26.9.13] - 2026-09-06
 
 ### Added
@@ -18,6 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Design Token Integration: Integrated theme.json presets (`var:preset|spacing|*`, `has-surface-body-background-color`, `has-brand-base-color`) and CSS custom properties across all section markup.
 
 ### Fixed
+- Section Insertion Preview Refresh Synchronization (`admin/js/xophz-compass-magic-wand-customizer.js`): Fixed race condition where inserting a section in the Customizer required manually refreshing the browser for it to appear. Updated `saveSections` to accept an `onComplete` callback triggered when the asynchronous `mh_save_page_sections` AJAX request completes, and updated `insertSectionById` to delay `api.previewer.refresh()` until the database metadata and block content are fully committed, accompanied by a defensive timeout fallback.
 - Section Library Modal Blank State (`includes/sections/*.php`, `includes/sections-catalog.php`, `admin/js/xophz-compass-magic-wand-customizer.js`): Fixed issue where Customizer Section Library modal came up blank with 0 matching sections. Stripped redundant `magic-wand-` prefix from all 63 section category keys in `includes/sections/` to align with the canonical taxonomy slugs (`hero`, `clients`, `features`, etc.) in the pattern registry. Added defensive category normalization in `mh_get_sections_catalog()` and `xophz-compass-magic-wand-customizer.js` to ensure consistent category matching and wireframe SVG generation.
 
 ### Removed

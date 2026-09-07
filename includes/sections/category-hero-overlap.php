@@ -23,36 +23,41 @@ return array(
 		'icon'     => 'dashicons-format-image',
 		'color'    => '#2563eb',
 		'source'   => 'core',
+		'anatomy'  => array(
+			'layout'     => 'split-right-media',
+			'hasBadge'   => true,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-hero","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-hero has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-hero has-surface-body-background-color has-background">
 	<!-- wp:columns {"verticalAlignment":"center","align":"wide"} -->
 	<div class="wp-block-columns alignwide are-vertically-aligned-center">
 		<!-- wp:column {"verticalAlignment":"center","width":"55%"} -->
-		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:55%">
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:55%;">
 			<!-- wp:group {"style":{"border":{"radius":"9999px","width":"1px","color":"rgba(37,99,235,0.25)"},"spacing":{"padding":{"top":"var:preset|spacing|1","bottom":"var:preset|spacing|1","left":"var:preset|spacing|3","right":"var:preset|spacing|3"}}},"backgroundColor":"surface-card","layout":{"type":"flex","justifyContent":"left"}} -->
-			<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:9999px;border-width:1px;border-color:rgba(37,99,235,0.25);padding-top:var(--wp--preset--spacing--1);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--1);padding-left:var(--wp--preset--spacing--3);box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 				<!-- wp:paragraph {"textColor":"brand-base","fontSize":"xs","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-				<p class="has-brand-base-color has-text-color has-xs-font-size">NEXT GENERATION PLATFORM</p>
+			<p style="font-weight:700;letter-spacing:1px;" class="has-brand-base-color has-text-color has-xs-font-size">NEXT GENERATION PLATFORM</p>
 				<!-- /wp:paragraph -->
 			</div>
 			<!-- /wp:group -->
 
 			<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"clamp(2.5rem, 5vw, 3.75rem)","lineHeight":"1.15","fontWeight":"800"}},"textColor":"text-heading"} -->
-			<h1 class="wp-block-heading has-text-heading-color has-text-color">Build Stunning Experiences with Quantum Precision</h1>
+			<h1 style="font-size:clamp(2.5rem, 5vw, 3.75rem);font-weight:800;line-height:1.15;" class="wp-block-heading has-text-heading-color has-text-color">Build Stunning Experiences with Quantum Precision</h1>
 			<!-- /wp:heading -->
 
 			<!-- wp:paragraph {"textColor":"text-muted","style":{"typography":{"fontSize":"1.125rem","lineHeight":"1.6"}}} -->
-			<p class="has-text-muted-color has-text-color">Craft responsive, accessible web applications with unified tokens, modular patterns, and zero-entropy engineering.</p>
+			<p style="font-size:1.125rem;line-height:1.6;" class="has-text-muted-color has-text-color">Craft responsive, accessible web applications with unified tokens, modular patterns, and zero-entropy engineering.</p>
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|6"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--6);" class="wp-block-buttons">
 				<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"}}} -->
-				<div class="wp-block-button"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#get-started">Get Started</a></div>
+				<div style="border-radius:6px;" class="wp-block-button"><a style="border-radius:6px;font-weight:700;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#get-started">Get Started</a></div>
 				<!-- /wp:button -->
 
 				<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px","width":"1px"}}} -->
-				<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#explore">Explore Features</a></div>
+				<div style="border-radius:6px;" class="wp-block-button is-style-outline"><a style="border-radius:6px;border-width:1px;" class="wp-block-button__link wp-element-button" href="#explore">Explore Features</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -60,11 +65,11 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"verticalAlignment":"center","width":"45%"} -->
-		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:45%">
+		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:45%;">
 			<!-- wp:group {"className":"mh-mock-media-box","style":{"border":{"radius":"12px"},"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|8","right":"var:preset|spacing|8"}}},"backgroundColor":"surface-section","layout":{"type":"flex","orientation":"vertical","justifyContent":"center","alignItems":"center"}} -->
-			<div class="wp-block-group mh-mock-media-box has-surface-section-background-color has-background">
+	<div style="border-radius:12px;padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--8);" class="wp-block-group mh-mock-media-box has-surface-section-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">HERO MEDIA SHOWCASE</p>
+			<p style="font-weight:700;letter-spacing:1px;" class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">HERO MEDIA SHOWCASE</p>
 				<!-- /wp:paragraph -->
 			</div>
 			<!-- /wp:group -->
@@ -84,22 +89,27 @@ return array(
 		'icon'     => 'dashicons-align-center',
 		'color'    => '#3b82f6',
 		'source'   => 'core',
+		'anatomy'  => array(
+			'layout'     => 'hero-centered',
+			'hasBadge'   => false,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-hero-centered","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-hero-centered has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-hero-centered has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"clamp(2.5rem, 6vw, 4.25rem)","lineHeight":"1.1","fontWeight":"800"}},"textColor":"text-heading"} -->
-		<h1 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Modern Websites Crafted with Pure Simplicity</h1>
+			<h1 style="font-size:clamp(2.5rem, 6vw, 4.25rem);font-weight:800;line-height:1.1;" class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Modern Websites Crafted with Pure Simplicity</h1>
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"typography":{"fontSize":"1.25rem","lineHeight":"1.6"}},"layout":{"type":"constrained","justifyContent":"center"}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Synthesizing real-time token standards, modular Gutenberg patterns, and direct visual canvas controls into a pure blank-canvas experience.</p>
+			<p style="font-size:1.25rem;line-height:1.6;" class="has-text-align-center has-text-muted-color has-text-color">Synthesizing real-time token standards, modular Gutenberg patterns, and direct visual canvas controls into a pure blank-canvas experience.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-		<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 			<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"}}} -->
-			<div class="wp-block-button"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#get-started">Get Started</a></div>
+				<div style="border-radius:6px;" class="wp-block-button"><a style="border-radius:6px;font-weight:700;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#get-started">Get Started</a></div>
 			<!-- /wp:button -->
 		</div>
 		<!-- /wp:buttons -->
@@ -117,22 +127,27 @@ return array(
 		'icon'     => 'dashicons-align-center',
 		'color'    => '#6366f1',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'hero-overlap',
+			'columns'  => 2,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-overlap mh-section-overlap-four-boxes stripped-about-four-boxes-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-four-boxes stripped-about-four-boxes-section">
+	<div style="padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-four-boxes stripped-about-four-boxes-section">
 	<!-- wp:columns {"align":"wide","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|6"}}}} -->
-	<div class="wp-block-columns alignwide">
+	<div style="margin-bottom:var(--wp--preset--spacing--6);" class="wp-block-columns alignwide">
 		<!-- wp:column {"verticalAlignment":"center","width":"50%","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|8","right":"var:preset|spacing|8"}},"border":{"radius":"8px"}},"backgroundColor":"surface-section"} -->
-		<div class="wp-block-column is-vertically-aligned-center has-surface-section-background-color has-background">
+		<div class="wp-block-column is-vertically-aligned-center mh-mock-media-box has-surface-section-background-color has-background" style="flex-basis:50%;border-radius:8px;padding:var(--wp--preset--spacing--8);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px dashed #cbd5e1;padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--8);">
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">VISUAL SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size" style="font-weight:700;letter-spacing:1px;"><i class="fa fa-image" style="font-size:36px;display:block;margin-bottom:12px;color:#94a3b8;"></i>VISUAL SHOWCASE</p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->
 
 		<!-- wp:column {"verticalAlignment":"center","width":"50%","style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|8","right":"var:preset|spacing|8"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column is-vertically-aligned-center has-surface-card-background-color has-background">
+		<div style="flex-basis:50%;border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--8);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column is-vertically-aligned-center has-surface-card-background-color has-background">
 			<!-- wp:paragraph {"textColor":"brand-base","fontSize":"xs","style":{"typography":{"fontWeight":"700","letterSpacing":"1.5px"}}} -->
-			<p class="has-brand-base-color has-text-color has-xs-font-size">LOREM IPSUM DOLOR</p>
+			<p style="font-weight:700;letter-spacing:1.5px;" class="has-brand-base-color has-text-color has-xs-font-size">LOREM IPSUM DOLOR</p>
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"level":2,"textColor":"text-heading"} -->
@@ -150,9 +165,9 @@ return array(
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column {"verticalAlignment":"center","width":"50%","style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|8","right":"var:preset|spacing|8"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column is-vertically-aligned-center has-surface-card-background-color has-background">
+		<div style="flex-basis:50%;border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--8);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column is-vertically-aligned-center has-surface-card-background-color has-background">
 			<!-- wp:paragraph {"textColor":"brand-base","fontSize":"xs","style":{"typography":{"fontWeight":"700","letterSpacing":"1.5px"}}} -->
-			<p class="has-brand-base-color has-text-color has-xs-font-size">LOREM IPSUM DOLOR</p>
+			<p style="font-weight:700;letter-spacing:1.5px;" class="has-brand-base-color has-text-color has-xs-font-size">LOREM IPSUM DOLOR</p>
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"level":2,"textColor":"text-heading"} -->
@@ -166,9 +181,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"verticalAlignment":"center","width":"50%","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|8","right":"var:preset|spacing|8"}},"border":{"radius":"8px"}},"backgroundColor":"surface-section"} -->
-		<div class="wp-block-column is-vertically-aligned-center has-surface-section-background-color has-background">
+		<div class="wp-block-column is-vertically-aligned-center mh-mock-media-box has-surface-section-background-color has-background" style="flex-basis:50%;border-radius:8px;padding:var(--wp--preset--spacing--8);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px dashed #cbd5e1;padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--8);">
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">VISUAL SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size" style="font-weight:700;letter-spacing:1px;"><i class="fa fa-image" style="font-size:36px;display:block;margin-bottom:12px;color:#94a3b8;"></i>VISUAL SHOWCASE</p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->
@@ -186,14 +201,20 @@ return array(
 		'icon'     => 'dashicons-align-center',
 		'color'    => '#6366f1',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'hero-overlap',
+			'columns'    => 4,
+			'hasIcons'   => true,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-overlap mh-section-overlap-coloured-boxes stripped-coloured-icon-boxes","style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-coloured-boxes stripped-coloured-icon-boxes">
+	<div style="padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-coloured-boxes stripped-coloured-icon-boxes">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"9999px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:9999px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-bolt"></i></p>
 				<!-- /wp:paragraph -->
@@ -209,9 +230,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"backgroundColor":"brand-muted","textColor":"brand-base","style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size"><a style="border-radius:6px;font-weight:700;" class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -219,9 +240,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"9999px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:9999px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-cloud"></i></p>
 				<!-- /wp:paragraph -->
@@ -237,9 +258,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"backgroundColor":"brand-muted","textColor":"brand-base","style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size"><a style="border-radius:6px;font-weight:700;" class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -247,9 +268,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"9999px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:9999px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-signal"></i></p>
 				<!-- /wp:paragraph -->
@@ -265,9 +286,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"backgroundColor":"brand-muted","textColor":"brand-base","style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size"><a style="border-radius:6px;font-weight:700;" class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -275,9 +296,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"9999px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:9999px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-pie-chart"></i></p>
 				<!-- /wp:paragraph -->
@@ -293,9 +314,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"backgroundColor":"brand-muted","textColor":"brand-base","style":{"border":{"radius":"6px"},"typography":{"fontWeight":"700"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size"><a style="border-radius:6px;font-weight:700;" class="wp-block-button__link has-brand-base-color has-brand-muted-background-color has-text-color has-background wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -315,22 +336,28 @@ return array(
 		'icon'     => 'dashicons-align-center',
 		'color'    => '#6366f1',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'hero-overlap',
+			'columns'    => 3,
+			'hasButtons' => true,
+			'hasCards'   => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-overlap mh-section-overlap-image-cards stripped-features-image-cards-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-image-cards stripped-features-image-cards-section">
+	<div style="padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-image-cards stripped-features-image-cards-section">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"0","bottom":"var:preset|spacing|6","left":"0","right":"0"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:0;padding-right:0;padding-bottom:var(--wp--preset--spacing--6);padding-left:0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":{"topLeft":"8px","topRight":"8px","bottomLeft":"0px","bottomRight":"0px"}}},"backgroundColor":"surface-section","layout":{"type":"flex","orientation":"vertical","justifyContent":"center","alignItems":"center"}} -->
-			<div class="wp-block-group has-surface-section-background-color has-background">
+	<div class="wp-block-group mh-mock-media-box has-surface-section-background-color has-background" style="border-top-left-radius:8px;border-top-right-radius:8px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;padding:var(--wp--preset--spacing--8);min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-bottom:1px solid #e2e8f0;padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);">
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size" style="font-weight:700;letter-spacing:1px;"><i class="fa fa-image" style="font-size:32px;display:block;margin-bottom:8px;color:#94a3b8;"></i>MEDIA SHOWCASE</p>
 				<!-- /wp:paragraph -->
 			</div>
 			<!-- /wp:group -->
 
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|2","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-			<div class="wp-block-group">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--2);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Responsive Design</h3>
 				<!-- /wp:heading -->
@@ -340,9 +367,9 @@ return array(
 				<!-- /wp:paragraph -->
 
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-				<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -352,17 +379,17 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"0","bottom":"var:preset|spacing|6","left":"0","right":"0"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:0;padding-right:0;padding-bottom:var(--wp--preset--spacing--6);padding-left:0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":{"topLeft":"8px","topRight":"8px","bottomLeft":"0px","bottomRight":"0px"}}},"backgroundColor":"surface-section","layout":{"type":"flex","orientation":"vertical","justifyContent":"center","alignItems":"center"}} -->
-			<div class="wp-block-group has-surface-section-background-color has-background">
+	<div class="wp-block-group mh-mock-media-box has-surface-section-background-color has-background" style="border-top-left-radius:8px;border-top-right-radius:8px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;padding:var(--wp--preset--spacing--8);min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-bottom:1px solid #e2e8f0;padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);">
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size" style="font-weight:700;letter-spacing:1px;"><i class="fa fa-image" style="font-size:32px;display:block;margin-bottom:8px;color:#94a3b8;"></i>MEDIA SHOWCASE</p>
 				<!-- /wp:paragraph -->
 			</div>
 			<!-- /wp:group -->
 
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|2","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-			<div class="wp-block-group">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--2);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Clean Code Architecture</h3>
 				<!-- /wp:heading -->
@@ -372,9 +399,9 @@ return array(
 				<!-- /wp:paragraph -->
 
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-				<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -384,17 +411,17 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"0","bottom":"var:preset|spacing|6","left":"0","right":"0"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:0;padding-right:0;padding-bottom:var(--wp--preset--spacing--6);padding-left:0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":{"topLeft":"8px","topRight":"8px","bottomLeft":"0px","bottomRight":"0px"}}},"backgroundColor":"surface-section","layout":{"type":"flex","orientation":"vertical","justifyContent":"center","alignItems":"center"}} -->
-			<div class="wp-block-group has-surface-section-background-color has-background">
+	<div class="wp-block-group mh-mock-media-box has-surface-section-background-color has-background" style="border-top-left-radius:8px;border-top-right-radius:8px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;padding:var(--wp--preset--spacing--8);min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-bottom:1px solid #e2e8f0;padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);">
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm","style":{"typography":{"fontWeight":"700","letterSpacing":"1px"}}} -->
-				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size" style="font-weight:700;letter-spacing:1px;"><i class="fa fa-image" style="font-size:32px;display:block;margin-bottom:8px;color:#94a3b8;"></i>MEDIA SHOWCASE</p>
 				<!-- /wp:paragraph -->
 			</div>
 			<!-- /wp:group -->
 
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|2","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-			<div class="wp-block-group">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--2);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Circadian Theming</h3>
 				<!-- /wp:heading -->
@@ -404,9 +431,9 @@ return array(
 				<!-- /wp:paragraph -->
 
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-				<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -428,14 +455,20 @@ return array(
 		'icon'     => 'dashicons-align-center',
 		'color'    => '#6366f1',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'hero-overlap',
+			'columns'    => 4,
+			'hasIcons'   => true,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-overlap mh-section-overlap-icons stripped-features-overlapped-icons-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-icons stripped-features-overlapped-icons-section">
+	<div style="padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-overlap mh-section-overlap-icons stripped-features-overlapped-icons-section">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-bolt"></i></p>
 				<!-- /wp:paragraph -->
@@ -451,9 +484,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -461,9 +494,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-rocket"></i></p>
 				<!-- /wp:paragraph -->
@@ -479,9 +512,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -489,9 +522,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-signal"></i></p>
 				<!-- /wp:paragraph -->
@@ -507,9 +540,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->
@@ -517,9 +550,9 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:group {"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"var:preset|spacing|3","bottom":"var:preset|spacing|3","left":"var:preset|spacing|3","right":"var:preset|spacing|3"},"margin":{"bottom":"var:preset|spacing|4"}}},"backgroundColor":"brand-muted","layout":{"type":"flex","justifyContent":"center"}} -->
-			<div class="wp-block-group has-brand-muted-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--3);padding-right:var(--wp--preset--spacing--3);padding-bottom:var(--wp--preset--spacing--3);padding-left:var(--wp--preset--spacing--3);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-brand-muted-background-color has-background">
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","fontSize":"lg"} -->
 				<p class="has-text-align-center has-brand-base-color has-text-color has-lg-font-size"><i class="fa fa-cogs"></i></p>
 				<!-- /wp:paragraph -->
@@ -535,9 +568,9 @@ return array(
 			<!-- /wp:paragraph -->
 
 			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-			<div class="wp-block-buttons">
+			<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-buttons">
 				<!-- wp:button {"variant":"outline","style":{"border":{"radius":"6px"}},"fontSize":"xs"} -->
-				<div class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
+				<div style="border-radius:6px;" class="wp-block-button has-custom-font-size has-xs-font-size is-style-outline"><a style="border-radius:6px;" class="wp-block-button__link wp-element-button" href="#learn-more">Learn More</a></div>
 				<!-- /wp:button -->
 			</div>
 			<!-- /wp:buttons -->

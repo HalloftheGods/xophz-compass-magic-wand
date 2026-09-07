@@ -69,8 +69,27 @@
 
 	// ── Editable Text Elements ────────────────────────────────
 	function initEditables() {
-		$('.mh-section [data-mw-edit], .mw-section [data-mw-edit]').each(function() {
-			$(this).attr('contenteditable', 'true').addClass('mw-editable');
+		var $sections = getTargetSections();
+		$sections.each(function() {
+			var $sec = $(this);
+			// Find all editable text nodes within the section
+			var $textEls = $sec.find('h1, h2, h3, h4, h5, h6, p, .wp-block-heading, .wp-block-paragraph, .wp-block-button__link, x-chip, .mh-section-badge, blockquote, li, [data-mw-edit]');
+			
+			$textEls.each(function() {
+				var $el = $(this);
+				// Exclude customizer chrome elements
+				if ($el.closest('#mw-overlays, .mw-preview-badge, #mw-format-toolbar, #mw-link-popover, .mw-insert-notch').length) {
+					return;
+				}
+				// Exclude parent containers that have nested headings or paragraphs
+				if ($el.find('h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote').length > 0) {
+					return;
+				}
+				$el.attr('contenteditable', 'true').addClass('mw-editable');
+				if (typeof $el.attr('data-mw-orig-text') === 'undefined') {
+					$el.attr('data-mw-orig-text', $el.text().trim());
+				}
+			});
 		});
 	}
 
@@ -80,46 +99,48 @@
 		$(this).focus();
 	});
 
-	var mwEditDebounceTimer = null;
-
 	function commitMwEditChange($el) {
 		if ( ! $el || ! $el.length ) return;
-		var $section = $el.closest('.mh-section, .mw-section');
-		var index = $('.mh-section, .mw-section').index($section);
-		var key = $el.attr('data-mw-edit');
+		var $section = $el.closest('.mh-section, .mw-section, .wp-block-group');
+		var index = getTargetSections().index($section);
+		if ( index === -1 ) {
+			index = $('.mh-section, .mw-section').index($section);
+		}
+		var key = $el.attr('data-mw-edit') || '';
+		var origText = $el.attr('data-mw-orig-text') || '';
 		var newText = $el.text().trim();
+
+		if ( origText === newText ) return;
+
+		$el.attr('data-mw-orig-text', newText);
 
 		var sections = getSections();
 		if ( index > -1 && index < sections.length ) {
 			sections[index].edits = sections[index].edits || {};
-			if ( sections[index].edits[key] === newText ) return;
-			sections[index].edits[key] = newText;
+			var editKey = key || origText || ('text_' + Date.now());
+			sections[index].edits[editKey] = newText;
+
+			// Replace in section block content if available
+			if ( sections[index].content && origText ) {
+				sections[index].content = sections[index].content.replace(origText, newText);
+			}
 			saveSections(sections);
 		}
 	}
 
-	$(document).on('keyup input', '[data-mw-edit]', function(e) {
-		var $el = $(this);
-		if ( e.type === 'keyup' && ['Shift', 'Control', 'Alt', 'Meta', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) !== -1 ) {
-			return;
-		}
-
-		if ( mwEditDebounceTimer ) {
-			clearTimeout(mwEditDebounceTimer);
-		}
-		mwEditDebounceTimer = setTimeout(function() {
-			commitMwEditChange($el);
-			mwEditDebounceTimer = null;
-		}, 750);
-	});
-
-	$(document).on('blur', '[data-mw-edit]', function() {
-		if ( mwEditDebounceTimer ) {
-			clearTimeout(mwEditDebounceTimer);
-			mwEditDebounceTimer = null;
-		}
+	$(document).on('blur', '.mw-editable, [data-mw-edit]', function() {
 		commitMwEditChange($(this));
 	});
+
+	// Commit any active focused section edit before Customizer saves/publishes
+	if ( parentApi && parentApi.previewer ) {
+		parentApi.previewer.bind('save', function() {
+			var $active = $(':focus.mw-editable, :focus[data-mw-edit]');
+			if ( $active.length ) {
+				commitMwEditChange($active);
+			}
+		});
+	}
 
 	// ── Floating Text Format Toolbar ──────────────────────────
 	var $formatToolbar = $(
@@ -315,18 +336,46 @@
 		var $sections = getTargetSections();
 		$sections.each(function(i) {
 			var $sec = $(this);
-			var type = $sec.attr('data-section-type') || 'custom';
+			var type = $sec.attr('data-section-type');
+			if (!type) {
+				var cls = $sec.attr('class') || '';
+				var m = cls.match(/\bmh-section-([a-z0-9-]+)\b/);
+				if (m && m[1] && m[1] !== 'boxed' && m[1] !== 'full-width') {
+					type = m[1];
+				} else {
+					type = 'custom';
+				}
+			}
 			var anchor = $sec.attr('id') || ('section-' + (i + 1));
-			var heading = $sec.find('[data-mw-edit="title"], h1, h2, h3').first().text().trim();
-			var sub = $sec.find('[data-mw-edit="subtitle"], p.has-text-muted-color').first().text().trim();
+			var heading = $sec.find('h1, h2, h3, h4, h5, h6, [data-mw-edit="title"]').first().text().trim();
+			var sub = $sec.find('p.has-text-muted-color, [data-mw-edit="subtitle"]').first().text().trim();
 			var label = heading || anchor.replace(/[-_]/g, ' ');
 			label = label.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
 			var isFull = $sec.hasClass('mh-section-full-width');
+
+			// Collect living element outline of the section for the Side Rail Element Navigator
+			var elements = [];
+			$sec.find('h1, h2, h3, h4, h5, h6, p, .wp-block-button__link, img').each(function(eIdx) {
+				var $el = $(this);
+				if ($el.closest('#mw-overlays, .mw-preview-badge, #mw-format-toolbar, .mw-insert-notch, #mw-link-popover').length) {
+					return;
+				}
+				var tag = this.tagName.toLowerCase();
+				var text = (tag === 'img') ? ($el.attr('alt') || $el.attr('src') || 'Image') : $el.text().trim();
+				if (!text && tag !== 'img') return;
+				if (text.length > 36) text = text.substring(0, 33) + '...';
+				elements.push({
+					tag: tag,
+					text: text,
+					selector: tag + ':eq(' + $sec.find(tag).index($el) + ')'
+				});
+			});
 
 			harvested.push({
 				type: type,
 				id: 'section_' + i,
 				label: label,
+				elements: elements,
 				settings: {
 					title: heading || label,
 					subtitle: sub || '',
@@ -525,40 +574,49 @@
 			parent.mhOpenSectionSideRail(idx);
 		}
 		if ( parentApi && parentApi.previewer ) {
-			parentApi.previewer.send('mh-open-section-side-rail', { index: idx });
+			var sections = getSections();
+			var secElements = (sections[idx] && sections[idx].elements) ? sections[idx].elements : [];
+			parentApi.previewer.send('mh-open-section-side-rail', { index: idx, elements: secElements });
 		}
 	});
 
 	// ── Image Replacement (WP Media Library) ──────────────────
 	var mediaFrame;
-	$(document).on('click', '[data-mw-image]', function(e) {
+	$(document).on('click', '[data-mw-image], .mh-section img, .mw-section img, .wp-block-image img', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		var $el = $(this);
-		var $section = $el.closest('.mh-section');
-		var index = $('.mh-section').index($section);
-		var key = $el.attr('data-mw-image');
+		var $section = $el.closest('.mh-section, .mw-section, .wp-block-group');
+		var index = getTargetSections().index($section);
+		if ( index === -1 ) index = $('.mh-section').index($section);
+		var key = $el.attr('data-mw-image') || ('img_' + $section.find('img').index($el));
+		var oldSrc = $el.attr('src') || '';
 		
 		if ( mediaFrame ) {
-			mediaFrame.open();
-			return;
+			mediaFrame.off('select');
 		}
 		
-		mediaFrame = parent.wp.media({
+		mediaFrame = (parent.wp && parent.wp.media) ? parent.wp.media({
 			title: 'Select or Upload Image',
 			button: { text: 'Use this Image' },
 			multiple: false
-		});
+		}) : null;
+
+		if ( !mediaFrame ) return;
 		
 		mediaFrame.on('select', function() {
 			var attachment = mediaFrame.state().get('selection').first().toJSON();
 			var newSrc = attachment.url;
 			$el.attr('src', newSrc);
+			$el.removeAttr('srcset');
 			
 			var sections = getSections();
 			if ( index > -1 && index < sections.length ) {
 				if ( !sections[index].edits ) sections[index].edits = {};
 				sections[index].edits[key] = newSrc;
+				if ( sections[index].content && oldSrc ) {
+					sections[index].content = sections[index].content.replace(oldSrc, newSrc);
+				}
 				saveSections(sections);
 			}
 		});
@@ -568,33 +626,36 @@
 
 	// ── Link Popover ──────────────────────────────────────────
 	var $linkPopover = $(
-		'<div id="mw-link-popover" style="position:absolute;display:none;background:#ffffff;padding:8px;border-radius:6px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.15);z-index:99999;border:1px solid #e2e8f0;gap:6px;align-items:center;">' +
-			'<input type="text" placeholder="https://" style="border:1px solid #cbd5e1;padding:6px 10px;border-radius:4px;font-size:12px;color:#0f172a;width:220px;outline:none;" />' +
-			'<button type="button" style="background:#2563eb;color:#ffffff;border:none;border-radius:4px;padding:6px 12px;cursor:pointer;font-size:12px;font-weight:600;">Apply</button>' +
+		'<div id="mw-link-popover" style="position:absolute;display:none;background:#0f172a;padding:8px 12px;border-radius:9999px;box-shadow:0 10px 25px -5px rgba(0,0,0,0.4);z-index:99999;border:1px solid rgba(255,255,255,0.18);gap:6px;align-items:center;">' +
+			'<input type="text" placeholder="https:// or #anchor" style="border:1px solid rgba(255,255,255,0.2);background:#1e293b;padding:5px 10px;border-radius:9999px;font-size:12px;color:#f8fafc;width:200px;outline:none;" />' +
+			'<button type="button" style="background:#2563eb;color:#ffffff;border:none;border-radius:9999px;padding:5px 12px;cursor:pointer;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Apply</button>' +
 		'</div>'
 	);
 	$('body').append($linkPopover);
 
 	var currentLinkEl = null;
 
-	$(document).on('click', 'a[data-mw-edit]', function(e) {
+	$(document).on('click', 'a[data-mw-edit], .mh-section .wp-block-button__link, .mw-section .wp-block-button__link, .mh-section a.button, .mw-section a.button', function(e) {
 		e.preventDefault();
 		currentLinkEl = $(this);
 		var offset = currentLinkEl.offset();
-		var urlKey = currentLinkEl.attr('data-mw-edit') + '_url';
+		var urlKey = (currentLinkEl.attr('data-mw-edit') || 'btn') + '_url';
 		var sections = getSections();
-		var index = $('.mh-section').index(currentLinkEl.closest('.mh-section'));
+		var $section = currentLinkEl.closest('.mh-section, .mw-section, .wp-block-group');
+		var index = getTargetSections().index($section);
+		if ( index === -1 ) index = $('.mh-section').index($section);
+
 		var currentUrl = '#';
-		if (sections[index] && sections[index].edits && sections[index].edits[urlKey]) {
+		if ( sections[index] && sections[index].edits && sections[index].edits[urlKey] ) {
 			currentUrl = sections[index].edits[urlKey];
 		} else {
-			currentUrl = currentLinkEl.attr('href');
+			currentUrl = currentLinkEl.attr('href') || '#';
 		}
 
 		$linkPopover.find('input').val(currentUrl);
 		$linkPopover.css({
-			top: offset.top - $linkPopover.outerHeight() - 8,
-			left: offset.left,
+			top: Math.max(10, offset.top - $linkPopover.outerHeight() - 8),
+			left: Math.max(10, offset.left),
 			display: 'flex'
 		});
 	});
@@ -602,9 +663,12 @@
 	$linkPopover.find('button').on('click', function(e) {
 		e.stopPropagation();
 		if ( !currentLinkEl ) return;
-		var newUrl = $linkPopover.find('input').val();
-		var urlKey = currentLinkEl.attr('data-mw-edit') + '_url';
-		var index = $('.mh-section').index(currentLinkEl.closest('.mh-section'));
+		var newUrl = $linkPopover.find('input').val() || '#';
+		var oldUrl = currentLinkEl.attr('href') || '#';
+		var urlKey = (currentLinkEl.attr('data-mw-edit') || 'btn') + '_url';
+		var $section = currentLinkEl.closest('.mh-section, .mw-section, .wp-block-group');
+		var index = getTargetSections().index($section);
+		if ( index === -1 ) index = $('.mh-section').index($section);
 		
 		currentLinkEl.attr('href', newUrl);
 		
@@ -612,6 +676,9 @@
 		if ( index > -1 && index < sections.length ) {
 			if ( !sections[index].edits ) sections[index].edits = {};
 			sections[index].edits[urlKey] = newUrl;
+			if ( sections[index].content && oldUrl && oldUrl !== newUrl ) {
+				sections[index].content = sections[index].content.replace('href="' + oldUrl + '"', 'href="' + newUrl + '"');
+			}
 			saveSections(sections);
 		}
 		$linkPopover.hide();
@@ -619,7 +686,7 @@
 	});
 
 	$(document).on('click', function(e) {
-		if ( !$(e.target).closest('#mw-link-popover').length && !$(e.target).closest('a[data-mw-edit]').length ) {
+		if ( !$(e.target).closest('#mw-link-popover').length && !$(e.target).closest('a[data-mw-edit], .wp-block-button__link, a.button').length ) {
 			$linkPopover.hide();
 			currentLinkEl = null;
 		}
@@ -645,6 +712,23 @@
 				var $el = $('#' + slug);
 				if ($el.length) {
 					$('html, body').animate({ scrollTop: $el.offset().top - 32 }, 300);
+				}
+			});
+
+			window.wp.customize.preview.bind('mh-focus-element', function(data) {
+				if (!data || typeof data.index === 'undefined') return;
+				var $sections = getTargetSections();
+				var $sec = $sections.eq(data.index);
+				if (!$sec.length) return;
+				var $target = data.selector ? $sec.find(data.selector).first() : $sec;
+				if ($target.length) {
+					$('html, body').stop().animate({ scrollTop: Math.max(0, $target.offset().top - 90) }, 250);
+					$target.focus();
+					var origOutline = $target.css('outline');
+					$target.css({ 'outline': '2px solid #62c9ff', 'outline-offset': '4px' });
+					setTimeout(function() {
+						$target.css('outline', origOutline);
+					}, 1400);
 				}
 			});
 
@@ -726,13 +810,18 @@
 					$sec.attr('id', slug);
 				}
 
-				// Title & Subtitle live DOM update
-				if ( set.title && $sec.find('[data-mw-edit="title"], h1, h2').length ) {
-					$sec.find('[data-mw-edit="title"], h1, h2').first().text(set.title);
+				// Ensure editables are initialized on any modified markup
+				initEditables();
+
+				// Re-hydrate any Vue 3 Quantum Atoms on the canvas
+				if ( window.XophzMagicWandAtoms && typeof window.XophzMagicWandAtoms.mount === 'function' ) {
+					try {
+						window.XophzMagicWandAtoms.mount();
+					} catch (e) {
+						// Safe re-mount fallback
+					}
 				}
-				if ( set.subtitle && $sec.find('[data-mw-edit="subtitle"], p').length ) {
-					$sec.find('[data-mw-edit="subtitle"], p').first().text(set.subtitle);
-				}
+
 
 				positionOverlays();
 			});

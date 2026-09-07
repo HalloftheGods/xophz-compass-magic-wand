@@ -165,11 +165,11 @@ class Xophz_Compass_Magic_Wand extends Xophz_Compass_Plugin_Base {
 
 		$plugin_public = new Xophz_Compass_Magic_Wand_Public( $this->get_xophz_compass_magic_wand(), $this->get_version() );
 
-		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		// $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		
 		$this->loader->add_filter( 'the_content', $plugin_public, 'render_page_builder_content' );
-		$this->loader->add_action( 'customize_preview_init', $plugin_public, 'enqueue_preview_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_preview_scripts' );
 		$this->loader->add_action( 'customize_save_after', $plugin_public, 'sync_sections_to_front_page' );
 
 	}

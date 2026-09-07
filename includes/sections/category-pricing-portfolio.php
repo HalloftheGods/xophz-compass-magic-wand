@@ -22,31 +22,34 @@ return array(
 		'icon'     => 'dashicons-tag',
 		'color'    => '#10b981',
 		'source'   => 'core',
+		'anatomy'  => array(
+			'layout' => 'pricing',
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-pricing","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Simple, Transparent Pricing</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Choose the plan that fits your growth.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Choose the plan that fits your growth.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
 		<div class="wp-block-columns alignwide">
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Starter</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"textColor":"brand-base","style":{"typography":{"fontSize":"2rem","fontWeight":"800"}}} -->
-				<p class="has-brand-base-color has-text-color" style="font-size:2rem;font-weight:800">$19 / mo</p>
+			<p class="has-brand-base-color has-text-color" style="font-size:2rem;font-weight:800;">$19 / mo</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:buttons -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#signup">Get Started</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#signup">Get Started</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -54,17 +57,17 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card mh-pricing-popular","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px","width":"2px","color":"#2563eb"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card mh-pricing-popular has-surface-card-background-color has-background">
+		<div style="border-radius:8px;border-width:2px;border-color:#2563eb;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card mh-pricing-popular has-surface-card-background-color has-background">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Professional</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"textColor":"brand-base","style":{"typography":{"fontSize":"2rem","fontWeight":"800"}}} -->
-				<p class="has-brand-base-color has-text-color" style="font-size:2rem;font-weight:800">$49 / mo</p>
+			<p class="has-brand-base-color has-text-color" style="font-size:2rem;font-weight:800;">$49 / mo</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:buttons -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#signup">Choose Pro</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#signup">Choose Pro</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -72,17 +75,17 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Enterprise</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"textColor":"brand-base","style":{"typography":{"fontSize":"2rem","fontWeight":"800"}}} -->
-				<p class="has-brand-base-color has-text-color" style="font-size:2rem;font-weight:800">$99 / mo</p>
+			<p class="has-brand-base-color has-text-color" style="font-size:2rem;font-weight:800;">$99 / mo</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:buttons -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button" href="#contact">Contact Us</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a style="width:100%;" class="wp-block-button__link wp-element-button" href="#contact">Contact Us</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -104,8 +107,14 @@ return array(
 		'icon'     => 'dashicons-groups',
 		'color'    => '#64748b',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 4,
+			'hasCards' => false,
+			'hasIcons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-clients-strip clients-strip-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-clients-strip clients-strip-section has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-clients-strip clients-strip-section has-surface-body-background-color has-background">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column -->
@@ -170,15 +179,21 @@ return array(
 		'icon'     => 'dashicons-groups',
 		'color'    => '#64748b',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 4,
+			'hasCards' => true,
+			'hasIcons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-clients-grid clients-grid-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-clients-grid clients-grid-section has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-clients-grid clients-grid-section has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Some of Our Customers</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Trusted by engineering teams and innovators worldwide to accelerate digital transformation.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Trusted by engineering teams and innovators worldwide to accelerate digital transformation.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
@@ -219,7 +234,7 @@ return array(
 		<!-- /wp:columns -->
 
 		<!-- wp:columns {"align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|4"}}}} -->
-		<div class="wp-block-columns alignwide">
+	<div style="margin-top:var(--wp--preset--spacing--4);" class="wp-block-columns alignwide">
 			<!-- wp:column -->
 			<div class="wp-block-column">
 				<div class="mh-mock-client-box">
@@ -268,15 +283,21 @@ return array(
 		'icon'     => 'dashicons-portfolio',
 		'color'    => '#a855f7',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 3,
+			'hasCards' => true,
+			'hasMedia' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-portfolio-cards portfolio-cards-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-portfolio-cards portfolio-cards-section has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-portfolio-cards portfolio-cards-section has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Check Out Our Cool Projects</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">A curated selection of modern applications, responsive platforms, and creative design systems.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">A curated selection of modern applications, responsive platforms, and creative design systems.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
@@ -356,7 +377,7 @@ return array(
 		<!-- /wp:columns -->
 
 		<!-- wp:columns {"align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|6"}}}} -->
-		<div class="wp-block-columns alignwide">
+	<div style="margin-top:var(--wp--preset--spacing--6);" class="wp-block-columns alignwide">
 			<!-- wp:column {"className":"portfolio-cards-projectcol"} -->
 			<div class="wp-block-column portfolio-cards-projectcol">
 				<div class="portfolio-cards-projectcard">
@@ -444,6 +465,13 @@ return array(
 		'icon'     => 'dashicons-portfolio',
 		'color'    => '#a855f7',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'grid',
+			'columns'    => 3,
+			'hasCards'   => true,
+			'hasMedia'   => true,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-portfolio-full portfolio-full-section","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-portfolio-full portfolio-full-section">
 	<!-- wp:columns {"align":"full"} -->
@@ -521,6 +549,12 @@ return array(
 		'icon'     => 'dashicons-format-gallery',
 		'color'    => '#06b6d4',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 4,
+			'hasCards' => true,
+			'hasMedia' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-gallery-full full-width-gallery","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-gallery-full full-width-gallery">
 	<!-- wp:columns {"align":"wide"} -->
@@ -574,15 +608,21 @@ return array(
 		'icon'     => 'dashicons-format-gallery',
 		'color'    => '#06b6d4',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 3,
+			'hasCards' => true,
+			'hasMedia' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-gallery-grid gallery-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-gallery-grid gallery-section has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-gallery-grid gallery-section has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Visual Showcase</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">A curated selection of our recent projects and architectural systems</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">A curated selection of our recent projects and architectural systems</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
@@ -647,26 +687,29 @@ return array(
 		'icon'     => 'dashicons-layout',
 		'color'    => '#2563eb',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout' => 'pricing',
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-pricing-bw pricing-black-white-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-bw pricing-black-white-section has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-bw pricing-black-white-section has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Monochrome Pricing</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Simple, transparent pricing tiers with no hidden fees.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Simple, transparent pricing tiers with no hidden fees.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide","className":"mh-pricing-grid"} -->
 		<div class="wp-block-columns alignwide mh-pricing-grid">
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Starter</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"2.25rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800">$19 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800;">$19 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:list {"className":"mh-pricing-features"} -->
 				<ul class="wp-block-list mh-pricing-features">
@@ -679,7 +722,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#starter">Select Starter</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#starter">Select Starter</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -687,7 +730,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card mh-pricing-popular","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px","width":"2px","color":"#0f172a"}},"backgroundColor":"text-heading","textColor":"text-inverse"} -->
-			<div class="wp-block-column mh-pricing-card mh-pricing-popular has-text-inverse-color has-text-heading-background-color has-text-color has-background">
+		<div style="border-radius:8px;border-width:2px;border-color:#0f172a;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);" class="wp-block-column mh-pricing-card mh-pricing-popular has-text-inverse-color has-text-heading-background-color has-text-color has-background">
 				<!-- wp:paragraph {"align":"center","className":"mh-pricing-badge"} -->
 				<p class="has-text-align-center mh-pricing-badge">Popular</p>
 				<!-- /wp:paragraph -->
@@ -695,7 +738,7 @@ return array(
 				<h3 class="wp-block-heading has-text-align-center has-text-inverse-color has-text-color">Professional</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-inverse","style":{"typography":{"fontSize":"2.25rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-inverse-color has-text-color" style="font-size:2.25rem;font-weight:800">$49 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-border)">/ mo</span></p>
+			<p class="has-text-align-center has-text-inverse-color has-text-color" style="font-size:2.25rem;font-weight:800;">$49 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-border)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:list {"className":"mh-pricing-features"} -->
 				<ul class="wp-block-list mh-pricing-features">
@@ -708,7 +751,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#pro">Choose Pro</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#pro">Choose Pro</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -716,12 +759,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Enterprise</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"2.25rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800">$99 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800;">$99 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:list {"className":"mh-pricing-features"} -->
 				<ul class="wp-block-list mh-pricing-features">
@@ -734,7 +777,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button" href="#contact">Contact Us</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a style="width:100%;" class="wp-block-button__link wp-element-button" href="#contact">Contact Us</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -756,26 +799,29 @@ return array(
 		'icon'     => 'dashicons-layout',
 		'color'    => '#2563eb',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout' => 'pricing',
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-pricing-colors pricing-colors-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-colors pricing-colors-section has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-colors pricing-colors-section has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Flexible Plans</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Select the tier tailored to your workflow.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Select the tier tailored to your workflow.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide","className":"mh-pricing-grid"} -->
 		<div class="wp-block-columns alignwide mh-pricing-grid">
 			<!-- wp:column {"className":"mh-pricing-card mh-pricing-card-brand","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card mh-pricing-card-brand has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card mh-pricing-card-brand has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-hover"} -->
 				<h3 class="wp-block-heading has-text-align-center has-brand-hover-color has-text-color">Basic</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"2.25rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800">$29 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800;">$29 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Ideal for solo creators and freelancers</p>
@@ -783,7 +829,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-hover","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-hover-background-color has-text-color has-background wp-element-button" href="#basic">Get Started</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-hover-background-color has-text-color has-background wp-element-button" href="#basic">Get Started</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -791,12 +837,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card mh-pricing-card-success","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card mh-pricing-card-success has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card mh-pricing-card-success has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-base"} -->
 				<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color">Team</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"2.25rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800">$59 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800;">$59 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Designed for collaborating small teams</p>
@@ -804,7 +850,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#team">Get Started</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#team">Get Started</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -812,12 +858,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card mh-pricing-card-accent","style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card mh-pricing-card-accent has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card mh-pricing-card-accent has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-active"} -->
 				<h3 class="wp-block-heading has-text-align-center has-brand-active-color has-text-color">Business</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"2.25rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800">$119 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:2.25rem;font-weight:800;">$119 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Comprehensive tools for scaling brands</p>
@@ -825,7 +871,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-active","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-active-background-color has-text-color has-background wp-element-button" href="#business">Get Started</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-active-background-color has-text-color has-background wp-element-button" href="#business">Get Started</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -847,26 +893,29 @@ return array(
 		'icon'     => 'dashicons-layout',
 		'color'    => '#2563eb',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout' => 'pricing',
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-pricing-double pricing-double-colors-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-double pricing-double-colors-section has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-double pricing-double-colors-section has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Full Feature Comparison</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Four distinct tiers for every stage of growth.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Four distinct tiers for every stage of growth.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide","className":"mh-pricing-grid"} -->
 		<div class="wp-block-columns alignwide mh-pricing-grid">
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|4","right":"var:preset|spacing|4"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--4);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--4);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":4,"textColor":"text-heading"} -->
 				<h4 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Free</h4>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"1.75rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800">$0</p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800;">$0</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Basic Starter</p>
@@ -874,7 +923,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button" href="#free">Sign Up</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a style="width:100%;" class="wp-block-button__link wp-element-button" href="#free">Sign Up</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -882,12 +931,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|4","right":"var:preset|spacing|4"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--4);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--4);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":4,"textColor":"text-heading"} -->
 				<h4 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Pro</h4>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"1.75rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800">$35 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800;">$35 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Advanced Tools</p>
@@ -895,7 +944,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#pro">Subscribe</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#pro">Subscribe</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -903,12 +952,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|4","right":"var:preset|spacing|4"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--4);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--4);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":4,"textColor":"text-heading"} -->
 				<h4 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Plus</h4>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"1.75rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800">$75 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800;">$75 <span style="font-size:0.875rem;font-weight:400;color:var(--mh-color-text-muted)">/ mo</span></p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Full Access</p>
@@ -916,7 +965,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#plus">Subscribe</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100"><a style="width:100%;" class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#plus">Subscribe</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -924,12 +973,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|4","right":"var:preset|spacing|4"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--4);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--4);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":4,"textColor":"text-heading"} -->
 				<h4 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Enterprise</h4>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-heading","style":{"typography":{"fontSize":"1.75rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800">Custom</p>
+			<p class="has-text-align-center has-text-heading-color has-text-color" style="font-size:1.75rem;font-weight:800;">Custom</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Dedicated Scale</p>
@@ -937,7 +986,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"variant":"outline","width":100} -->
-					<div class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a class="wp-block-button__link wp-element-button" href="#enterprise">Contact</a></div>
+				<div style="width:100%;" class="wp-block-button has-custom-width wp-block-button__width-100 is-style-outline"><a style="width:100%;" class="wp-block-button__link wp-element-button" href="#enterprise">Contact</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -959,26 +1008,32 @@ return array(
 		'icon'     => 'dashicons-layout',
 		'color'    => '#2563eb',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'grid',
+			'columns'    => 2,
+			'hasCards'   => true,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-pricing-simple pricing-simple-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-simple pricing-simple-section has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-pricing-simple pricing-simple-section has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Simple Pricing</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">No hidden fees, cancel anytime.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">No hidden fees, cancel anytime.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide","className":"mh-pricing-grid"} -->
 		<div class="wp-block-columns alignwide mh-pricing-grid">
 			<!-- wp:column {"className":"mh-pricing-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"12px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
+		<div style="border-radius:12px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Standard License</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","style":{"typography":{"fontSize":"2.5rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800">$49</p>
+			<p class="has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800;">$49</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color">Single site usage, lifetime updates, and 1 year of support.</p>
@@ -986,7 +1041,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse"} -->
-					<div class="wp-block-button"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#purchase-standard">Purchase Now</a></div>
+				<div class="wp-block-button"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#purchase-standard">Purchase Now</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -994,12 +1049,12 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"className":"mh-pricing-card mh-pricing-card-highlight","style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"12px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column mh-pricing-card mh-pricing-card-highlight has-surface-card-background-color has-background">
+		<div style="border-radius:12px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column mh-pricing-card mh-pricing-card-highlight has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Extended License</h3>
 				<!-- /wp:heading -->
 				<!-- wp:paragraph {"align":"center","textColor":"brand-base","style":{"typography":{"fontSize":"2.5rem","fontWeight":"800"}}} -->
-				<p class="has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800">$149</p>
+			<p class="has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800;">$149</p>
 				<!-- /wp:paragraph -->
 				<!-- wp:paragraph {"align":"center","textColor":"text-muted"} -->
 				<p class="has-text-align-center has-text-muted-color has-text-color">Unlimited sites usage, lifetime priority support, and multi-user access.</p>
@@ -1007,7 +1062,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse"} -->
-					<div class="wp-block-button"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#purchase-extended">Purchase Now</a></div>
+				<div class="wp-block-button"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button" href="#purchase-extended">Purchase Now</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -1029,15 +1084,21 @@ return array(
 		'icon'     => 'dashicons-cart',
 		'color'    => '#9333ea',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'grid',
+			'columns'    => 4,
+			'hasCards'   => true,
+			'hasButtons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-full-width mh-section-woocommerce woocommerce-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-full-width mh-section-woocommerce woocommerce-section has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-full-width mh-section-woocommerce woocommerce-section has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
 		<h2 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color">Featured Products</h2>
 		<!-- /wp:heading -->
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Explore best-selling items from our store</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Explore best-selling items from our store</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->

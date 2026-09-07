@@ -21,8 +21,13 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'core',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 3,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -30,13 +35,13 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Everything required to build high-converting, accessible web destinations.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Everything required to build high-converting, accessible web destinations.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
 		<div class="wp-block-columns alignwide">
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Fast &amp; Responsive</h3>
 				<!-- /wp:heading -->
@@ -47,7 +52,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Design Tokens</h3>
 				<!-- /wp:heading -->
@@ -58,7 +63,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Native WordPress</h3>
 				<!-- /wp:heading -->
@@ -82,14 +87,18 @@ return array(
 		'icon'     => 'dashicons-chart-bar',
 		'color'    => '#2563eb',
 		'source'   => 'core',
+		'anatomy'  => array(
+			'layout'  => 'numbers',
+			'columns' => 4,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-numbers","style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-card","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-numbers has-surface-card-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group alignfull mh-section mh-section-numbers has-surface-card-background-color has-background">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column -->
 		<div class="wp-block-column">
 			<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-base","style":{"typography":{"fontSize":"2.5rem","fontWeight":"800"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800">99.9%</h3>
+			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800;">99.9%</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Uptime Reliability</p>
@@ -100,7 +109,7 @@ return array(
 		<!-- wp:column -->
 		<div class="wp-block-column">
 			<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-base","style":{"typography":{"fontSize":"2.5rem","fontWeight":"800"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800">&lt; 100ms</h3>
+			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800;">&lt; 100ms</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Render Latency</p>
@@ -111,7 +120,7 @@ return array(
 		<!-- wp:column -->
 		<div class="wp-block-column">
 			<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-base","style":{"typography":{"fontSize":"2.5rem","fontWeight":"800"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800">60 FPS</h3>
+			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800;">60 FPS</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Canvas Performance</p>
@@ -122,7 +131,7 @@ return array(
 		<!-- wp:column -->
 		<div class="wp-block-column">
 			<!-- wp:heading {"textAlign":"center","level":3,"textColor":"brand-base","style":{"typography":{"fontSize":"2.5rem","fontWeight":"800"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800">100%</h3>
+			<h3 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:2.5rem;font-weight:800;">100%</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Block Standard Compliance</p>
@@ -142,17 +151,21 @@ return array(
 		'icon'     => 'dashicons-chart-bar',
 		'color'    => '#2563eb',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'  => 'numbers',
+			'columns' => 4,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-numbers-grid","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-numbers-grid has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-numbers-grid has-surface-section-background-color has-background">
 	<!-- wp:columns {"align":"wide"} -->
 	<div class="wp-block-columns alignwide">
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:heading {"textAlign":"center","level":2,"textColor":"brand-base","style":{"typography":{"fontSize":"3rem","fontWeight":"800"}}} -->
-			<h2 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:3rem;font-weight:800">230</h2>
+			<h2 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:3rem;font-weight:800;">230</h2>
 			<!-- /wp:heading -->
 			<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"sm","textColor":"text-heading","style":{"typography":{"letterSpacing":"1px"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-sm-font-size" style="letter-spacing:1px">PROJECTS COMPLETED</h3>
+			<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-sm-font-size" style="letter-spacing:1px;">PROJECTS COMPLETED</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Delivered with high performance across enterprise platforms.</p>
@@ -161,12 +174,12 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:heading {"textAlign":"center","level":2,"textColor":"brand-base","style":{"typography":{"fontSize":"3rem","fontWeight":"800"}}} -->
-			<h2 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:3rem;font-weight:800">75,340</h2>
+			<h2 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:3rem;font-weight:800;">75,340</h2>
 			<!-- /wp:heading -->
 			<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"sm","textColor":"text-heading","style":{"typography":{"letterSpacing":"1px"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-sm-font-size" style="letter-spacing:1px">WORKED HOURS</h3>
+			<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-sm-font-size" style="letter-spacing:1px;">WORKED HOURS</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Dedicated craft and engineering invested into user experiences.</p>
@@ -175,12 +188,12 @@ return array(
 		<!-- /wp:column -->
 
 		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-		<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 			<!-- wp:heading {"textAlign":"center","level":2,"textColor":"brand-base","style":{"typography":{"fontSize":"3rem","fontWeight":"800"}}} -->
-			<h2 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:3rem;font-weight:800">25</h2>
+			<h2 class="wp-block-heading has-text-align-center has-brand-base-color has-text-color" style="font-size:3rem;font-weight:800;">25</h2>
 			<!-- /wp:heading -->
 			<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"sm","textColor":"text-heading","style":{"typography":{"letterSpacing":"1px"}}} -->
-			<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-sm-font-size" style="letter-spacing:1px">TEAM MEMBERS</h3>
+			<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-sm-font-size" style="letter-spacing:1px;">TEAM MEMBERS</h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"sm"} -->
 			<p class="has-text-align-center has-text-muted-color has-text-color has-sm-font-size">Specialists cooperating across engineering and interface design.</p>
@@ -200,8 +213,13 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 4,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-coloured-boxes","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-coloured-boxes has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-coloured-boxes has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -209,13 +227,13 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
 		<div class="wp-block-columns alignwide">
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Responsive Design</h3>
 				<!-- /wp:heading -->
@@ -225,7 +243,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-base","textColor":"text-inverse","fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
+				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-brand-base-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -233,7 +251,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Cloud Integration</h3>
 				<!-- /wp:heading -->
@@ -243,7 +261,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"status-success","textColor":"text-inverse","fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-status-success-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
+				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-status-success-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -251,7 +269,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Realtime Signals</h3>
 				<!-- /wp:heading -->
@@ -261,7 +279,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"status-warning","textColor":"text-inverse","fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-status-warning-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
+				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-status-warning-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -269,7 +287,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Data Analytics</h3>
 				<!-- /wp:heading -->
@@ -279,7 +297,7 @@ return array(
 				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"brand-active","textColor":"text-inverse","fontSize":"xs"} -->
-					<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-brand-active-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
+				<div class="wp-block-button has-custom-font-size has-xs-font-size"><a class="wp-block-button__link has-text-inverse-color has-brand-active-background-color has-text-color has-background wp-element-button">LEARN MORE</a></div>
 					<!-- /wp:button -->
 				</div>
 				<!-- /wp:buttons -->
@@ -300,8 +318,14 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'     => 'grid',
+			'columns'    => 3,
+			'hasButtons' => true,
+			'hasCards'   => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-image-cards","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-image-cards has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-image-cards has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -309,22 +333,22 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
 		<div class="wp-block-columns alignwide">
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|6","left":"var:preset|spacing|0","right":"var:preset|spacing|0"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--0);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--0);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group has-surface-section-background-color has-background">
 					<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"xs","style":{"typography":{"letterSpacing":"1px"}}} -->
-					<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px;">MEDIA SHOWCASE</p>
 					<!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:group -->
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|2","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--2);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group">
 					<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Responsive Architecture</h3>
 					<!-- /wp:heading -->
@@ -340,16 +364,16 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|6","left":"var:preset|spacing|0","right":"var:preset|spacing|0"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--0);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--0);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group has-surface-section-background-color has-background">
 					<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"xs","style":{"typography":{"letterSpacing":"1px"}}} -->
-					<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px;">MEDIA SHOWCASE</p>
 					<!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:group -->
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|2","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--2);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group">
 					<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Design System Tokens</h3>
 					<!-- /wp:heading -->
@@ -365,16 +389,16 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|0","bottom":"var:preset|spacing|6","left":"var:preset|spacing|0","right":"var:preset|spacing|0"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--0);padding-right:var(--wp--preset--spacing--0);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--0);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group has-surface-section-background-color has-background">
 					<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"xs","style":{"typography":{"letterSpacing":"1px"}}} -->
-					<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px;">MEDIA SHOWCASE</p>
 					<!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:group -->
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|2","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"layout":{"type":"constrained"}} -->
-				<div class="wp-block-group">
+	<div style="padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--2);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group">
 					<!-- wp:heading {"level":3,"fontSize":"lg","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-lg-font-size">Standardized Blocks</h3>
 					<!-- /wp:heading -->
@@ -403,8 +427,13 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 4,
+			'hasIcons' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-large-icons","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-large-icons has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-large-icons has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -412,7 +441,7 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
@@ -487,8 +516,14 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 4,
+			'hasIcons' => true,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-overlapped-icons","style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|12","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-overlapped-icons has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--12);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--12);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-overlapped-icons has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -496,13 +531,13 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
 		<div class="wp-block-columns alignwide">
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Responsive Design</h3>
 				<!-- /wp:heading -->
@@ -516,7 +551,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Parallax Effect</h3>
 				<!-- /wp:heading -->
@@ -530,7 +565,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">WooCommerce Ready</h3>
 				<!-- /wp:heading -->
@@ -544,7 +579,7 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:heading {"textAlign":"center","level":3,"fontSize":"lg","textColor":"text-heading"} -->
 				<h3 class="wp-block-heading has-text-align-center has-text-heading-color has-text-color has-lg-font-size">Content Blocks</h3>
 				<!-- /wp:heading -->
@@ -571,8 +606,13 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 3,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-small-icon-cards","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-small-icon-cards has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-small-icon-cards has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -580,7 +620,7 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
@@ -588,7 +628,7 @@ return array(
 			<!-- wp:column -->
 			<div class="wp-block-column">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Responsive Design</h3>
 					<!-- /wp:heading -->
@@ -599,7 +639,7 @@ return array(
 				<!-- /wp:group -->
 
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Live Synchronization</h3>
 					<!-- /wp:heading -->
@@ -614,7 +654,7 @@ return array(
 			<!-- wp:column -->
 			<div class="wp-block-column">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Data Analytics</h3>
 					<!-- /wp:heading -->
@@ -625,7 +665,7 @@ return array(
 				<!-- /wp:group -->
 
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Modular Configuration</h3>
 					<!-- /wp:heading -->
@@ -640,7 +680,7 @@ return array(
 			<!-- wp:column -->
 			<div class="wp-block-column">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Accelerated Delivery</h3>
 					<!-- /wp:heading -->
@@ -651,7 +691,7 @@ return array(
 				<!-- /wp:group -->
 
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Scheduled Routines</h3>
 					<!-- /wp:heading -->
@@ -677,8 +717,13 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 2,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-small-image-cards","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-small-image-cards has-surface-section-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-small-image-cards has-surface-section-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -686,7 +731,7 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
@@ -694,7 +739,7 @@ return array(
 			<!-- wp:column -->
 			<div class="wp-block-column">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Responsive Layout</h3>
 					<!-- /wp:heading -->
@@ -708,7 +753,7 @@ return array(
 				<!-- /wp:group -->
 
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Token Architecture</h3>
 					<!-- /wp:heading -->
@@ -726,7 +771,7 @@ return array(
 			<!-- wp:column -->
 			<div class="wp-block-column">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Component Modularity</h3>
 					<!-- /wp:heading -->
@@ -740,7 +785,7 @@ return array(
 				<!-- /wp:group -->
 
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-				<div class="wp-block-group has-surface-card-background-color has-background">
+	<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-group has-surface-card-background-color has-background">
 					<!-- wp:heading {"level":3,"fontSize":"base","textColor":"text-heading"} -->
 					<h3 class="wp-block-heading has-text-heading-color has-text-color has-base-font-size">Quantum Consistency</h3>
 					<!-- /wp:heading -->
@@ -769,8 +814,13 @@ return array(
 		'icon'     => 'dashicons-grid-view',
 		'color'    => '#10b981',
 		'source'   => 'classic',
+		'anatomy'  => array(
+			'layout'   => 'grid',
+			'columns'  => 3,
+			'hasCards' => true,
+		),
 		'content'  => '<!-- wp:group {"align":"full","className":"mh-section mh-section-features-square-image","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}}},"backgroundColor":"surface-body","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull mh-section mh-section-features-square-image has-surface-body-background-color has-background">
+	<div style="padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--6);" class="wp-block-group alignfull mh-section mh-section-features-square-image has-surface-body-background-color has-background">
 	<!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
 	<div class="wp-block-group alignwide">
 		<!-- wp:heading {"textAlign":"center","level":2,"textColor":"text-heading"} -->
@@ -778,17 +828,17 @@ return array(
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"align":"center","textColor":"text-muted","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<p class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
+			<p style="margin-bottom:var(--wp--preset--spacing--8);" class="has-text-align-center has-text-muted-color has-text-color">Engineered solutions crafted for resilience, clarity, and performance.</p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:columns {"align":"wide"} -->
 		<div class="wp-block-columns alignwide">
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|4"}},"border":{"radius":"6px"}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-surface-section-background-color has-background">
+	<div style="border-radius:6px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-surface-section-background-color has-background">
 					<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"xs","style":{"typography":{"letterSpacing":"1px"}}} -->
-					<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px;">MEDIA SHOWCASE</p>
 					<!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:group -->
@@ -805,11 +855,11 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|4"}},"border":{"radius":"6px"}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-surface-section-background-color has-background">
+	<div style="border-radius:6px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-surface-section-background-color has-background">
 					<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"xs","style":{"typography":{"letterSpacing":"1px"}}} -->
-					<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px;">MEDIA SHOWCASE</p>
 					<!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:group -->
@@ -826,11 +876,11 @@ return array(
 			<!-- /wp:column -->
 
 			<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|6","bottom":"var:preset|spacing|6","left":"var:preset|spacing|6","right":"var:preset|spacing|6"}},"border":{"radius":"8px"}},"backgroundColor":"surface-card"} -->
-			<div class="wp-block-column has-surface-card-background-color has-background">
+		<div style="border-radius:8px;padding-top:var(--wp--preset--spacing--6);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--6);padding-left:var(--wp--preset--spacing--6);border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,0.04);" class="wp-block-column has-surface-card-background-color has-background">
 				<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8","left":"var:preset|spacing|6","right":"var:preset|spacing|6"},"margin":{"bottom":"var:preset|spacing|4"}},"border":{"radius":"6px"}},"backgroundColor":"surface-section","layout":{"type":"constrained"}} -->
-				<div class="wp-block-group has-surface-section-background-color has-background">
+	<div style="border-radius:6px;padding-top:var(--wp--preset--spacing--8);padding-right:var(--wp--preset--spacing--6);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--6);margin-bottom:var(--wp--preset--spacing--4);" class="wp-block-group has-surface-section-background-color has-background">
 					<!-- wp:paragraph {"align":"center","textColor":"text-muted","fontSize":"xs","style":{"typography":{"letterSpacing":"1px"}}} -->
-					<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px">MEDIA SHOWCASE</p>
+			<p class="has-text-align-center has-text-muted-color has-text-color has-xs-font-size" style="letter-spacing:1px;">MEDIA SHOWCASE</p>
 					<!-- /wp:paragraph -->
 				</div>
 				<!-- /wp:group -->

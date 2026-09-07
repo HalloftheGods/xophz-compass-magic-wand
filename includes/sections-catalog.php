@@ -30,6 +30,7 @@ function mh_get_sections_catalog(): array {
 		'team-testimonials' => $sections_dir . '/category-team-testimonials.php',
 		'cta-contact'       => $sections_dir . '/category-cta-contact.php',
 		'pricing-portfolio' => $sections_dir . '/category-pricing-portfolio.php',
+		'quantum-atoms'     => $sections_dir . '/category-quantum-atoms.php',
 	);
 
 	$catalog = array();
