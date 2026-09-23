@@ -5,6 +5,18 @@ All notable changes to the Xophz Compass Magic Wand plugin are documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026-09-21]
+
+### Added
+- Wide Phone Apps Iframe Slider Section Archetype (`includes/sections/category-pricing-portfolio.php`, `admin/js/customizer/default-items.js`, `admin/js/customizer/side-rail.js`, `admin/js/customizer/wireframes.js`, `public/class-xophz-compass-magic-wand-public.php`, `public/js/xophz-compass-magic-wand-preview.js`): Added the `phone-apps-slider` modular section archetype under the Portfolio and Gallery categories. Features customizable phone app slide items with independent iframe endpoints, titles, categories, descriptions, and launch links in the Customizer Side Rail (Screen 3). Includes vector SVG wireframe illustration for the Section Library modal, dynamic item compiling via `compile_phone_slider_items()`, and real-time live preview synchronization.
+
+### Fixed
+- Customizer Side Rail Section Editing Controls (`admin/js/customizer/side-rail.js`, `admin/js/customizer/default-items.js`, `admin/js/customizer/section-modal.js`, `public/class-xophz-compass-magic-wand-public.php`, `public/js/xophz-compass-magic-wand-preview.js`):
+  - Section Headings and Copy Inputs: Added explicit fields for Section Title / Heading and Section Subtitle in Customizer Screen 3 (Side Rail Content tab), resolving the issue where section copy inputs were missing. Changes synchronize in real time to the live canvas DOM and persist to block markup.
+  - Content Items and App Slides Manager: Fixed issue where `s.items` was missing for sections parsed from Gutenberg blocks or newly inserted from the Section Library. Implemented slide item extraction in `get_page_sections()` from `.mh-phone-slide`, restored meta items merge, and initialized default items on section insertion. Ensured `renderItemsManagerHtml()` always renders for archetypes supporting items, with dedicated controls for App Title, App URL (Iframe Source), Category Badge, Launch Link, and Description, plus an empty state with "+ Add App Slide".
+  - Section Elements Navigator Live Population: Resolved issue where Section Elements Navigator displayed an empty state. Added `mh-get-section-elements` and `mh-return-section-elements` bi-directional PostMessage handlers and on-demand DOM scanning in `preview.js`, immediately populating navigator pills when opening the Side Rail.
+  - Dynamic Phone Slider Live Preview and Compiler: Updated `render_section_type()` and `compile_section_items()` to compile items whenever present (removing the `$has_custom_content` bypass) and support both `phone-slider` and `phone-apps-slider` type slugs. Enhanced preview listener to rebuild slider slides dynamically when items are added or removed.
+
 ## [26.9.21] - 2026-09-07
 
 ### Fixed

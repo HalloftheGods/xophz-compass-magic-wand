@@ -288,11 +288,22 @@
 	function insertSectionById(sectionId) {
 		var def = sectionsList.find(function(s) { return s.id === sectionId; });
 		var sections = state.getSections();
+		var initialItems = [];
+		if (window.mhCustomizer && window.mhCustomizer.defaultItems && typeof window.mhCustomizer.defaultItems.getDefaultItems === 'function') {
+			initialItems = window.mhCustomizer.defaultItems.getDefaultItems(sectionId);
+		}
 		var newSection = {
 			type: sectionId,
 			id: 'section_' + Date.now(),
 			label: def ? def.name : '',
-			content: def ? def.content : ''
+			content: def ? def.content : '',
+			items: JSON.parse(JSON.stringify(initialItems || [])),
+			settings: {
+				title: def ? def.name : '',
+				subtitle: def ? (def.desc || '') : '',
+				layout: 'full',
+				anchor: utils.slugify(def ? def.name : 'section')
+			}
 		};
 
 		// Stage 1: Insertion Bounds Evaluation

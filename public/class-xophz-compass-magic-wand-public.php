@@ -67,6 +67,7 @@ class Xophz_Compass_Magic_Wand_Public {
 			'team-testimonials',
 			'cta-contact',
 			'pricing-portfolio',
+			'phone-slider',
 		);
 
 		foreach ( $section_categories as $category ) {
@@ -151,6 +152,7 @@ class Xophz_Compass_Magic_Wand_Public {
 			'team-testimonials',
 			'cta-contact',
 			'pricing-portfolio',
+			'phone-slider',
 		);
 		foreach ( $section_categories as $category ) {
 			$handle = 'magic-hat-section-' . $category;
@@ -165,6 +167,19 @@ class Xophz_Compass_Magic_Wand_Public {
 						'all'
 					);
 				}
+			}
+		}
+
+		if ( ! wp_script_is( 'magic-hat-phone-slider', 'enqueued' ) ) {
+			$theme_script = get_template_directory() . '/assets/js/phone-slider.js';
+			if ( file_exists( $theme_script ) ) {
+				wp_enqueue_script(
+					'magic-hat-phone-slider',
+					get_template_directory_uri() . '/assets/js/phone-slider.js',
+					array(),
+					$this->version,
+					true
+				);
 			}
 		}
 
@@ -256,6 +271,58 @@ class Xophz_Compass_Magic_Wand_Public {
 						$subtitle = wp_strip_all_tags( $p[1] );
 					}
 
+					$items = array();
+
+					// Parse phone slider slides into items
+					if ( false !== strpos( $block_html, 'mh-phone-slider' ) || 'phone-slider' === $type || 'phone-apps-slider' === $type ) {
+						if ( preg_match_all( '/<div\b[^>]*class="[^"]*\bmh-phone-slide\b[^"]*"[^>]*>(.*?)(?=<div\b[^>]*class="[^"]*\bmh-phone-slide\b|\s*<\/div>\s*<button|$)/is', $block_html, $slide_matches ) ) {
+							foreach ( $slide_matches[0] as $slide_html ) {
+								$slide_item = array(
+									'title' => '',
+									'url'   => '',
+									'badge' => '',
+									'desc'  => '',
+									'link'  => '',
+								);
+								if ( preg_match( '/<iframe\b[^>]*src="([^"]*)"/i', $slide_html, $src_m ) ) {
+									$slide_item['url'] = $src_m[1];
+								}
+								if ( preg_match( '/<h[1-6]\b[^>]*class="[^"]*\bmh-phone-app-title\b[^"]*"[^>]*>(.*?)<\/h[1-6]>/is', $slide_html, $title_m ) ) {
+									$slide_item['title'] = wp_strip_all_tags( $title_m[1] );
+								} elseif ( preg_match( '/<iframe\b[^>]*title="([^"]*)"/i', $slide_html, $t_m ) ) {
+									$slide_item['title'] = $t_m[1];
+								}
+								if ( preg_match( '/<span\b[^>]*class="[^"]*\bmh-phone-badge\b[^"]*"[^>]*>(.*?)<\/span>/is', $slide_html, $badge_m ) ) {
+									$slide_item['badge'] = wp_strip_all_tags( $badge_m[1] );
+								}
+								if ( preg_match( '/<p\b[^>]*class="[^"]*\bmh-phone-app-desc\b[^"]*"[^>]*>(.*?)<\/p>/is', $slide_html, $desc_m ) ) {
+									$slide_item['desc'] = wp_strip_all_tags( $desc_m[1] );
+								}
+								if ( preg_match( '/<a\b[^>]*class="[^"]*\bmh-phone-app-link\b[^"]*"[^>]*href="([^"]*)"/i', $slide_html, $link_m ) ||
+								     preg_match( '/<a\b[^>]*href="([^"]*)"[^>]*class="[^"]*\bmh-phone-app-link\b[^"]*"/i', $slide_html, $link_m ) ) {
+									$slide_item['link'] = $link_m[1];
+								}
+								$items[] = $slide_item;
+							}
+						}
+					}
+
+					// Fallback: parse column blocks into items
+					if ( empty( $items ) && preg_match_all( '/<!-- wp:column\b.*?-->\s*<div\b[^>]*class="[^"]*wp-block-column[^"]*"[^>]*>(.*?)<\/div>\s*<!-- \/wp:column -->/is', $block_html, $col_matches ) ) {
+						foreach ( $col_matches[1] as $col_body ) {
+							$col_item = array();
+							if ( preg_match( '/<h[1-6]\b[^>]*>(.*?)<\/h[1-6]>/is', $col_body, $hm ) ) {
+								$col_item['title'] = wp_strip_all_tags( $hm[1] );
+							}
+							if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $col_body, $pm ) ) {
+								$col_item['desc'] = wp_strip_all_tags( $pm[1] );
+							}
+							if ( ! empty( $col_item ) ) {
+								$items[] = $col_item;
+							}
+						}
+					}
+
 					$label = $title ? $title : ( $anchor ? ucwords( str_replace( array( '-', '_' ), ' ', $anchor ) ) : ucfirst( str_replace( '-', ' ', $type ) ) );
 
 					$sections_from_blocks[] = array(
@@ -263,6 +330,7 @@ class Xophz_Compass_Magic_Wand_Public {
 						'id'       => $anchor ? 'section_' . sanitize_key( $anchor ) : 'section_' . $i,
 						'label'    => $label,
 						'content'  => $block_html,
+						'items'    => $items,
 						'settings' => array(
 							'title'    => $title ?: $label,
 							'subtitle' => $subtitle,
@@ -283,6 +351,9 @@ class Xophz_Compass_Magic_Wand_Public {
 								$m_sec = $meta_sections[ $idx ];
 								if ( isset( $m_sec['settings'] ) && is_array( $m_sec['settings'] ) ) {
 									$sec['settings'] = array_merge( $sec['settings'], $m_sec['settings'] );
+								}
+								if ( isset( $m_sec['items'] ) && is_array( $m_sec['items'] ) && ! empty( $m_sec['items'] ) ) {
+									$sec['items'] = $m_sec['items'];
 								}
 								if ( isset( $m_sec['edits'] ) && is_array( $m_sec['edits'] ) ) {
 									$sec['edits'] = $m_sec['edits'];
@@ -440,6 +511,14 @@ class Xophz_Compass_Magic_Wand_Public {
 				'<!-- /wp:group -->';
 		}
 
+		// Apply section heading and subtitle from settings if present
+		if ( ! empty( $settings['title'] ) && preg_match( '/<h[1-3][^>]*>(.*?)<\/h[1-3]>/is', $content ) ) {
+			$content = preg_replace( '/(<h[1-3][^>]*>)(.*?)(<\/h[1-3]>)/is', '$1' . esc_html( $settings['title'] ) . '$3', $content, 1 );
+		}
+		if ( isset( $settings['subtitle'] ) && '' !== $settings['subtitle'] && preg_match( '/<p[^>]*class="[^"]*has-text-muted-color[^"]*"[^>]*>(.*?)<\/p>/is', $content ) ) {
+			$content = preg_replace( '/(<p[^>]*class="[^"]*has-text-muted-color[^"]*"[^>]*>)(.*?)(<\/p>)/is', '$1' . esc_html( $settings['subtitle'] ) . '$3', $content, 1 );
+		}
+
 		// Apply target date for countdown timer applet atoms
 		if ( ! empty( $settings['target_date'] ) && preg_match( '/<x-countdown-clock\b[^>]*>/is', $content ) ) {
 			$content = preg_replace_callback( '/(<x-countdown-clock\b[^>]*\btarget-date=")([^"]*)(")/is', function( $m ) use ( $settings ) {
@@ -461,8 +540,8 @@ class Xophz_Compass_Magic_Wand_Public {
 			}
 		}
 
-		// Dynamic content items: only compile if items are explicitly present and section was not loaded with custom content
-		if ( ! $has_custom_content && ! empty( $section['items'] ) && is_array( $section['items'] ) ) {
+		// Dynamic content items: compile whenever items are explicitly present
+		if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) {
 			$content = self::compile_section_items( $content, $section['items'], $type );
 		}
 
@@ -482,6 +561,11 @@ class Xophz_Compass_Magic_Wand_Public {
 	public static function compile_section_items( string $content, array $items, string $type = '' ): string {
 		if ( empty( $items ) ) {
 			return $content;
+		}
+
+		// Dedicated compiler for phone app slider slides
+		if ( false !== strpos( $content, 'mh-phone-slider' ) || 'phone-apps-slider' === $type || 'phone-slider' === $type ) {
+			return self::compile_phone_slider_items( $content, $items );
 		}
 
 		// Match all column blocks
@@ -582,6 +666,77 @@ class Xophz_Compass_Magic_Wand_Public {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Compile custom slide items into Wide Phone Apps Iframe Slider markup.
+	 *
+	 * @param string                            $content Section Gutenberg markup.
+	 * @param array<int, array<string, mixed>> $items Array of slide descriptors.
+	 * @return string Compiled block markup.
+	 */
+	public static function compile_phone_slider_items( string $content, array $items ): string {
+		if ( empty( $items ) ) {
+			return $content;
+		}
+
+		$track_pattern = '/(<div\b[^>]*class="[^"]*mh-phone-slider-track[^"]*"[^>]*>)(.*?)(<\/div>\s*<button\b[^>]*class="[^"]*mh-phone-nav-next)/is';
+		if ( ! preg_match( $track_pattern, $content, $match ) ) {
+			return $content;
+		}
+
+		$track_open  = $match[1];
+		$track_close = '</div>' . "\n\t\t\t\t" . $match[3];
+
+		$slides_html = '';
+		foreach ( $items as $i => $item ) {
+			$title = isset( $item['title'] ) ? $item['title'] : ( isset( $item['name'] ) ? $item['name'] : 'App ' . ( $i + 1 ) );
+			$url   = isset( $item['url'] ) ? $item['url'] : '#';
+			$badge = isset( $item['badge'] ) ? $item['badge'] : 'PWA';
+			$desc  = isset( $item['desc'] ) ? $item['desc'] : '';
+			$link  = ! empty( $item['link'] ) ? $item['link'] : $url;
+			$active_class = ( 0 === $i ) ? ' is-active' : '';
+
+			$slides_html .= '
+					<div class="mh-phone-slide' . $active_class . '" data-slide-index="' . $i . '" data-mw-item-idx="' . $i . '">
+						<div class="mh-phone-device-wrap">
+							<div class="mh-phone-chassis">
+								<div class="mh-phone-notch">
+									<span class="mh-phone-camera"></span>
+									<span class="mh-phone-speaker"></span>
+								</div>
+								<span class="mh-phone-hardware-btn mh-phone-btn-vol-up"></span>
+								<span class="mh-phone-hardware-btn mh-phone-btn-vol-down"></span>
+								<span class="mh-phone-hardware-btn mh-phone-btn-power"></span>
+								<div class="mh-phone-screen">
+									<div class="mh-phone-loader">
+										<div class="mh-phone-loader-spinner"></div>
+										<span>Booting App...</span>
+									</div>
+									<iframe
+										class="mh-phone-iframe"
+										src="' . esc_url( $url ) . '"
+										title="' . esc_attr( $title ) . '"
+										loading="lazy"
+										sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+										allow="fullscreen; clipboard-read; clipboard-write">
+									</iframe>
+									<div class="mh-phone-glare"></div>
+								</div>
+							</div>
+						</div>
+						<div class="mh-phone-meta">
+							<span class="mh-phone-badge" data-mw-item-prop="badge">' . esc_html( $badge ) . '</span>
+							<h3 class="mh-phone-app-title" data-mw-item-prop="title">' . esc_html( $title ) . '</h3>
+							<p class="mh-phone-app-desc" data-mw-item-prop="desc">' . esc_html( $desc ) . '</p>
+							<a href="' . esc_url( $link ) . '" class="mh-phone-app-link" target="_blank" rel="noopener" data-mw-item-prop="link">
+								<span>Launch Fullscreen</span> &rarr;
+							</a>
+						</div>
+					</div>';
+		}
+
+		return preg_replace( $track_pattern, $track_open . $slides_html . "\n\t\t\t\t" . $track_close, $content, 1 );
 	}
 
 	/**

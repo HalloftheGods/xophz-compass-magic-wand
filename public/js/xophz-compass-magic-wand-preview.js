@@ -567,18 +567,62 @@
 		var idx = parseInt($btn.attr('data-index'), 10);
 		if ( isNaN(idx) ) return;
 
+		var $targetSec = getTargetSections().eq(idx);
+		var secElements = [];
+		if ( $targetSec.length ) {
+			$targetSec.find('h1, h2, h3, h4, h5, h6, p, .wp-block-button__link, .mh-phone-app-link, a.button, img').each(function() {
+				var $el = $(this);
+				if ( $el.closest('#mw-overlays, .mw-preview-badge, #mw-format-toolbar, .mw-insert-notch, #mw-link-popover').length ) {
+					return;
+				}
+				var tag = this.tagName.toLowerCase();
+				var text = (tag === 'img') ? ($el.attr('alt') || $el.attr('src') || 'Image') : $el.text().trim();
+				if ( ! text && tag !== 'img' ) return;
+				if ( text.length > 36 ) text = text.substring(0, 33) + '...';
+				secElements.push({
+					tag: tag,
+					text: text,
+					selector: tag + ':eq(' + $targetSec.find(tag).index($el) + ')'
+				});
+			});
+		}
+
 		if ( parentApi && parentApi.section && parentApi.section('mh_page_builder') ) {
 			parentApi.section('mh_page_builder').expand();
 		}
 		if ( typeof parent.mhOpenSectionSideRail === 'function' ) {
-			parent.mhOpenSectionSideRail(idx);
+			parent.mhOpenSectionSideRail(idx, secElements);
 		}
 		if ( parentApi && parentApi.previewer ) {
-			var sections = getSections();
-			var secElements = (sections[idx] && sections[idx].elements) ? sections[idx].elements : [];
 			parentApi.previewer.send('mh-open-section-side-rail', { index: idx, elements: secElements });
 		}
 	});
+
+	if ( parentApi && parentApi.previewer ) {
+		parentApi.previewer.bind('mh-get-section-elements', function(data) {
+			if ( ! data || typeof data.index !== 'number' ) return;
+			var $targetSec = getTargetSections().eq(data.index);
+			var elements = [];
+			if ( $targetSec.length ) {
+				$targetSec.find('h1, h2, h3, h4, h5, h6, p, .wp-block-button__link, .mh-phone-app-link, a.button, img').each(function() {
+					var $el = $(this);
+					if ( $el.closest('#mw-overlays, .mw-preview-badge, #mw-format-toolbar, .mw-insert-notch, #mw-link-popover').length ) {
+						return;
+					}
+					var tag = this.tagName.toLowerCase();
+					var text = (tag === 'img') ? ($el.attr('alt') || $el.attr('src') || 'Image') : $el.text().trim();
+					if ( ! text && tag !== 'img' ) return;
+					if ( text.length > 36 ) text = text.substring(0, 33) + '...';
+					elements.push({
+						tag: tag,
+						text: text,
+						selector: tag + ':eq(' + $targetSec.find(tag).index($el) + ')'
+					});
+				});
+			}
+			parentApi.previewer.send('mh-return-section-elements', { index: data.index, elements: elements });
+		});
+	}
 
 	// ── Image Replacement (WP Media Library) ──────────────────
 	var mediaFrame;
@@ -804,6 +848,20 @@
 					$sec.removeClass('has-light-text has-dark-text');
 				}
 
+				// Section Headings and copy
+				if ( typeof set.title === 'string' && set.title ) {
+					var $h = $sec.find('h1, h2, h3, h4, h5, h6, [data-mw-edit="title"]').first();
+					if ( $h.length ) {
+						$h.text(set.title);
+					}
+				}
+				if ( typeof set.subtitle === 'string' ) {
+					var $sub = $sec.find('p.has-text-muted-color, [data-mw-edit="subtitle"]').first();
+					if ( $sub.length ) {
+						$sub.text(set.subtitle);
+					}
+				}
+
 				// Section ID
 				if ( s.label || set.anchor ) {
 					var slug = set.anchor ? set.anchor.toLowerCase().replace(/[^a-z0-9]+/g, '-') : (s.label ? s.label.toLowerCase().replace(/[^a-z0-9]+/g, '-') : 'section-' + (data.index + 1));
@@ -822,6 +880,79 @@
 					}
 				}
 
+				// Live update phone slider slides and re-init
+				if ( $sec.find('.mh-phone-slider').length && Array.isArray(s.items) ) {
+					var $track = $sec.find('.mh-phone-slider-track');
+					var $slides = $sec.find('.mh-phone-slide');
+					if ( $track.length && $slides.length !== s.items.length ) {
+						var slidesHtml = '';
+						s.items.forEach(function(item, i) {
+							var itemTitle = item.title || ('App ' + (i + 1));
+							var itemUrl = item.url || '#';
+							var itemBadge = item.badge || 'PWA';
+							var itemDesc = item.desc || '';
+							var itemLink = item.link || itemUrl;
+							var activeCls = (0 === i) ? ' is-active' : '';
+							slidesHtml +=
+								'<div class="mh-phone-slide' + activeCls + '" data-slide-index="' + i + '" data-mw-item-idx="' + i + '">' +
+									'<div class="mh-phone-device-wrap">' +
+										'<div class="mh-phone-chassis">' +
+											'<div class="mh-phone-notch">' +
+												'<span class="mh-phone-camera"></span>' +
+												'<span class="mh-phone-speaker"></span>' +
+											'</div>' +
+											'<span class="mh-phone-hardware-btn mh-phone-btn-vol-up"></span>' +
+											'<span class="mh-phone-hardware-btn mh-phone-btn-vol-down"></span>' +
+											'<span class="mh-phone-hardware-btn mh-phone-btn-power"></span>' +
+											'<div class="mh-phone-screen">' +
+												'<div class="mh-phone-loader">' +
+													'<div class="mh-phone-loader-spinner"></div>' +
+													'<span>Booting App...</span>' +
+												'</div>' +
+												'<iframe class="mh-phone-iframe" src="' + itemUrl + '" title="' + itemTitle + '" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" allow="fullscreen; clipboard-read; clipboard-write"></iframe>' +
+												'<div class="mh-phone-glare"></div>' +
+											'</div>' +
+										'</div>' +
+									'</div>' +
+									'<div class="mh-phone-meta">' +
+										'<span class="mh-phone-badge" data-mw-item-prop="badge">' + itemBadge + '</span>' +
+										'<h3 class="mh-phone-app-title" data-mw-item-prop="title">' + itemTitle + '</h3>' +
+										'<p class="mh-phone-app-desc" data-mw-item-prop="desc">' + itemDesc + '</p>' +
+										'<a href="' + itemLink + '" class="mh-phone-app-link" target="_blank" rel="noopener" data-mw-item-prop="link">' +
+											'<span>Launch Fullscreen</span> &rarr;' +
+										'</a>' +
+									'</div>' +
+								'</div>';
+						});
+						$track.html(slidesHtml);
+					} else {
+						s.items.forEach(function(item, idx) {
+							var $slide = $slides.eq(idx);
+							if ( $slide.length ) {
+								if ( item.title ) $slide.find('[data-mw-item-prop="title"]').text(item.title);
+								if ( item.desc ) $slide.find('[data-mw-item-prop="desc"]').text(item.desc);
+								if ( item.badge ) $slide.find('[data-mw-item-prop="badge"]').text(item.badge);
+								if ( item.url ) {
+									var $iframe = $slide.find('iframe.mh-phone-iframe');
+									if ( $iframe.length && $iframe.attr('src') !== item.url ) {
+										$iframe.attr('src', item.url);
+									}
+								}
+								if ( item.link ) {
+									$slide.find('[data-mw-item-prop="link"]').attr('href', item.link);
+								}
+							}
+						});
+					}
+				}
+
+				if ( typeof window.mhInitPhoneSliders === 'function' ) {
+					try {
+						window.mhInitPhoneSliders();
+					} catch (e) {
+						// Safe slider re-init fallback
+					}
+				}
 
 				positionOverlays();
 			});

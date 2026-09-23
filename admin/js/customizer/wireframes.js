@@ -74,6 +74,8 @@
 			layout = 'faq';
 		} else if (category === 'pricing' || content.indexOf('pricing') !== -1) {
 			layout = 'pricing';
+		} else if (content.indexOf('phone-slider') !== -1 || content.indexOf('phone-apps') !== -1) {
+			layout = 'phone-slider';
 		} else if (category === 'testimonials' || content.indexOf('testimonial') !== -1) {
 			layout = 'testimonials';
 		} else if (category === 'numbers' || content.indexOf('number') !== -1 || content.indexOf('counter') !== -1) {
@@ -304,6 +306,46 @@
 		return svg;
 	}
 
+	// 10. Wide Phone Apps Iframe Slider
+	function buildPhoneSliderSvg(c) {
+		var svg = '<svg viewBox="0 0 240 85" width="100%" height="85" fill="none" xmlns="http://www.w3.org/2000/svg">';
+		// Top section headline wireframe
+		svg += '<rect x="85" y="4" width="70" height="5" rx="1.5" fill="#0f172a"/>';
+		svg += '<rect x="98" y="11" width="44" height="3" rx="1" fill="#94a3b8"/>';
+
+		// Left arrow button
+		svg += '<circle cx="34" cy="45" r="9" fill="#0f172a" stroke="#334155"/>';
+		svg += '<path d="M36 41L32 45L36 49" stroke="' + c + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+		// Wide Phone Chassis
+		svg += '<rect x="58" y="16" width="124" height="56" rx="8" fill="#000000" stroke="#0f172a" stroke-width="3"/>';
+		svg += '<rect x="58" y="16" width="124" height="56" rx="8" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>';
+
+		// Phone notch & speaker
+		svg += '<rect x="110" y="17" width="20" height="3" rx="1.5" fill="#1e293b"/>';
+		svg += '<circle cx="106" cy="18.5" r="1" fill="#475569"/>';
+
+		// Inner Screen & App UI
+		svg += '<rect x="62" y="21" width="116" height="47" rx="5" fill="#090d16"/>';
+		svg += '<rect x="66" y="25" width="35" height="4" rx="1" fill="' + c + '"/>';
+		svg += '<rect x="66" y="32" width="32" height="18" rx="2" fill="#1e293b"/>';
+		svg += '<rect x="104" y="32" width="32" height="18" rx="2" fill="#1e293b"/>';
+		svg += '<rect x="142" y="32" width="32" height="18" rx="2" fill="#1e293b"/>';
+		svg += '<rect x="88" y="58" width="64" height="5" rx="2.5" fill="#1e293b"/>';
+
+		// Right arrow button
+		svg += '<circle cx="206" cy="45" r="9" fill="#0f172a" stroke="#334155"/>';
+		svg += '<path d="M204 41L208 45L204 49" stroke="' + c + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+		// Pagination dots
+		svg += '<circle cx="114" cy="79" r="2.5" fill="' + c + '"/>';
+		svg += '<circle cx="120" cy="79" r="1.5" fill="#475569"/>';
+		svg += '<circle cx="126" cy="79" r="1.5" fill="#475569"/>';
+
+		svg += '</svg>';
+		return svg;
+	}
+
 	/**
 	 * Main Wireframe Resolution Pipeline
 	 *
@@ -326,6 +368,9 @@
 		var layout = anatomy.layout || 'content';
 
 		switch (layout) {
+			case 'phone-slider':
+				return buildPhoneSliderSvg(c);
+
 			case 'hero-overlap':
 				return buildHeroOverlapSvg(c, anatomy.columns || 4, anatomy.hasIcons !== false, anatomy.hasButtons !== false);
 

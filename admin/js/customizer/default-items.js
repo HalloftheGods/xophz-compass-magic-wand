@@ -131,6 +131,14 @@
 					{ name: 'Enterprise', price: '$199', period: '/mo', features: 'Dedicated Systems Architect\nCustom Pattern Conjuring\n99.9% SLA Guarantee\nMulti-Cluster Deployments', btn_text: 'Contact Sales', btn_link: '#', is_popular: false }
 				];
 
+			case 'phone-slider':
+			case 'phone-apps-slider':
+				return [
+					{ title: 'My Compass Phone', url: '/wp-admin/admin.php?page=xophz-compass#/phone', badge: 'Phone OS', desc: 'Sovereign mobile operating system with WebOS apps and spatial launcher.', link: '/wp-admin/admin.php?page=xophz-compass#/phone' },
+					{ title: 'Bomb Bag File Explorer', url: '/wp-admin/admin.php?page=xophz-compass#/bomb-bag', badge: 'File Vault', desc: 'Decentralized spatial asset storage and quantum file vault.', link: '/wp-admin/admin.php?page=xophz-compass#/bomb-bag' },
+					{ title: 'Magic Formula Canvas', url: '/wp-admin/admin.php?page=xophz-compass#/magic-formula', badge: 'Formula', desc: 'Visual node-based shortcode synthesizer and reactive component builder.', link: '/wp-admin/admin.php?page=xophz-compass#/magic-formula' }
+				];
+
 			default:
 				return [
 					{ title: 'Item 1', desc: 'Custom content description.' },

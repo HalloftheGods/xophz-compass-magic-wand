@@ -37,6 +37,19 @@
 		ensureSideRailElement();
 		bindSideRailEvents();
 
+		if (api && api.previewer) {
+			api.previewer.bind('mh-return-section-elements', function(data) {
+				if (!data || typeof data.index !== 'number') return;
+				var sections = state.getSections();
+				if (sections[data.index]) {
+					sections[data.index].elements = data.elements || [];
+					if (currentSideRailIndex === data.index && $sideRail) {
+						$sideRail.find('.mh-elements-nav-container').html(renderElementsNavigatorHtml(sections[data.index]));
+					}
+				}
+			});
+		}
+
 		window.mhOpenSectionSideRail = openSectionSideRail;
 	}
 
@@ -112,6 +125,9 @@
 		var anchor = (section.settings && section.settings.anchor) ? section.settings.anchor : utils.slugify(section.label || 'section');
 		if (api && api.previewer) {
 			api.previewer.send('mh-scroll-to', anchor);
+			if (!incomingElements || !incomingElements.length) {
+				api.previewer.send('mh-get-section-elements', { index: index });
+			}
 		}
 	}
 
@@ -134,6 +150,32 @@
 	}
 
 	/**
+	 * Determine if a section archetype supports repeatable content items.
+	 *
+	 * @param {string} type Archetype slug identifier.
+	 * @return {boolean} True if archetype manages items.
+	 */
+	function archetypeSupportsItems(type) {
+		if (!type) return false;
+		var t = type.toLowerCase();
+		return (
+			t.indexOf('feature') !== -1 ||
+			t.indexOf('testimonial') !== -1 ||
+			t.indexOf('number') !== -1 ||
+			t.indexOf('pricing') !== -1 ||
+			t.indexOf('team') !== -1 ||
+			t.indexOf('faq') !== -1 ||
+			t.indexOf('cta') !== -1 ||
+			t.indexOf('contact') !== -1 ||
+			t.indexOf('about') !== -1 ||
+			t.indexOf('phone') !== -1 ||
+			t.indexOf('slider') !== -1 ||
+			t === 'clients' ||
+			t === 'case-study'
+		);
+	}
+
+	/**
 	 * Render HTML for the Content Items repeater accordion.
 	 *
 	 * @param {Object} s Section descriptor.
@@ -142,16 +184,23 @@
 	function renderItemsManagerHtml(s) {
 		var type = s.type || '';
 		var items = s.items || [];
+		var isPhoneSlider = type.indexOf('phone') !== -1 || type.indexOf('slider') !== -1;
+		var groupTitle = isPhoneSlider ? 'App Slides (' + items.length + ')' : 'Content Items (' + items.length + ')';
+		var addBtnText = isPhoneSlider ? '+ Add App Slide' : '+ Add Item';
 		var html =
 			'<div class="mh-control-group">' +
 				'<div class="mh-items-control-head">' +
-					'<span class="mh-control-group-title">Content Items (' + items.length + ')</span>' +
-					'<button type="button" class="button button-secondary button-small mh-rail-add-item-btn">+ Add Item</button>' +
+					'<span class="mh-control-group-title">' + groupTitle + '</span>' +
+					'<button type="button" class="button button-secondary button-small mh-rail-add-item-btn">' + addBtnText + '</button>' +
 				'</div>' +
 				'<div class="mh-items-accordion">';
 
+		if (!items.length) {
+			html += '<div class="mh-items-control-empty" style="padding:14px;text-align:center;color:#64748b;font-size:12px;border:1px dashed rgba(255,255,255,0.15);border-radius:8px;margin-top:8px;">No items configured yet. Click "' + addBtnText + '" above to add your first item.</div>';
+		}
+
 		items.forEach(function(item, idx) {
-			var titlePreview = item.title || item.name || item.question || item.value || item.headline || 'Item ' + (idx + 1);
+			var titlePreview = item.title || item.name || item.question || item.value || item.headline || (isPhoneSlider ? 'App Slide ' + (idx + 1) : 'Item ' + (idx + 1));
 			html +=
 				'<div class="mh-item-card" data-item-idx="' + idx + '">' +
 					'<div class="mh-item-card-header">' +
@@ -273,6 +322,24 @@
 						'<label class="mh-rail-label">Contact Form Shortcode</label>' +
 						'<input type="text" class="mh-rail-input" data-prop="shortcode" value="' + utils.escAttr(item.shortcode || '[contact-form-7]') + '" />' +
 					'</div>';
+			} else if (type.indexOf('phone') !== -1 || type.indexOf('slider') !== -1) {
+				html +=
+					'<div class="mh-rail-field">' +
+						'<label class="mh-rail-label">App Title</label>' +
+						'<input type="text" class="mh-rail-input" data-prop="title" value="' + utils.escAttr(item.title || '') + '" />' +
+					'</div>' +
+					'<div class="mh-rail-field">' +
+						'<label class="mh-rail-label">App URL (Iframe Source)</label>' +
+						'<input type="text" class="mh-rail-input" data-prop="url" value="' + utils.escAttr(item.url || '') + '" placeholder="/wp-admin/admin.php?page=..." />' +
+					'</div>' +
+					'<div class="mh-rail-field mh-rail-field-row">' +
+						'<div class="mh-rail-field-col"><label class="mh-rail-label">Category / Badge</label><input type="text" class="mh-rail-input" data-prop="badge" value="' + utils.escAttr(item.badge || 'PWA') + '" /></div>' +
+						'<div class="mh-rail-field-col"><label class="mh-rail-label">Launch Link URL</label><input type="text" class="mh-rail-input" data-prop="link" value="' + utils.escAttr(item.link || item.url || '#') + '" /></div>' +
+					'</div>' +
+					'<div class="mh-rail-field">' +
+						'<label class="mh-rail-label">Description</label>' +
+						'<textarea class="mh-rail-textarea" data-prop="desc">' + utils.escAttr(item.desc || '') + '</textarea>' +
+					'</div>';
 			} else {
 				html +=
 					'<div class="mh-rail-field">' +
@@ -285,9 +352,10 @@
 					'</div>';
 			}
 
+			var deleteBtnText = isPhoneSlider ? 'Remove Slide' : 'Remove Item';
 			html +=
 					'<div class="mh-item-card-footer">' +
-						'<button type="button" class="button-link-delete mh-rail-item-delete-btn" data-item-idx="' + idx + '">Remove Item</button>' +
+						'<button type="button" class="button-link-delete mh-rail-item-delete-btn" data-item-idx="' + idx + '">' + deleteBtnText + '</button>' +
 					'</div>' +
 				'</div></div>';
 		});
@@ -361,7 +429,17 @@
 		s.items = s.items || [];
 		s.edits = s.edits || {};
 
+		// Populate items from defaultItems if empty and archetype supports items
+		if ((!s.items || !s.items.length) && archetypeSupportsItems(s.type) && defaultItems && typeof defaultItems.getDefaultItems === 'function') {
+			var defItems = defaultItems.getDefaultItems(s.type);
+			if (defItems && defItems.length) {
+				s.items = JSON.parse(JSON.stringify(defItems));
+			}
+		}
+
 		var label = s.label || def.name;
+		var title = s.settings.title || label;
+		var subtitle = s.settings.subtitle || '';
 		var anchor = s.settings.anchor || utils.slugify(label);
 		var layout = s.settings.layout || 'boxed';
 		var padTop = s.settings.padding_top || 'normal';
@@ -406,9 +484,25 @@
 					'</div>' +
 
 					'<div class="mh-control-group">' +
+						'<div class="mh-control-group-title">Section Headings &amp; Copy</div>' +
+						'<div class="mh-control-field">' +
+							'<label class="mh-control-field-title">Section Title / Heading</label>' +
+							'<input type="text" class="mh-control-input mh-rail-title-input" value="' + utils.escAttr(title) + '" placeholder="Section Title" />' +
+						'</div>' +
+						'<div class="mh-control-field">' +
+							'<label class="mh-control-field-title">Section Subtitle</label>' +
+							'<textarea class="mh-rail-textarea mh-rail-subtitle-input" placeholder="Section Subtitle">' + utils.escAttr(subtitle) + '</textarea>' +
+						'</div>' +
+					'</div>' +
+
+					(archetypeSupportsItems(s.type) || (s.items && s.items.length) ? renderItemsManagerHtml(s) : '') +
+
+					'<div class="mh-control-group">' +
 						'<div class="mh-control-group-title">Section Elements Navigator</div>' +
 						'<p class="mh-control-field-desc">Select an element to scroll and focus it on the live canvas:</p>' +
-						renderElementsNavigatorHtml(s) +
+						'<div class="mh-elements-nav-container">' +
+							renderElementsNavigatorHtml(s) +
+						'</div>' +
 					'</div>' +
 
 					'<div class="mh-control-group">' +
@@ -428,8 +522,6 @@
 								'<input type="text" class="mh-control-input mh-rail-target-date-input" value="' + utils.escAttr(s.settings.target_date || '2027-01-01T00:00:00Z') + '" placeholder="2027-01-01T00:00:00Z" />' +
 							'</div>' +
 						'</div>' : '') +
-
-					(s.items && s.items.length ? renderItemsManagerHtml(s) : '') +
 				'</div>' +
 
 				// Tab 2: Style & Layout
@@ -588,6 +680,16 @@
 		s.settings = s.settings || {};
 		s.items = s.items || [];
 
+		// Section Headings & Copy
+		var $titleInput = $sideRail.find('.mh-rail-title-input');
+		if ($titleInput.length) {
+			s.settings.title = $titleInput.val() || '';
+		}
+		var $subInput = $sideRail.find('.mh-rail-subtitle-input');
+		if ($subInput.length) {
+			s.settings.subtitle = $subInput.val() || '';
+		}
+
 		// Section Identity
 		var newLabel = $sideRail.find('.mh-rail-label-input').val();
 		if (newLabel) {
@@ -723,7 +825,11 @@
 			var s = sections[currentSideRailIndex];
 			if (s) {
 				s.items = s.items || [];
-				s.items.push({ title: 'New Item', desc: 'Description of this new feature or item.' });
+				if (s.type && (s.type.indexOf('phone') !== -1 || s.type.indexOf('slider') !== -1)) {
+					s.items.push({ title: 'New App', url: '#', badge: 'App', desc: 'Interactive phone application preview.', link: '#' });
+				} else {
+					s.items.push({ title: 'New Item', desc: 'Description of this new feature or item.' });
+				}
 				state.saveSectionsQuiet(sections);
 				renderSideRail(currentSideRailIndex);
 				if (api && api.previewer) {
