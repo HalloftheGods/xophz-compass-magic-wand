@@ -336,7 +336,7 @@ class Xophz_Compass_Magic_Wand_Admin {
 			$public_inst = new Xophz_Compass_Magic_Wand_Public( $this->plugin_name, $this->version );
 			$block_content = '';
 			foreach ( $sections as $index => $section ) {
-				$type  = isset( $section['type'] ) ? $section['type'] : 'hero';
+				$type  = isset( $section['type'] ) && ! empty( $section['type'] ) ? $section['type'] : 'custom';
 				$label = isset( $section['label'] ) ? $section['label'] : ucfirst( str_replace( '-', ' ', $type ) );
 				$rendered = $public_inst->render_section_type( $type, $label, $section, $index );
 				$block_content .= $rendered . "\n\n";
@@ -354,6 +354,12 @@ class Xophz_Compass_Magic_Wand_Admin {
 		// Persist sections metadata to post_meta and theme_mod so Customizer retains active sections
 		update_post_meta( $page_id, '_mh_page_sections', wp_slash( $sections_json ) );
 		$front_page_id = absint( get_option( 'page_on_front' ) );
+		if ( ! $front_page_id ) {
+			$home_page = get_page_by_path( 'home' );
+			if ( $home_page ) {
+				$front_page_id = $home_page->ID;
+			}
+		}
 		if ( $page_id === $front_page_id || ! $front_page_id ) {
 			set_theme_mod( 'mh_page_sections', $sections_json );
 		}

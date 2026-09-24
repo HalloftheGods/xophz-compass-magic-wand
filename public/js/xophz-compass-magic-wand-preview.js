@@ -99,13 +99,52 @@
 		$(this).focus();
 	});
 
+	function findSectionForElement($el) {
+		var $targetSections = getTargetSections();
+		var matchedSection = null;
+		var matchedIndex = -1;
+
+		if ( ! $el || ! $el.length ) {
+			return { $section: null, index: -1 };
+		}
+
+		$targetSections.each(function(i) {
+			if ( this === $el[0] || $.contains(this, $el[0]) ) {
+				matchedSection = $(this);
+				matchedIndex = i;
+				return false;
+			}
+		});
+
+		if ( matchedIndex === -1 ) {
+			var $closest = $el.closest('.mw-section, .mh-section, .wp-block-group');
+			if ( $closest.length ) {
+				matchedIndex = $targetSections.index($closest);
+				if ( matchedIndex !== -1 ) {
+					matchedSection = $closest;
+				} else {
+					matchedIndex = $('.mw-section, .mh-section').index($closest);
+					if ( matchedIndex !== -1 ) {
+						matchedSection = $closest;
+					}
+				}
+			}
+		}
+
+		return {
+			$section: matchedSection,
+			index: matchedIndex
+		};
+	}
+
 	function commitMwEditChange($el) {
 		if ( ! $el || ! $el.length ) return;
-		var $section = $el.closest('.mh-section, .mw-section, .wp-block-group');
-		var index = getTargetSections().index($section);
-		if ( index === -1 ) {
-			index = $('.mh-section, .mw-section').index($section);
-		}
+		var match = findSectionForElement($el);
+		var $section = match.$section;
+		var index = match.index;
+
+		if ( index === -1 || ! $section ) return;
+
 		var key = $el.attr('data-mw-edit') || '';
 		var origText = $el.attr('data-mw-orig-text') || '';
 		var newText = $el.text().trim();
@@ -115,6 +154,10 @@
 		$el.attr('data-mw-orig-text', newText);
 
 		var sections = getSections();
+		if ( ! sections || ! sections[index] ) {
+			sections = extractSectionsFromDom();
+		}
+
 		if ( index > -1 && index < sections.length ) {
 			sections[index].edits = sections[index].edits || {};
 			var editKey = key || origText || ('text_' + Date.now());
@@ -128,7 +171,21 @@
 		}
 	}
 
+	var editDebounceTimer = null;
+	$(document).on('input', '.mw-editable, [data-mw-edit]', function() {
+		var $el = $(this);
+		// Immediately trigger Customizer dirty/published state change
+		if ( parentApi && parentApi.state && parentApi.state('saved') ) {
+			parentApi.state('saved').set(false);
+		}
+		clearTimeout(editDebounceTimer);
+		editDebounceTimer = setTimeout(function() {
+			commitMwEditChange($el);
+		}, 400);
+	});
+
 	$(document).on('blur', '.mw-editable, [data-mw-edit]', function() {
+		clearTimeout(editDebounceTimer);
 		commitMwEditChange($(this));
 	});
 
@@ -185,14 +242,25 @@
 	$('body').append($overlayContainer);
 
 	function getTargetSections() {
-		var $sections = $('#mw-front-content > .wp-block-group, #mw-front-content > .mh-section, .mh-front-page-main > .wp-block-group, .mh-front-page-main > .mh-section, main > .wp-block-group, main > .mh-section');
-		if ( ! $sections.length ) {
-			$sections = $('.mh-section');
+		var $root = $('#mw-front-content, main.mh-front-page-main, main#mw-content, main.site-main, .entry-content.wp-block-post-content, .entry-content').first();
+		if ( $root.length ) {
+			var $children = $root.children('.wp-block-group, .mh-section, .mw-section, .wp-block-cover, .wp-block-columns');
+			if ( $children.length ) {
+				return $children;
+			}
+			var $inner = $root.find('.entry-content');
+			if ( $inner.length && $inner.children('.wp-block-group, .mh-section, .mw-section').length ) {
+				return $inner.children('.wp-block-group, .mh-section, .mw-section');
+			}
+			if ( $root.children().length ) {
+				return $root.children();
+			}
 		}
-		if ( ! $sections.length ) {
-			$sections = $('.entry-content > .wp-block-group');
+		var $sections = $('.mh-section, .mw-section');
+		if ( $sections.length ) {
+			return $sections;
 		}
-		return $sections;
+		return $('.entry-content > .wp-block-group');
 	}
 
 	function escHtml(str) {
@@ -376,6 +444,7 @@
 				id: 'section_' + i,
 				label: label,
 				elements: elements,
+				content: $sec.prop('outerHTML') || '',
 				settings: {
 					title: heading || label,
 					subtitle: sub || '',
@@ -390,14 +459,14 @@
 	var domHarvestedOnce = false;
 
 	function getSections() {
-		if ( window.mhPreviewData && Array.isArray( window.mhPreviewData.sections ) ) {
+		if ( window.mhPreviewData && Array.isArray( window.mhPreviewData.sections ) && window.mhPreviewData.sections.length > 0 ) {
 			return window.mhPreviewData.sections;
 		}
 		try {
 			var raw = ( parentApi && parentApi('mh_page_sections') ) ? parentApi('mh_page_sections').get() : null;
 			if ( raw !== null && typeof raw !== 'undefined' ) {
 				var parsed = JSON.parse( raw || '[]' );
-				if ( Array.isArray( parsed ) ) {
+				if ( Array.isArray( parsed ) && parsed.length > 0 ) {
 					if ( window.mhPreviewData ) {
 						window.mhPreviewData.sections = parsed;
 					}
@@ -424,6 +493,9 @@
 	}
 
 	function saveSections(arr) {
+		if ( parentApi && parentApi.state && parentApi.state('saved') ) {
+			parentApi.state('saved').set(false);
+		}
 		if ( window.mhPreviewData ) {
 			window.mhPreviewData.sections = arr;
 			if ( parentApi && parentApi.previewer ) {
@@ -630,9 +702,11 @@
 		e.preventDefault();
 		e.stopPropagation();
 		var $el = $(this);
-		var $section = $el.closest('.mh-section, .mw-section, .wp-block-group');
-		var index = getTargetSections().index($section);
-		if ( index === -1 ) index = $('.mh-section').index($section);
+		var match = findSectionForElement($el);
+		var $section = match.$section;
+		var index = match.index;
+		if ( index === -1 || ! $section ) return;
+
 		var key = $el.attr('data-mw-image') || ('img_' + $section.find('img').index($el));
 		var oldSrc = $el.attr('src') || '';
 		
@@ -685,12 +759,12 @@
 		var offset = currentLinkEl.offset();
 		var urlKey = (currentLinkEl.attr('data-mw-edit') || 'btn') + '_url';
 		var sections = getSections();
-		var $section = currentLinkEl.closest('.mh-section, .mw-section, .wp-block-group');
-		var index = getTargetSections().index($section);
-		if ( index === -1 ) index = $('.mh-section').index($section);
+		var match = findSectionForElement(currentLinkEl);
+		var $section = match.$section;
+		var index = match.index;
 
 		var currentUrl = '#';
-		if ( sections[index] && sections[index].edits && sections[index].edits[urlKey] ) {
+		if ( index > -1 && sections[index] && sections[index].edits && sections[index].edits[urlKey] ) {
 			currentUrl = sections[index].edits[urlKey];
 		} else {
 			currentUrl = currentLinkEl.attr('href') || '#';
@@ -710,9 +784,9 @@
 		var newUrl = $linkPopover.find('input').val() || '#';
 		var oldUrl = currentLinkEl.attr('href') || '#';
 		var urlKey = (currentLinkEl.attr('data-mw-edit') || 'btn') + '_url';
-		var $section = currentLinkEl.closest('.mh-section, .mw-section, .wp-block-group');
-		var index = getTargetSections().index($section);
-		if ( index === -1 ) index = $('.mh-section').index($section);
+		var match = findSectionForElement(currentLinkEl);
+		var $section = match.$section;
+		var index = match.index;
 		
 		currentLinkEl.attr('href', newUrl);
 		
