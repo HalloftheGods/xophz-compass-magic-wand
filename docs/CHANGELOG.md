@@ -5,6 +5,16 @@ All notable changes to the Xophz Compass Magic Wand plugin are documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026-09-23]
+
+### Fixed
+- Front-Page Group Block Content Editing and Persistence (`public/js/xophz-compass-magic-wand-preview.js`, `public/class-xophz-compass-magic-wand-public.php`, `admin/class-xophz-compass-magic-wand-admin.php`, `admin/js/customizer/state.js`):
+  - Resolved issue where editing text inside Gutenberg group blocks (`wp-block-group`) on the front page failed to activate the Customizer "Publish" button. Added immediate dirty state notification `parentApi.state('saved').set(false)` on editable input and blur events.
+  - Implemented `findSectionForElement()` using containment traversal to correctly resolve nested group elements and inner blocks to their containing top-level section in `getTargetSections()`.
+  - Fixed section index lookup for image replacement and button URL popovers, preventing broken lookups inside nested containers.
+  - Expanded `get_page_sections()` in PHP to recognize standard Gutenberg `core/group` blocks as page sections and preserve custom content across meta merges.
+  - Enhanced `sync_sections_to_front_page()` to resolve pending Customizer post values and fall back to the Home page path when `page_on_front` is 0.
+
 ## [2026-09-21]
 
 ### Added

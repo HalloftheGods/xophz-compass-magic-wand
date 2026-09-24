@@ -141,13 +141,19 @@
 		pageSectionsCache[activePageId] = arr;
 
 		// Stage 1: Atomic Concept Declarations
-		var isFrontPage = !activePageId || (window.mhMagicWand && parseInt(activePageId, 10) === parseInt(window.mhMagicWand.pageOnFront, 10));
+		var hasMagicWand = Boolean(window.mhMagicWand);
+		var configuredFrontPage = hasMagicWand ? parseInt(window.mhMagicWand.pageOnFront, 10) : 0;
+		var isFrontPage = !activePageId || !configuredFrontPage || (parseInt(activePageId, 10) === configuredFrontPage);
 		var hasSetting = Boolean(api && api(settingId));
 
 		// Stage 2: Unified Decision
 		var canUpdateCustomizerSetting = isFrontPage && hasSetting;
 		if (canUpdateCustomizerSetting) {
 			api(settingId).set(JSON.stringify(arr));
+		}
+
+		if (api && api.state && api.state('saved')) {
+			api.state('saved').set(false);
 		}
 
 		// Stage 1: AJAX Capability Declarations

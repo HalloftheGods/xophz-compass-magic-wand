@@ -242,7 +242,10 @@ class Xophz_Compass_Magic_Wand_Public {
 				}
 
 				$block_html = serialize_block( $block );
-				$is_section = ( false !== strpos( $block_html, 'mh-section' ) ) || ( false !== strpos( $block_html, 'data-section-type' ) );
+				$is_section = ( false !== strpos( $block_html, 'mh-section' ) ) ||
+				              ( false !== strpos( $block_html, 'data-section-type' ) ) ||
+				              ( 'core/group' === $block['blockName'] ) ||
+				              ( false !== strpos( $block['blockName'], 'group' ) );
 
 				if ( $is_section ) {
 					$type = 'custom';
@@ -357,6 +360,9 @@ class Xophz_Compass_Magic_Wand_Public {
 								}
 								if ( isset( $m_sec['edits'] ) && is_array( $m_sec['edits'] ) ) {
 									$sec['edits'] = $m_sec['edits'];
+								}
+								if ( ! empty( $m_sec['content'] ) ) {
+									$sec['content'] = $m_sec['content'];
 								}
 							}
 						}
@@ -747,18 +753,49 @@ class Xophz_Compass_Magic_Wand_Public {
 	public function sync_sections_to_front_page( $wp_customize = null ): void {
 		$front_page_id = absint( get_option( 'page_on_front' ) );
 		if ( ! $front_page_id ) {
+			$home_page = get_page_by_path( 'home' );
+			if ( $home_page ) {
+				$front_page_id = $home_page->ID;
+			}
+		}
+
+		if ( ! $front_page_id ) {
 			return;
 		}
 
-		$sections_json = get_theme_mod( 'mh_page_sections', '[]' );
+		$sections_json = '';
+		$has_customize_instance = $wp_customize && is_object( $wp_customize );
+		if ( $has_customize_instance ) {
+			$setting = $wp_customize->get_setting( 'mh_page_sections' );
+			if ( $setting ) {
+				$sections_json = $setting->post_value();
+				if ( empty( $sections_json ) ) {
+					$sections_json = $setting->value();
+				}
+			}
+		}
+
+		if ( empty( $sections_json ) ) {
+			$sections_json = get_theme_mod( 'mh_page_sections', '' );
+		}
+
+		if ( empty( $sections_json ) ) {
+			$sections_json = get_post_meta( $front_page_id, '_mh_page_sections', true );
+		}
+
+		if ( empty( $sections_json ) ) {
+			$sections_json = '[]';
+		}
+
 		$sections = json_decode( $sections_json, true );
-		if ( ! is_array( $sections ) ) {
+		$is_valid_sections_array = is_array( $sections );
+		if ( ! $is_valid_sections_array ) {
 			return;
 		}
 
 		$block_content = '';
 		foreach ( $sections as $index => $section ) {
-			$type  = isset( $section['type'] ) ? $section['type'] : 'hero';
+			$type  = isset( $section['type'] ) && ! empty( $section['type'] ) ? $section['type'] : 'custom';
 			$label = isset( $section['label'] ) ? $section['label'] : ucfirst( str_replace( '-', ' ', $type ) );
 			$block_content .= $this->render_section_type( $type, $label, $section, $index ) . "\n\n";
 		}
